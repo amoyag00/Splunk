@@ -30,7 +30,7 @@ public class Comic implements Serializable{
     @Column(name="name")
     private String name;
     
-    @Column(name="numChapters")
+    @Column(name="numberChapters")
     private int numChapters;
     
     @Column(name="statusComic")

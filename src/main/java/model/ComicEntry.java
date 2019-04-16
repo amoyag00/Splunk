@@ -24,8 +24,8 @@ import javax.persistence.TemporalType;
  */
 
 @Entity
-@Table(name="COMICS")
-public class ComicList implements Serializable {
+@Table(name="LISTS")
+public class ComicEntry implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int listId;
@@ -121,7 +121,7 @@ public class ComicList implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ComicList other = (ComicList) obj;
+        final ComicEntry other = (ComicEntry) obj;
         if (this.listId != other.listId) {
             return false;
         }
