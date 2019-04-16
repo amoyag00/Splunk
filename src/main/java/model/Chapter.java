@@ -24,13 +24,15 @@ public class Chapter implements Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int chapterId;
     
-    @JoinColumn(name="comicID")
+    @JoinColumn(name="comicId")
     @ManyToOne
     private Comic comic;
     
     @Column(name="chapterNumber")
     private int chapterNumber;
     
+    @Column(name="chapterName")
+    private String chapterName;
     
     @Column(name="addedDate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -79,6 +81,16 @@ public class Chapter implements Serializable{
         this.contentPath = contentPath;
     }
 
+    public String getChapterName() {
+        return chapterName;
+    }
+
+    public void setChapterName(String chapterName) {
+        this.chapterName = chapterName;
+    }
+    
+    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -99,8 +111,10 @@ public class Chapter implements Serializable{
 
     @Override
     public String toString() {
-        return "Chapter{" + "chapterId=" + chapterId + ", comic=" + comic + ", chapterNumber=" + chapterNumber + ", addedDate=" + addedDate + ", contentPath=" + contentPath + '}';
+        return "Chapter{" + "chapterId=" + chapterId + ", comic=" + comic + ", chapterNumber=" + chapterNumber + ", chapterName=" + chapterName + ", addedDate=" + addedDate + ", contentPath=" + contentPath + '}';
     }
+
+    
     
     
     

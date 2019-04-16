@@ -6,6 +6,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import model.Chapter;
+import model.Comic;
 import model.ComicEntry;
 import model.User;
 
@@ -51,6 +53,31 @@ public class ComicEntryFacade extends AbstractFacade<ComicEntry> implements Comi
        for(ComicEntry entry : comicList){
            edit(entry);
        } 
+    }
+    
+    @Override
+    public boolean exists(ComicEntry entry){
+        boolean exists= false;
+        String queryStr;
+        List<ComicEntry> comicList;
+        int userId=entry.getUser().getUserId();
+        int comicId=entry.getComic().getComicId();
+        
+        try{
+            queryStr="FROM ComicEntry etr WHERE etr.user.userId=?1 AND etr.comic.comicId=?2";
+            Query query = em.createQuery(queryStr);
+            query.setParameter(1, userId);
+            query.setParameter(2, comicId);
+            query.setMaxResults(1);
+            comicList=query.getResultList();      
+            if(!comicList.isEmpty()){
+                exists=true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Could not access to the database");
+        }
+        return exists;
     }
     
 }

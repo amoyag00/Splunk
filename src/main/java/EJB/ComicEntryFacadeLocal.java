@@ -34,4 +34,6 @@ public interface ComicEntryFacadeLocal {
     List<ComicEntry> getListOf(User user);
     
     void update(List<ComicEntry> comicList);
+    
+    boolean exists(ComicEntry entry);
 }

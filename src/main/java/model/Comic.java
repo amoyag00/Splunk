@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.io.Serializable;
@@ -35,6 +30,9 @@ public class Comic implements Serializable{
     
     @Column(name="statusComic")
     private String statusComic;
+    
+    @Column(name="imagePath")
+    private String imagePath;
     
     @Column(name="publishDate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -79,6 +77,16 @@ public class Comic implements Serializable{
     public void setPublishDate(Date publishDate) {
         this.publishDate = publishDate;
     }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+    
+    
 
     @Override
     public String toString() {

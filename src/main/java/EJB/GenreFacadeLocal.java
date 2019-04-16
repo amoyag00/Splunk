@@ -7,6 +7,7 @@ package EJB;
 
 import java.util.List;
 import javax.ejb.Local;
+import model.Comic;
 import model.Genre;
 
 /**
@@ -29,5 +30,7 @@ public interface GenreFacadeLocal {
     List<Genre> findRange(int[] range);
 
     int count();
+    
+    List<Genre> list(Comic comic);
     
 }
