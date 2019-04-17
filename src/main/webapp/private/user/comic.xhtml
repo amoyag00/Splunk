@@ -29,6 +29,9 @@
                     <p>Genres</p>
                     <p:commandButton value="Show Genres One Piece" actionListener="#{comicController.dummyListGenres()}" update="genres"/>
                     <h:inputTextarea id="genres" value="#{comicController.genres}" />
+                    <p>Authors</p>
+                    <p:commandButton value="Show Authors One Piece" actionListener="#{comicController.dummyListAuthors()}" update="authors"/>
+                    <h:inputTextarea id="authors" value="#{comicController.authors}" />
                 </h:form>
             </ui:define>
 

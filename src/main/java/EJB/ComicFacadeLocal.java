@@ -1,15 +1,22 @@
 package EJB;
 
+import EJB.AbstractFacade.Order;
 import java.util.List;
 import javax.ejb.Local;
 import model.Comic;
 
 /**
  *
- * @author alex
+ * @author splunk
  */
 @Local
 public interface ComicFacadeLocal {
+    
+    public enum Param{
+        NAME, SCORE
+    }
+    
+   
 
     void create(Comic comic);
 
@@ -24,5 +31,9 @@ public interface ComicFacadeLocal {
     List<Comic> findRange(int[] range);
 
     int count();
+    
+    List<Comic> search(String match);
+    
+    List<Comic> searchBy(String match, Param param, Order order);
     
 }

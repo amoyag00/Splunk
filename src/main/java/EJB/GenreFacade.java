@@ -16,7 +16,7 @@ import model.Genre;
 
 /**
  *
- * @author alex
+ * @author splunk
  */
 @Stateless
 public class GenreFacade extends AbstractFacade<Genre> implements GenreFacadeLocal {

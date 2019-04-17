@@ -1,5 +1,6 @@
 package controller;
 
+import EJB.AuthorFacadeLocal;
 import EJB.ChapterFacadeLocal;
 import EJB.ComicEntryFacadeLocal;
 import EJB.ComicFacadeLocal;
@@ -13,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import model.Author;
 import model.Chapter;
 import model.Comic;
 import model.ComicEntry;
@@ -42,6 +44,9 @@ public class ComicController implements Serializable{
     @EJB
     private GenreFacadeLocal genreEJB;
     
+    @EJB
+    private AuthorFacadeLocal authorEJB;
+    
     private Comic comic;
     
     private boolean isAdded;
@@ -51,6 +56,8 @@ public class ComicController implements Serializable{
     private String reviewList;//TODO delete
     
     private String genres;//TODO deldete
+    
+    private String authors;//TODO deldete
     
     //@PostConstruct
     public void init(){
@@ -133,6 +140,16 @@ public class ComicController implements Serializable{
         }
         
     }
+    public void dummyListAuthors(){
+        //TODO delete this
+        comic=comicEJB.find(3);
+        List<Author> authors=authorEJB.list(comic);
+        this.authors="";
+        for(Author author: authors){
+            this.authors+= author.getName()+", "+ author.getCategory()+"\n";
+        }
+        
+    }
 
     public boolean isIsAdded() {
         return isAdded;
@@ -172,6 +189,14 @@ public class ComicController implements Serializable{
 
     public void setGenres(String genres) {
         this.genres = genres;
+    }
+
+    public String getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(String authors) {
+        this.authors = authors;
     }
     
     
