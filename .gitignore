@@ -1,1 +1,5 @@
+#Ignore
 target/
+
+#Allow
+!target/endorsed/
