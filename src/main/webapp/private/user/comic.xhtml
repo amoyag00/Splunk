@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template.xhtml">
+
+            <ui:define name="top">
+                top
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <p:commandButton value="Add One Piece entry" actionListener="#{comicController.dummyAddEntry()}"/>
+                    <p></p>
+                    <p:commandButton value="Is Added One Piece?" actionListener="#{comicController.dummyIsAdded()}" update="isAdded"/>
+                    <h:outputLabel id="isAdded" value="#{comicController.isAdded}" />
+                    
+                    <p>ChapterList</p>
+                    <p:commandButton value="Show Chapters One Piece" actionListener="#{comicController.dummyListChapters()}" update="chapters"/>
+                    <h:inputTextarea id="chapters" value="#{comicController.chapterList}" />
+                    <p>Reviews</p>
+                    <p:commandButton value="Show Reviews One Piece" actionListener="#{comicController.dummyListReviews()}" update="reviews"/>
+                    <h:inputTextarea id="reviews" value="#{comicController.reviewList}" />
+                    <p>Genres</p>
+                    <p:commandButton value="Show Genres One Piece" actionListener="#{comicController.dummyListGenres()}" update="genres"/>
+                    <h:inputTextarea id="genres" value="#{comicController.genres}" />
+                    <p>Authors</p>
+                    <p:commandButton value="Show Authors One Piece" actionListener="#{comicController.dummyListAuthors()}" update="authors"/>
+                    <h:inputTextarea id="authors" value="#{comicController.authors}" />
+                </h:form>
+            </ui:define>
+
+            <ui:define name="bottom">
+                bottom
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
