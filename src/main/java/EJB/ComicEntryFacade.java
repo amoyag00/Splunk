@@ -79,5 +79,22 @@ public class ComicEntryFacade extends AbstractFacade<ComicEntry> implements Comi
         }
         return exists;
     }
+    @Override
+    public double getGlobalScore(Comic comic){
+        double score=0.0d;
+        String queryStr;
+        
+        try{
+            queryStr="SELECT AVG(etr.score) FROM ComicEntry etr WHERE etr.comic.comicId=?1";
+            Query query = em.createQuery(queryStr);
+            query.setParameter(1, comic.getComicId());
+            score=(double)query.getSingleResult();      
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Could not access to the database");
+        }
+        return score;
+    }
     
 }

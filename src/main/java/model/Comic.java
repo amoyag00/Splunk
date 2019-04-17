@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -37,6 +38,9 @@ public class Comic implements Serializable{
     @Column(name="publishDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date publishDate;
+    
+    @Transient 
+    private double globalScore;
 
     public int getComicId() {
         return comicId;
@@ -85,6 +89,16 @@ public class Comic implements Serializable{
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
+    public double getGlobalScore() {
+        return globalScore;
+    }
+
+    public void setGlobalScore(double globalScore) {
+        this.globalScore = globalScore;
+    }
+    
+    
     
     
 

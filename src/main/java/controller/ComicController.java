@@ -59,6 +59,8 @@ public class ComicController implements Serializable{
     
     private String authors;//TODO deldete
     
+    private String globalScore;//TODO deldete
+    
     //@PostConstruct
     public void init(){
         //TODO
@@ -150,6 +152,12 @@ public class ComicController implements Serializable{
         }
         
     }
+    
+    public void dummyGetGlobalSocre(){
+        //TODO delete this
+       comic=comicEJB.find(3);
+       this.globalScore=String.valueOf(comicListEJB.getGlobalScore(comic));
+    }
 
     public boolean isIsAdded() {
         return isAdded;
@@ -197,6 +205,14 @@ public class ComicController implements Serializable{
 
     public void setAuthors(String authors) {
         this.authors = authors;
+    }
+
+    public String getGlobalScore() {
+        return globalScore;
+    }
+
+    public void setGlobalScore(String globalScore) {
+        this.globalScore = globalScore;
     }
     
     

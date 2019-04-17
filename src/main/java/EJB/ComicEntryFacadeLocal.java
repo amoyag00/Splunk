@@ -7,6 +7,7 @@ package EJB;
 
 import java.util.List;
 import javax.ejb.Local;
+import model.Comic;
 import model.ComicEntry;
 import model.User;
 
@@ -36,4 +37,6 @@ public interface ComicEntryFacadeLocal {
     void update(List<ComicEntry> comicList);
     
     boolean exists(ComicEntry entry);
+    
+    double getGlobalScore(Comic comic);
 }
