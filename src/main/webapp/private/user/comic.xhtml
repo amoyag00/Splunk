@@ -32,6 +32,9 @@
                     <p>Authors</p>
                     <p:commandButton value="Show Authors One Piece" actionListener="#{comicController.dummyListAuthors()}" update="authors"/>
                     <h:inputTextarea id="authors" value="#{comicController.authors}" />
+                    <p>Global score</p>
+                    <p:commandButton value="Global score One Piece" actionListener="#{comicController.dummyGetGlobalSocre()}" update="score"/>
+                    <h:inputTextarea id="score" value="#{comicController.globalScore}" />
                 </h:form>
             </ui:define>
 
