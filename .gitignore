@@ -1,5 +1,6 @@
 #Ignore
 target/
+persistence.xml
 
 #Allow
 !target/endorsed/
