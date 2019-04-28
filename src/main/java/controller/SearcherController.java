@@ -32,11 +32,32 @@ public class SearcherController implements Serializable{
     
     private String userResults;
     
+    private String textSearch;
     
+    private String searchType;
+    
+    private List<Comic> resultComics;
     
     //@PostConstruct
     public void init(){
         //TODO
+    }
+    
+    public void search(){
+        
+        
+        //if(searchType.equals("Comic")){
+            //List<Comic> results;
+            resultComics = comicEJB.search(textSearch);
+            System.out.println(resultComics);
+            /*for(Comic comic :results){
+            comicResults+=comic.getName()+" "+comic.getImagePath()+"\n";
+        }*/
+       //}
+       // else{
+         //   List<User> results;
+            //results = userEJB.search(textSearch);
+       // }
     }
     
     public void dummySearchComic(){
@@ -89,6 +110,30 @@ public class SearcherController implements Serializable{
 
     public void setUserResults(String userResults) {
         this.userResults = userResults;
+    }
+
+    public String getTextSearch() {
+        return textSearch;
+    }
+
+    public void setTextSearch(String textSearch) {
+        this.textSearch = textSearch;
+    }
+
+    public String getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(String searchType) {
+        this.searchType = searchType;
+    }
+
+    public List<Comic> getResultComics() {
+        return resultComics;
+    }
+
+    public void setResultComics(List<Comic> resultComics) {
+        this.resultComics = resultComics;
     }
     
     

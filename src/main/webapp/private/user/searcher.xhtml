@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -14,7 +15,41 @@
             </ui:define>
 
             <ui:define name="content">
-                <h:form>
+                <h:form id="form">
+                    <h1>BUSCADOR</h1>
+                    <p:inputText id="search" value="#{searcherController.textSearch}" required="true"/>
+                    <p:selectOneMenu id="selection" value="#{searcherController.searchType}" style="width:125px">
+                        <f:selectItem itemLabel="Comic" itemValue="comic" />
+                        <f:selectItem itemLabel="User" itemValue="user" />
+                    </p:selectOneMenu>
+                    
+                    <p:commandButton value="Buscar" actionListener="#{searcherController.search()}" update="results"/>
+                    <p:dataGrid  var="comic" value="#{searcherController.resultComics}" columns="3" layout="grid"
+                        rows="12" paginator="true" id="results"
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="6,12,16">
+                        
+                        <f:facet name="headerResultados">
+                            Resultados de busqueda
+                        </f:facet>
+
+                        <p:panel header="#{comic.name}" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:graphicImage name="#{comic.imagePath}"
+                                
+
+                                <p:commandLink title="View Detail">
+                                    <h:outputText styleClass="pi pi-search" style="margin:0 auto;"/>
+                                    <f:setPropertyActionListener value="#{comic}" target=""/>
+                                </p:commandLink>
+                                    
+                            </h:panelGrid>
+                        </p:panel>
+
+                    </p:dataGrid>
+                    
+                    
+                    <ui:remove>
                     <p>Comics containing substring on</p>
                     <p:commandButton value="search comics" actionListener="#{searcherController.dummySearchComic()}" update="comics"/>
                     <h:inputTextarea id="comics" value="#{searcherController.comicResults}" />
@@ -27,6 +62,7 @@
                     <p>Users containing a in their nickname order A-Z</p>
                     <p:commandButton value="search users" actionListener="#{searcherController.dummySearchUser()}" update="users"/>
                     <h:inputTextarea id="users" value="#{searcherController.userResults}" />
+                    </ui:remove>
                 </h:form>
             </ui:define>
 
