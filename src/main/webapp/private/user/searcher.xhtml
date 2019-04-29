@@ -19,35 +19,49 @@
                     <h1>BUSCADOR</h1>
                     <p:inputText id="search" value="#{searcherController.textSearch}" required="true"/>
                     <p:selectOneMenu id="selection" value="#{searcherController.searchType}" style="width:125px">
-                        <f:selectItem itemLabel="Comic" itemValue="comic" />
-                        <f:selectItem itemLabel="User" itemValue="user" />
+                        <f:selectItem itemLabel="Comic" itemValue="comicSearch" />
+                        <f:selectItem itemLabel="User" itemValue="userSearch" />
                     </p:selectOneMenu>
                     
-                    <p:commandButton value="Buscar" actionListener="#{searcherController.search()}" update="results"/>
+                    <p:commandButton value="Buscar" actionListener="#{searcherController.search()}" update="comicSearch userSearch"/>
+                    
                     <p:dataGrid  var="comic" value="#{searcherController.resultComics}" columns="3" layout="grid"
-                        rows="12" paginator="true" id="results"
+                        rows="12" paginator="true" id="comicSearch"
                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="6,12,16">
                         
                         <f:facet name="headerResultados">
-                            Resultados de busqueda
+                            Resultados de busqueda de comics
                         </f:facet>
 
                         <p:panel header="#{comic.name}" style="text-align:center">
                             <h:panelGrid columns="1" style="width:100%">
-                                <p:graphicImage name="#{comic.imagePath}"
-                                
-
-                                <p:commandLink title="View Detail">
-                                    <h:outputText styleClass="pi pi-search" style="margin:0 auto;"/>
-                                    <f:setPropertyActionListener value="#{comic}" target=""/>
-                                </p:commandLink>
-                                    
+                                <p:graphicImage name="#{comic.imagePath}" height="200"/>
+                                <h:link outcome="comic" value="Detalles">
+                                    <ui:remove>
+                                    <f:param name="authors" value="autor"/>
+                                    </ui:remove>
+                                </h:link>
                             </h:panelGrid>
                         </p:panel>
-
                     </p:dataGrid>
                     
+                    <p:dataGrid  var="user" value="#{searcherController.resultUsers}" columns="3" layout="grid"
+                        rows="12" paginator="true" id="userSearch"
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="6,12,16">
+                        
+                        <f:facet name="headerResultados">
+                            Resultados de busqueda de usuarios
+                        </f:facet>
+
+                        <p:panel header="#{user.nickname}" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <h:link outcome="" value="Ver perfil">
+                                </h:link>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
                     
                     <ui:remove>
                     <p>Comics containing substring on</p>

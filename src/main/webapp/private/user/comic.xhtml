@@ -14,7 +14,14 @@
             </ui:define>
 
             <ui:define name="content">
-                <h:form>
+                <p:panel header="#{comicController.comic.name}" footer="Fecha de publicacion: #{comicController.comic.publishDate}">
+                    <p:graphicImage name="#{comicController.comic.imagePath}"/>cd 
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <h:outputLabel value="Capitulos: "/>
+                        <h:outputLabel value="#{comicController.comic.numChapters}"/>
+                    </h:panelGrid>
+                </p:panel>
+                <ui:remove><h:form>
                     <p:commandButton value="Add One Piece entry" actionListener="#{comicController.dummyAddEntry()}"/>
                     <p></p>
                     <p:commandButton value="Is Added One Piece?" actionListener="#{comicController.dummyIsAdded()}" update="isAdded"/>
@@ -36,6 +43,7 @@
                     <p:commandButton value="Global score One Piece" actionListener="#{comicController.dummyGetGlobalSocre()}" update="score"/>
                     <h:inputTextarea id="score" value="#{comicController.globalScore}" />
                 </h:form>
+                    </ui:remove>
             </ui:define>
 
             <ui:define name="bottom">

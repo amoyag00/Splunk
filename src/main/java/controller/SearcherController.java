@@ -38,6 +38,8 @@ public class SearcherController implements Serializable{
     
     private List<Comic> resultComics;
     
+    private List<User> resultUsers;
+    
     //@PostConstruct
     public void init(){
         //TODO
@@ -46,18 +48,13 @@ public class SearcherController implements Serializable{
     public void search(){
         
         
-        //if(searchType.equals("Comic")){
-            //List<Comic> results;
+        if(searchType.equals("comicSearch")){
             resultComics = comicEJB.search(textSearch);
-            System.out.println(resultComics);
-            /*for(Comic comic :results){
-            comicResults+=comic.getName()+" "+comic.getImagePath()+"\n";
-        }*/
-       //}
-       // else{
-         //   List<User> results;
-            //results = userEJB.search(textSearch);
-       // }
+       }
+        else{
+            List<User> results;
+            resultUsers = userEJB.search(textSearch, true);
+        }
     }
     
     public void dummySearchComic(){
@@ -87,14 +84,14 @@ public class SearcherController implements Serializable{
             comicResults+=comic.getName()+" "+comic.getImagePath()+"\n";
         }
     }
-    public void dummySearchUser(){
+    /*public void dummySearchUser(){
         //TODO delete this
         //Order must be ASC or DESC or ""
         List<User> results=userEJB.search("", false, Order.DESC);
         for(User user :results){
             userResults+="Nickname: "+user.getNickname()+" Private profile? "+user.isPrivate()+"\n";
         }
-    }
+    }*/
 
     public String getComicResults() {
         return comicResults;
@@ -135,6 +132,12 @@ public class SearcherController implements Serializable{
     public void setResultComics(List<Comic> resultComics) {
         this.resultComics = resultComics;
     }
-    
-    
+
+    public List<User> getResultUsers() {
+        return resultUsers;
+    }
+
+    public void setResultUsers(List<User> resultUsers) {
+        this.resultUsers = resultUsers;
+    }
 }
