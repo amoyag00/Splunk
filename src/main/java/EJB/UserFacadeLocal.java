@@ -28,5 +28,5 @@ public interface UserFacadeLocal {
 
     int count();
     
-    List<User> search(String nickname, boolean includePrivate, Order order);
+    List<User> search(String nickname, boolean includePrivate/*, Order order*/);
 }
