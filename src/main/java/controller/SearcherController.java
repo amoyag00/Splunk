@@ -46,8 +46,6 @@ public class SearcherController implements Serializable{
     }
     
     public void search(){
-        
-        
         if(searchType.equals("comicSearch")){
             resultComics = comicEJB.search(textSearch);
        }

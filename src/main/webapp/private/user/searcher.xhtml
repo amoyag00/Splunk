@@ -62,21 +62,6 @@
                             </h:panelGrid>
                         </p:panel>
                     </p:dataGrid>
-                    
-                    <ui:remove>
-                    <p>Comics containing substring on</p>
-                    <p:commandButton value="search comics" actionListener="#{searcherController.dummySearchComic()}" update="comics"/>
-                    <h:inputTextarea id="comics" value="#{searcherController.comicResults}" />
-                    <p>Comics ordered by name A-Z</p>
-                    <p:commandButton value="search comics" actionListener="#{searcherController.dummySearchComicByName()}" update="comicsName"/>
-                    <h:inputTextarea id="comicsName" value="#{searcherController.comicResults}" />
-                    <p>Comics ordered by score top-down</p>
-                    <p:commandButton value="search comics" actionListener="#{searcherController.dummySearchComicByScore()}" update="comicsScore"/>
-                    <h:inputTextarea id="comicsScore" value="#{searcherController.comicResults}" />
-                    <p>Users containing a in their nickname order A-Z</p>
-                    <p:commandButton value="search users" actionListener="#{searcherController.dummySearchUser()}" update="users"/>
-                    <h:inputTextarea id="users" value="#{searcherController.userResults}" />
-                    </ui:remove>
                 </h:form>
             </ui:define>
 
