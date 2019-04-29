@@ -33,7 +33,6 @@ public class SearcherController implements Serializable{
     private String userResults;
     
     
-    
     //@PostConstruct
     public void init(){
         //TODO
@@ -66,14 +65,14 @@ public class SearcherController implements Serializable{
             comicResults+=comic.getName()+" "+comic.getImagePath()+"\n";
         }
     }
-    public void dummySearchUser(){
+    /*public void dummySearchUser(){
         //TODO delete this
         //Order must be ASC or DESC or ""
         List<User> results=userEJB.search("", false, Order.DESC);
         for(User user :results){
             userResults+="Nickname: "+user.getNickname()+" Private profile? "+user.isPrivate()+"\n";
         }
-    }
+    }*/
 
     public String getComicResults() {
         return comicResults;
@@ -89,7 +88,5 @@ public class SearcherController implements Serializable{
 
     public void setUserResults(String userResults) {
         this.userResults = userResults;
-    }
-    
-    
+    }  
 }
