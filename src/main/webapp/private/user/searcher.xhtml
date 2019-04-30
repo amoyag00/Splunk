@@ -22,6 +22,10 @@
                         <f:selectItem itemLabel="Comic" itemValue="comicSearch" />
                         <f:selectItem itemLabel="User" itemValue="userSearch" />
                     </p:selectOneMenu>
+                    <p:selectOneMenu id="order" value="#{searcherController.orderType}" style="width:125px">
+                        <f:selectItem itemLabel="Asc" itemValue="asc" />
+                        <f:selectItem itemLabel="Desc" itemValue="desc" />
+                    </p:selectOneMenu>
                     
                     <p:commandButton value="Buscar" actionListener="#{searcherController.search()}" update="comicSearch userSearch"/>
                     

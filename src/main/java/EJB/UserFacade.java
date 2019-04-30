@@ -31,7 +31,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     }
     
     @Override
-    public List<User> search(String match, boolean excludePrivate/*, Order order*/){
+    public List<User> search(String match, boolean excludePrivate, Order order){
         List<User> users= new ArrayList<User>();
         String queryStr;
         
@@ -40,12 +40,12 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
             if(excludePrivate){
                 queryStr+=" AND user.isPrivate=0";
             }
-            /*queryStr+=" ORDER BY user.nickname ";
+            queryStr+=" ORDER BY user.nickname ";
             if(order == Order.ASC){
                 queryStr+="ASC";
             }else if(order == Order.DESC){
                 queryStr+="DESC";
-            }*/
+            }
             Query query = em.createQuery(queryStr);
             query.setParameter(1, match.toLowerCase());
             users=query.getResultList();      
