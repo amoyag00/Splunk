@@ -48,6 +48,31 @@ public class ComicFacade extends AbstractFacade<Comic> implements ComicFacadeLoc
     }
     
     @Override
+    public List<Comic> searchOrder(String match, Order order){
+        List<Comic> comics= new ArrayList<Comic>();
+        String queryStr;
+        
+        try{
+            queryStr="FROM Comic comic WHERE LOWER(comic.name) LIKE CONCAT('%',?1,'%')";
+            queryStr+=" ORDER BY comic.name ";
+            if(order == Order.ASC){
+                queryStr+="ASC";
+            }else if(order == Order.DESC){
+                queryStr+="DESC";
+            }
+            Query query = em.createQuery(queryStr);
+            query.setParameter(1, match.toLowerCase());
+            comics=query.getResultList();      
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Could not access to the database");
+        }
+        
+        return comics;
+    }
+    
+    @Override
     public List<Comic> searchBy(String match, Param param, Order order){
         List<Comic> comics= new ArrayList<Comic>();
         String queryStr="";

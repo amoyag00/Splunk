@@ -61,9 +61,16 @@ public class ComicController implements Serializable{
     
     private String globalScore;//TODO deldete
     
-    //@PostConstruct
+    @PostConstruct
     public void init(){
         //TODO
+        search();
+    }
+    
+    public void search(){
+        List<Comic> tmp;
+        tmp = comicEJB.search("dragon ball");
+        comic = tmp.get(0);
     }
     
     public void dummyAddEntry(){

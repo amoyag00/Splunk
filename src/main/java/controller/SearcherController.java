@@ -32,11 +32,38 @@ public class SearcherController implements Serializable{
     
     private String userResults;
     
+    private String textSearch;
     
+    private String searchType;
+    
+    private String orderType;
+    
+    private List<Comic> resultComics;
+    
+    private List<User> resultUsers;
     
     //@PostConstruct
     public void init(){
         //TODO
+    }
+    
+    public void search(){
+        if(searchType.equals("comicSearch")){
+            if(orderType.equals("asc")){
+                resultComics = comicEJB.searchOrder(textSearch, Order.ASC);
+            }
+            else{
+                resultComics = comicEJB.searchOrder(textSearch, Order.DESC);
+            }
+       }
+        else{
+            if(orderType.equals("asc")){
+                resultUsers = userEJB.search(textSearch, true, Order.ASC);
+            }
+            else{
+                resultUsers = userEJB.search(textSearch, true, Order.DESC);
+            }
+        }
     }
     
     public void dummySearchComic(){
@@ -66,14 +93,14 @@ public class SearcherController implements Serializable{
             comicResults+=comic.getName()+" "+comic.getImagePath()+"\n";
         }
     }
-    public void dummySearchUser(){
+    /*public void dummySearchUser(){
         //TODO delete this
         //Order must be ASC or DESC or ""
         List<User> results=userEJB.search("", false, Order.DESC);
         for(User user :results){
             userResults+="Nickname: "+user.getNickname()+" Private profile? "+user.isPrivate()+"\n";
         }
-    }
+    }*/
 
     public String getComicResults() {
         return comicResults;
@@ -90,6 +117,44 @@ public class SearcherController implements Serializable{
     public void setUserResults(String userResults) {
         this.userResults = userResults;
     }
-    
-    
+
+    public String getTextSearch() {
+        return textSearch;
+    }
+
+    public void setTextSearch(String textSearch) {
+        this.textSearch = textSearch;
+    }
+
+    public String getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(String searchType) {
+        this.searchType = searchType;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
+    }
+
+    public List<Comic> getResultComics() {
+        return resultComics;
+    }
+
+    public void setResultComics(List<Comic> resultComics) {
+        this.resultComics = resultComics;
+    }
+
+    public List<User> getResultUsers() {
+        return resultUsers;
+    }
+
+    public void setResultUsers(List<User> resultUsers) {
+        this.resultUsers = resultUsers;
+    }
 }
