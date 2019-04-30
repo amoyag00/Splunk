@@ -23,7 +23,7 @@
                     <p:fieldset legend="Home">
                         <p:panelGrid id="homeGrid" columns="2">
 
-                            <p:dataTable var="list" value="#{listController.comicList}" rowIndexVar="row" editable="true" editMode="cell">
+                            <p:dataTable var="list" value="#{homeController.comicList}" rowIndexVar="row" editable="true" editMode="cell">
 
                             <p:ajax event="cellEdit" listener="#{homeController.onCellEdit}" />                                
                                 <p:column headerText="Title">
@@ -46,7 +46,7 @@
                                 </p:column>
 
                                 <p:column headerText="Delete">
-                                    <p:commandButton value="Delete"  actionListener="#{listController.deleteEntry(row)}"/>
+                                    <p:commandButton value="Delete"  actionListener="#{homeController.deleteEntry(row)}"/>
                                 </p:column>
                             </p:dataTable>
                             <p:chart type="pie" model="#{homeController.pieModel1}"/>

@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -27,6 +26,14 @@ public class HomeController implements Serializable{
     private ComicEntryFacadeLocal comicListEJB;
     
     private List<ComicEntry>  comicList;
+
+    public List<ComicEntry> getComicList() {
+        return comicList;
+    }
+
+    public void setComicList(List<ComicEntry> comicList) {
+        this.comicList = comicList;
+    }
 
     public PieChartModel getPieModel1() {
         return pieModel1;
@@ -65,7 +72,10 @@ public class HomeController implements Serializable{
         comicListEJB.remove(comicList.get(comicList.size()-1));
     }
     
-   
+    public void deleteEntry(int row){
+        //TODO delete this
+        comicListEJB.remove(comicList.get(row));
+    }
     
     /*public void dummyPrintList(){
         //TODO delete this
@@ -115,14 +125,6 @@ public class HomeController implements Serializable{
         pieModel1.set("No specified", 421);
         pieModel1.setLegendPosition("w");
         pieModel1.setShadow(true);
-    }
-    
-    public List<ComicEntry> getList() {
-        return comicList;
-    }
-
-    public void setList(List<ComicEntry> comicList) {
-        this.comicList = comicList;
     }
     
     public void onCellEdit(CellEditEvent event) {
