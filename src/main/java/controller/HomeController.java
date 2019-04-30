@@ -9,9 +9,9 @@ import javax.inject.Named;
 import model.ComicEntry;
 import model.User;
 import EJB.ComicEntryFacadeLocal;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.primefaces.event.CellEditEvent;
 import org.primefaces.model.chart.PieChartModel;
 
 /**
