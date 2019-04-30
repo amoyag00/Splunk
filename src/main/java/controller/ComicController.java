@@ -49,6 +49,14 @@ public class ComicController implements Serializable{
     
     private Comic comic;
     
+    private List<Review> reviewResults;
+    
+    private List<Author> authorResults;
+    
+    private List<Genre> genreResults;
+    
+    private List<Chapter> chapterResults;
+    
     private boolean isAdded;
     
     private String chapterList;//TODO delete
@@ -71,6 +79,25 @@ public class ComicController implements Serializable{
         List<Comic> tmp;
         tmp = comicEJB.search("dragon ball");
         comic = tmp.get(0);
+
+        reviewResults = reviewEJB.list(comic);
+        System.out.println(reviewResults);
+        authorResults = authorEJB.list((comic));
+        genreResults = genreEJB.list(comic);
+        chapterResults = chapterEJB.list(comic);
+        
+        List<Author> authors=authorEJB.list(comic);
+        this.authors="";
+        for(Author author: authors){
+            this.authors+= author.getName()+", "+ author.getCategory()+"\n";
+        }
+        
+        List<Genre> genres=genreEJB.list(comic);
+        chapterList="";
+        this.genres="";
+        for(Genre genre: genres){
+            this.genres+= genre.getName()+" ";
+        }   
     }
     
     public void dummyAddEntry(){
@@ -206,6 +233,14 @@ public class ComicController implements Serializable{
         this.genres = genres;
     }
 
+    public List<Chapter> getChapterResults() {
+        return chapterResults;
+    }
+
+    public void setChapterResults(List<Chapter> chapterResults) {
+        this.chapterResults = chapterResults;
+    }
+
     public String getAuthors() {
         return authors;
     }
@@ -220,6 +255,30 @@ public class ComicController implements Serializable{
 
     public void setGlobalScore(String globalScore) {
         this.globalScore = globalScore;
+    }
+
+    public List<Review> getReviewResults() {
+        return reviewResults;
+    }
+
+    public void setReviewResults(List<Review> reviewResults) {
+        this.reviewResults = reviewResults;
+    }
+
+    public List<Author> getAuthorResults() {
+        return authorResults;
+    }
+
+    public void setAuthorResults(List<Author> authorResults) {
+        this.authorResults = authorResults;
+    }
+
+    public List<Genre> getGenreResults() {
+        return genreResults;
+    }
+
+    public void setGenreResults(List<Genre> genreResults) {
+        this.genreResults = genreResults;
     }
     
     

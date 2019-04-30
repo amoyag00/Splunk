@@ -156,5 +156,5 @@ public class SearcherController implements Serializable{
 
     public void setResultUsers(List<User> resultUsers) {
         this.resultUsers = resultUsers;
-    }
+    }  
 }
