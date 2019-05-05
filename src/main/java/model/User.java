@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,8 +31,9 @@ public class User implements Serializable{
     @Column(name="pass")
     private String password;
     
-    @Column(name="usertype")
-    private String userType;
+    @JoinColumn(name="rol")
+    @ManyToOne
+    private Rol rol;
     
     @Column(name="private")
     private boolean isPrivate;
@@ -63,12 +66,12 @@ public class User implements Serializable{
         this.password = password;
     }
 
-    public String getUserType() {
-        return userType;
+    public Rol getRol() {
+        return rol;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public boolean isPrivate() {
@@ -89,7 +92,7 @@ public class User implements Serializable{
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", nickname=" + nickname + ", password=" + password + ", userType=" + userType + ", isPrivate=" + isPrivate + ", expirationDate=" + expirationDate + '}';
+        return "User{" + "userId=" + userId + ", nickname=" + nickname + ", password=" + password + ", userType=" + rol.toString() + ", isPrivate=" + isPrivate + ", expirationDate=" + expirationDate + '}';
     }
 
     @Override
