@@ -29,4 +29,8 @@ public interface UserFacadeLocal {
     int count();
     
     List<User> search(String nickname, boolean includePrivate, Order order);
+    
+    public User getUser(User user);
+    
+    public boolean exists(String nickname);
 }

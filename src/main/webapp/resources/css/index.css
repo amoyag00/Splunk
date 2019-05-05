@@ -1,0 +1,20 @@
+#login{
+    float:right;
+}
+
+#indexBody{
+    background-image: url("#{resource['img/bg.png']}");
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-position: 60% 20%;
+
+}
+
+.indexPanel.ui-panelgrid>*>tr,
+.indexPanel.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
+}
+
+div.ui-growl {
+   top:10%;
+}
