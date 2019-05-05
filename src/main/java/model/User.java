@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -31,12 +32,21 @@ public class User implements Serializable{
     @Column(name="pass")
     private String password;
     
+    @Transient
+    private String password2;
+    
     @JoinColumn(name="rol")
     @ManyToOne
     private Rol rol;
     
+    @Column(name="email")
+    private String email;
+    
     @Column(name="private")
     private boolean isPrivate;
+    
+    @Column(name="banned")
+    private boolean banned;
     
     @Column(name="expirationDate")
     @Temporal(TemporalType.TIMESTAMP)
@@ -82,6 +92,15 @@ public class User implements Serializable{
         this.isPrivate = isPrivate;
     }
 
+    public boolean isBanned() {
+        return banned;
+    }
+
+    public void setBanned(boolean banned) {
+        this.banned = banned;
+    }
+
+    
     public Date getExpirationDate() {
         return expirationDate;
     }
@@ -90,6 +109,24 @@ public class User implements Serializable{
         this.expirationDate = expirationDate;
     }
 
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    
+    
     @Override
     public String toString() {
         return "User{" + "userId=" + userId + ", nickname=" + nickname + ", password=" + password + ", userType=" + rol.toString() + ", isPrivate=" + isPrivate + ", expirationDate=" + expirationDate + '}';

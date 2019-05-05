@@ -142,7 +142,6 @@ DELETE FROM `LISTS`;
 /*!40000 ALTER TABLE `LISTS` DISABLE KEYS */;
 INSERT INTO `LISTS` (`listId`, `userId`, `comicId`, `comicStatus`, `score`, `progress`, `addedDate`) VALUES
 	(1, 1, 1, 'P', 9, 87, '2019-04-16 13:33:49'),
-	(3, 1, 2, 'R', 87, 87, '2019-04-16 13:35:51'),
 	(9, 2, 1, NULL, 50, NULL, '2019-04-17 01:08:08'),
 	(10, 2, 2, NULL, 40, NULL, '2019-04-17 01:08:19'),
 	(11, 2, 3, NULL, 90, NULL, '2019-04-17 01:08:25'),
@@ -186,25 +185,47 @@ INSERT INTO `REVIEWS` (`reviewId`, `userId`, `comicId`, `writtenDate`, `reviewTe
 	(10, 2, 5, '2019-04-16 22:35:15', 'Wow!!!!');
 /*!40000 ALTER TABLE `REVIEWS` ENABLE KEYS */;
 
+-- Volcando estructura para tabla Splunk.ROL
+CREATE TABLE IF NOT EXISTS `ROL` (
+  `rolId` int(11) NOT NULL AUTO_INCREMENT,
+  `rol` enum('A','U') DEFAULT NULL,
+  PRIMARY KEY (`rolId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Volcando datos para la tabla Splunk.ROL: ~2 rows (aproximadamente)
+DELETE FROM `ROL`;
+/*!40000 ALTER TABLE `ROL` DISABLE KEYS */;
+INSERT INTO `ROL` (`rolId`, `rol`) VALUES
+	(1, 'U'),
+	(2, 'A');
+/*!40000 ALTER TABLE `ROL` ENABLE KEYS */;
+
 -- Volcando estructura para tabla Splunk.USERS
 CREATE TABLE IF NOT EXISTS `USERS` (
   `userId` int(11) NOT NULL AUTO_INCREMENT,
   `nickname` varchar(10) DEFAULT NULL,
   `pass` varchar(20) NOT NULL,
-  `usertype` varchar(10) DEFAULT NULL,
   `private` bit(1) NOT NULL,
   `expirationDate` datetime NOT NULL,
   `banned` bit(1) DEFAULT b'0',
-  PRIMARY KEY (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `rol` int(11) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`userId`),
+  KEY `rol` (`rol`),
+  CONSTRAINT `USERS_ibfk_1` FOREIGN KEY (`rol`) REFERENCES `ROL` (`rolId`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla Splunk.USERS: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla Splunk.USERS: ~7 rows (aproximadamente)
 DELETE FROM `USERS`;
 /*!40000 ALTER TABLE `USERS` DISABLE KEYS */;
-INSERT INTO `USERS` (`userId`, `nickname`, `pass`, `usertype`, `private`, `expirationDate`, `banned`) VALUES
-	(1, 'Johnny', 'Johnny', 'user', b'0', '2019-04-16 13:31:16', b'0'),
-	(2, 'Salty', 'Salty', 'user', b'0', '2019-04-16 13:31:54', b'0'),
-	(3, 'Blue', 'Blue', 'user', b'1', '2019-04-16 13:32:10', b'0');
+INSERT INTO `USERS` (`userId`, `nickname`, `pass`, `private`, `expirationDate`, `banned`, `rol`, `email`) VALUES
+	(1, 'Johnny', 'Johnny', b'0', '2019-04-16 13:31:16', b'0', 1, NULL),
+	(2, 'Salty', 'Salty', b'0', '2019-04-16 13:31:54', b'0', 1, NULL),
+	(3, 'Blue', 'Blue', b'1', '2019-04-16 13:32:10', b'0', 1, NULL),
+	(4, 'admin', 'admin', b'1', '2019-05-05 11:05:16', b'0', 2, NULL),
+	(5, 'usuario', 'Usuario1', b'0', '2019-05-06 01:08:36', b'0', 1, NULL),
+	(6, 'usuario2', 'Usuario2', b'1', '2019-05-06 01:09:01', b'0', 1, NULL),
+	(7, 'usuario3', 'Usuario3', b'0', '2019-05-06 01:16:32', b'0', 1, 'usuario3@gmail.com');
 /*!40000 ALTER TABLE `USERS` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
