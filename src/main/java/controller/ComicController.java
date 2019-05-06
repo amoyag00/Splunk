@@ -13,6 +13,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import model.Author;
 import model.Chapter;
@@ -47,6 +48,9 @@ public class ComicController implements Serializable{
     @EJB
     private AuthorFacadeLocal authorEJB;
     
+    @Inject
+    private SearcherController searcher;
+    
     private Comic comic;
     
     private boolean isAdded;
@@ -64,7 +68,8 @@ public class ComicController implements Serializable{
     @PostConstruct
     public void init(){
         //TODO
-        search();
+        //search();
+        comic = searcher.getComicSelected();
     }
     
     public void search(){
@@ -192,6 +197,14 @@ public class ComicController implements Serializable{
 
     public String getReviewList() {
         return reviewList;
+    }
+
+    public SearcherController getComicSelected() {
+        return searcher;
+    }
+
+    public void setComicSelected(SearcherController searcher) {
+        this.searcher = searcher;
     }
 
     public void setReviewList(String reviewList) {

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import model.Comic;
@@ -20,7 +21,7 @@ import model.User;
  * @author splunk
  */
 @Named 
-@ViewScoped
+@RequestScoped
 public class SearcherController implements Serializable{
     @EJB
     private ComicFacadeLocal comicEJB;
@@ -41,6 +42,8 @@ public class SearcherController implements Serializable{
     private List<Comic> resultComics;
     
     private List<User> resultUsers;
+    
+    private Comic comicSelected;
     
     //@PostConstruct
     public void init(){
@@ -64,6 +67,11 @@ public class SearcherController implements Serializable{
                 resultUsers = userEJB.search(textSearch, true, Order.DESC);
             }
         }
+    }
+    
+    public void viewComic(Comic comic) {
+        comicSelected = comic;
+        System.out.println("entra");
     }
     
     public void dummySearchComic(){
@@ -116,6 +124,14 @@ public class SearcherController implements Serializable{
 
     public void setUserResults(String userResults) {
         this.userResults = userResults;
+    }
+
+    public Comic getComicSelected() {
+        return comicSelected;
+    }
+
+    public void setComicSelected(Comic comicSelected) {
+        this.comicSelected = comicSelected;
     }
 
     public String getTextSearch() {
