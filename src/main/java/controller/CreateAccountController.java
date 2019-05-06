@@ -84,6 +84,7 @@ public class CreateAccountController implements Serializable {
     public boolean isStrong(String password) {
         boolean hasNumber = false;
         boolean hasUpperCase = false;
+        boolean isStrong = false;
 
         for (int i = 0; i < password.length(); i++) {
             
@@ -98,8 +99,12 @@ public class CreateAccountController implements Serializable {
             }
 
         }
-
-        return (hasNumber && hasUpperCase && password.length() >= 8);
+        
+        if(password.length() >= 8 && hasNumber && hasUpperCase  ){
+            isStrong = true;
+        }
+        
+        return isStrong;
     }
 
 }

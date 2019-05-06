@@ -13,35 +13,47 @@ import static org.junit.Assert.*;
  * @author Splunk
  */
 public class CreateAccountControllerTest {
+
     private CreateAccountController c;
-    
+
     @Before
-    public void setup(){
+    public void setup() {
         c = new CreateAccountController();
     }
-   
+
     @Test
-    public void shortPasswordTest() {
-        assertFalse(c.isStrong("hola"));
-    }
-    
-    @Test
-    public void noNumberTest() {
-        assertFalse(c.isStrong("somepassword"));
-    }
-    
-    @Test
-    public void HasNumberNoUpperCaseTest() {
-        assertFalse(c.isStrong("somepassword2"));
-    }
-    
-    @Test
-    public void HasNumberAndUpperCaseTest() {
-        assertTrue(c.isStrong("somePassword2"));
-    }
-    
-    @Test
-    public void EmptyPasswordTest() {
+    public void emptyPasswordTest() {
         assertFalse(c.isStrong(""));
     }
+
+    @Test
+    public void noNumberNoUpperCaseShortTest() {
+        assertFalse(c.isStrong("hello"));
+    }
+
+    @Test
+    public void hasNumberNoUpperCaseShortTest() {
+        assertFalse(c.isStrong("3"));
+    }
+
+    @Test
+    public void hasUpperCaseNoNumberShortTest() {
+        assertFalse(c.isStrong("A"));
+    }
+
+    @Test
+    public void noNumberNoUpperCaseLongTest() {
+        assertFalse(c.isStrong("thisisalongpassword"));
+    }
+
+    @Test
+    public void hasNumberNoUpperCaseLongTest() {
+        assertFalse(c.isStrong("thisisalongpassword2"));
+    }
+
+    @Test
+    public void hasNumberHasUpperCaseLongTest() {
+        assertTrue(c.isStrong("Thisisalongpassword2"));
+    }
+
 }
