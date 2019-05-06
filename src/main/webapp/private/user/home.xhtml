@@ -5,7 +5,9 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{securityController.checkUserPrivileges()}" />
+    </f:metadata>
     <body>
 
         <ui:composition template="./../../WEB-INF/templates/template.xhtml">
