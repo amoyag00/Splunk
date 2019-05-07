@@ -41,14 +41,20 @@ public class IndexController implements Serializable{
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
                             "Error", "La contraseña es incorrecta"));
                 }else{
-                    String rol = u.getRol().getRol();
-                    if(rol.equals("U")){
-                        direction="/private/user/home.xhtml";
-                    }else if(rol.equals("A")){
-                        direction="/private/admin/comicAdmin.xhtml";
+                    if(!u.isBanned()){
+                       String rol = u.getRol().getRol();
+                        if(rol.equals("U")){
+                            direction="/private/user/home.xhtml";
+                        }else if(rol.equals("A")){
+                            direction="/private/admin/comicAdmin.xhtml";
+                        }
+
+                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", u); 
+                    }else{
+                       FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                        "Error", "Estás baneado "+ user.getNickname())); 
                     }
                     
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", u);
                 }
             }else{
                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
