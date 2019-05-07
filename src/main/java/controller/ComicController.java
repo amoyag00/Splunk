@@ -7,11 +7,17 @@ import EJB.ComicFacadeLocal;
 import EJB.GenreFacadeLocal;
 import EJB.ReviewFacadeLocal;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import model.Author;
@@ -49,6 +55,8 @@ public class ComicController implements Serializable{
     
     private Comic comic;
     
+    private Chapter selectedChapter;
+    
     private List<Review> reviewResults;
     
     private List<Author> authorResults;
@@ -81,7 +89,7 @@ public class ComicController implements Serializable{
         comic = tmp.get(0);
 
         reviewResults = reviewEJB.list(comic);
-        System.out.println(reviewResults);
+        //System.out.println(reviewResults);
         authorResults = authorEJB.list((comic));
         genreResults = genreEJB.list(comic);
         chapterResults = chapterEJB.list(comic);
@@ -97,7 +105,37 @@ public class ComicController implements Serializable{
         this.genres="";
         for(Genre genre: genres){
             this.genres+= genre.getName()+" ";
-        }   
+        }
+        
+    }
+    
+    public void setSelectedChapter(Chapter chapter){
+        this.selectedChapter = chapter;
+    }
+    
+    public String checkPremium(){
+        String redirect="";
+        if(this.chapterResults.get(0).equals(this.selectedChapter)
+            || this.chapterResults.get(chapterResults.size()-1).equals(this.selectedChapter)){
+            redirect = "searcher.xhtml";//Change for chapter xhtml
+        }else{
+            User user = (User)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user"); 
+            Date expirationDate = user.getExpirationDate();
+            long diff = expirationDate.getTime() - new Date().getTime();
+            
+            if(diff>0){//User suscription has not expired
+                redirect="searcher.xhtml"; //Change for chapter XHTML
+            }else{
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Info", "Su suscripción caducó el "+ dateToString(expirationDate))); 
+            }
+        }
+        return redirect;
+    }
+    
+    public String dateToString(Date date){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'a las' HH:mm:ss", new Locale("es","ES"));
+        return formatter.format(date);
     }
     
     public void dummyAddEntry(){
