@@ -16,6 +16,7 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -33,7 +34,7 @@ import model.User;
  * @author splunk
  */
 @Named 
-@ViewScoped
+@RequestScoped
 public class ComicController implements Serializable{
     @EJB
     private ComicEntryFacadeLocal comicListEJB;
@@ -113,18 +114,24 @@ public class ComicController implements Serializable{
         this.selectedChapter = chapter;
     }
     
+    public Chapter getSelectedChapter(){
+        return this.selectedChapter;
+    }
+    
     public String checkPremium(){
         String redirect="";
         if(this.chapterResults.get(0).equals(this.selectedChapter)
             || this.chapterResults.get(chapterResults.size()-1).equals(this.selectedChapter)){
-            redirect = "searcher.xhtml";//Change for chapter xhtml
+            redirect = "reader.xhtml";//Change for chapter xhtml
         }else{
             User user = (User)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user"); 
             Date expirationDate = user.getExpirationDate();
             long diff = expirationDate.getTime() - new Date().getTime();
             
+            
+            
             if(diff>0){//User suscription has not expired
-                redirect="searcher.xhtml"; //Change for chapter XHTML
+                redirect="reader.xhtml"; //Change for chapter XHTML
             }else{
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Info", "Su suscripción caducó el "+ dateToString(expirationDate))); 
