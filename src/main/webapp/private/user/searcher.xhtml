@@ -27,30 +27,47 @@
                         <f:selectItem itemLabel="Desc" itemValue="desc" />
                     </p:selectOneMenu>
                     
-                    <p:commandButton value="Buscar" actionListener="#{searcherController.search()}" update="comicSearch userSearch"/>
+                    <p:commandButton value="Buscar" actionListener="#{searcherController.search()}" update="comicSearch"/>
                     
-                    <p:dataGrid  var="comic" value="#{searcherController.resultComics}" columns="3" layout="grid"
+                    <ui:remove>
+                        <p:dataGrid  var="comic" value="#{searcherController.resultComics}" columns="3" layout="grid"
                         rows="12" paginator="true" id="comicSearch"
                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="6,12,16">
                         
-                        <f:facet name="headerResultados">
-                            Resultados de busqueda de comics
-                        </f:facet>
+                            <f:facet name="headerResultados">
+                                Resultados de busqueda de comics
+                            </f:facet>
 
-                        <p:panel header="#{comic.name}" style="text-align:center">
-                            <h:panelGrid columns="1" style="width:100%">
-                                <p:graphicImage name="#{comic.imagePath}" height="200"/>
-                                <h:link outcome="comic" value="Detalles">
-                                    <ui:remove>
-                                    <f:param name="authors" value="autor"/>
-                                    </ui:remove>
-                                </h:link>
-                            </h:panelGrid>
-                        </p:panel>
-                    </p:dataGrid>
+                            
+                            <p:panel header="#{comic.name}" style="text-align:center">
+                                <h:panelGrid columns="1" style="width:100%">
+                                    <p:commandLink actionListener="#{searcherController.viewComic(comic)}" action="comic">
+                                        <p:graphicImage library="resources" name="#{comic.imagePath}" height="200"/>
+                                    </p:commandLink>
+
+                                    <h:link outcome="comic" value="Detalles">
+                                        <ui:remove>
+                                        <f:param name="authors" value="autor"/>
+                                        </ui:remove>
+                                    </h:link>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:dataGrid>
+                    </ui:remove>
                     
-                    <p:dataGrid  var="user" value="#{searcherController.resultUsers}" columns="3" layout="grid"
+                    
+                    <p:dataTable id="comicSearch" var="comic" value="#{searcherController.resultComics}">
+                        <p:column headerText="#{comic.name}">
+                            <p:commandLink actionListener="#{searcherController.viewComic(comic)}" action="comic">
+                                <p:graphicImage  name="#{comic.imagePath}" height="200"/>
+                            </p:commandLink>
+                            <p:commandButton value="Buscar" actionListener="#{searcherController.viewComic(comic)}" action="comic"/>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <ui:remove>
+                        <p:dataGrid  var="user" value="#{searcherController.resultUsers}" columns="3" layout="grid"
                         rows="12" paginator="true" id="userSearch"
                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="6,12,16">
@@ -66,6 +83,8 @@
                             </h:panelGrid>
                         </p:panel>
                     </p:dataGrid>
+                    </ui:remove>
+                    
                 </h:form>
             </ui:define>
 

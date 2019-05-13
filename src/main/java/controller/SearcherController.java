@@ -8,6 +8,7 @@ import EJB.UserFacadeLocal;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.view.ViewScoped;
@@ -45,7 +46,7 @@ public class SearcherController implements Serializable{
     
     private Comic comicSelected;
     
-    //@PostConstruct
+    @PostConstruct
     public void init(){
         //TODO
     }
