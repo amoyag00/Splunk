@@ -23,8 +23,8 @@
                         <f:selectItem itemLabel="User" itemValue="userSearch" />
                     </p:selectOneMenu>
                     <p:selectOneMenu id="order" value="#{searcherController.orderType}" style="width:125px">
-                        <f:selectItem itemLabel="Asc" itemValue="asc" />
-                        <f:selectItem itemLabel="Desc" itemValue="desc" />
+                        <f:selectItem itemLabel="A-Z" itemValue="asc" />
+                        <f:selectItem itemLabel="Z-A" itemValue="desc" />
                     </p:selectOneMenu>
                     
                     <p:commandButton value="Buscar" actionListener="#{searcherController.search()}" update="comicSearch userSearch"/>
@@ -40,7 +40,11 @@
 
                         <p:panel header="#{comic.name}" style="text-align:center">
                             <h:panelGrid columns="1" style="width:100%">
-                                <p:graphicImage name="#{comic.imagePath}" height="200"/>
+                                <p:commandLink actionListener="#{searcherController.viewComic(comic)}" action='comic'>
+                                    <p:graphicImage name="#{comic.imagePath}" height="200"/>
+                                </p:commandLink>
+                                
+                                <p:commandButton value='prueba' actionListener="#{searcherController.viewComic(comic)}" action='comic'/>
                                 <h:link outcome="comic" value="Detalles">
                                     <ui:remove>
                                     <f:param name="authors" value="autor"/>

@@ -2,9 +2,11 @@ package controller;
 
 import java.io.IOException;
 import java.io.Serializable;
-import javax.faces.bean.SessionScoped;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import model.User;
@@ -14,8 +16,13 @@ import model.User;
  * @author Splunk
  */
 @Named 
-@ViewScoped
+@SessionScoped
 public class TemplateController implements Serializable{
+   
+    @PostConstruct
+    public void init() {
+        //MenuController menus = new MenuController();
+    }
     
     public void checkPermissions(){
        User us =(User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
