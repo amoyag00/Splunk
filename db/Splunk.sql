@@ -1,0 +1,1 @@
+alter table REVIEWS add column visible bit
