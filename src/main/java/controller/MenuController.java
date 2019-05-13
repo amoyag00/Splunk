@@ -39,12 +39,10 @@ public class MenuController implements Serializable {
     }
     
     public void loadMenu(){
-        try{
         modelo = new DefaultMenuModel();
         String contexto = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
         List<Menu> listaMenus;
         User user = (User)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-        System.out.println(user.getNickname());
         listaMenus = menuFacadeLocal.getMenus(user);
         
         for(Menu menu:listaMenus){
@@ -67,10 +65,6 @@ public class MenuController implements Serializable {
                     modelo.addElement(item);
                 }
             }
-        }
-        System.out.println(modelo.getElements().size());
-        }catch(Exception e){
-                e.printStackTrace();
         }
     }
 

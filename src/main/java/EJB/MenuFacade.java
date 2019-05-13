@@ -35,7 +35,6 @@ public class MenuFacade extends AbstractFacade<Menu> implements MenuFacadeLocal 
     @Override
     public List<Menu> getMenus(User user){
         List<Menu> listaMenus=null;
-        System.out.println(user);
         try{
             String consulta="FROM Menu m WHERE m.rolId.rolId =?1";
             Query query = em.createQuery(consulta);

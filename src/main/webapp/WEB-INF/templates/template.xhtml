@@ -13,6 +13,7 @@
         
     </h:head>
     <f:event type="preRenderView" listener="#{templateController.checkPermissions()}" />
+    <f:event type="preRenderView" listener="#{menuController.loadMenu()}" />
     <h:body>
 
         <div id="top">

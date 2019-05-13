@@ -3,7 +3,7 @@ package controller;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -16,16 +16,12 @@ import model.User;
  * @author Splunk
  */
 @Named 
-@ViewScoped
+@SessionScoped
 public class TemplateController implements Serializable{
-    
-    @Inject
-    private MenuController menus;
-    
+   
     @PostConstruct
     public void init() {
         //MenuController menus = new MenuController();
-        menus.loadMenu();
     }
     
     public void checkPermissions(){
