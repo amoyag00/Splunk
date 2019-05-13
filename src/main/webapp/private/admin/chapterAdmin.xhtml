@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{securityController.checkAdminPrivileges()}" />
+    </f:metadata>
+    
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template.xhtml">
+
+            <ui:define name="top">
+                top
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <p:panel header="#{chapterAdminController.comic.name}" footer="#{comicController.comic.publishDate}">
+                        <p:graphicImage name="#{chapterAdminController.comic.imagePath}"
+                    </p:panel>
+                    <p:commandButton value="Crear capitulo"/>
+                    
+                    <p:fieldset legend="Capitulos">
+                        <p:dataGrid var="chapter" value="#{chapterAdminController.chapterResults}" columns="2" layout="grid"
+                                    rows="12" paginator="true" id="caps"
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
+                                    rowsPerPageTemplate="6,12,16">
+                            <p:panelGrid   style="width:1800px; border:none" >
+                             
+                                    <p:column style="width:33%;border:none;">
+                                        <p:outputLabel value="Capitulo #{chapter.chapterNumber} #{chapter.chapterName}" /> 
+                                    </p:column>
+                                
+                                    <p:column style="width:33%;border:none;">
+                                        <p:outputLabel value="Añadido en #{chapter.addedDate}" /> 
+                                    </p:column>
+                                
+                                    <p:column style="width:33%;border:none;">
+                                        <p:commandButton  value="Editar capitulo"/> 
+                                    </p:column>
+                            </p:panelGrid>
+
+
+                        </p:dataGrid>
+                    </p:fieldset>
+                </h:form>
+            </ui:define>
+            
+            <ui:define name="bottom">
+                bottom
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
