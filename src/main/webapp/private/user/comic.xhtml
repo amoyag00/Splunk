@@ -3,8 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{securityController.checkUserPrivileges()}" />
+    </f:metadata>
     <body>
 
         <ui:composition template="./../../WEB-INF/templates/template.xhtml">
@@ -15,6 +18,7 @@
 
             <ui:define name="content">
                 <h:form>
+                    
                     <h:panelGrid columns="2">
                         <p:panel header="#{comicController.comic.name}" footer="Fecha de publicacion: #{comicController.comic.publishDate}">
                             <h:panelGrid columns="3" cellpadding="10">
@@ -30,57 +34,70 @@
                             </h:panelGrid>
                         </p:panel>
 
-                        <p:panel header="Reviews">
+                        <p:fieldset legend="Reviews">
                             <p:dataGrid var="review" value="#{comicController.reviewResults}" columns="1" layout="grid"
                                         rows="12" paginator="true" id="showReviews"
                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
                                         rowsPerPageTemplate="6,12,16">
-                                    <p:panel header="#{review.user.nickname}">
+                                <p:panel header="#{review.user.nickname}">
                                     <h:outputLabel value="#{review.reviewText}"/>
                                 </p:panel>
                             </p:dataGrid>
-                        </p:panel>
+                        </p:fieldset>
                     </h:panelGrid>
-                    <p:panel header="Capitulos">
-                        <p:dataGrid var="chapter" value="#{comicController.chapterResults}" columns="1" layout="grid"
-                            rows="12" paginator="true" id="showReviews"
-                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
-                            rowsPerPageTemplate="6,12,16">
-                        <p:panel header="Capitulo #{chapter.chapterNumber} #{chapter.chapterName}" footer="Añadido en #{chapter.addedDate}">
-                            <h:panelGrid columns="2">
-                                <h:link outcome="" value="Leer"/>
-                            </h:panelGrid>
-                        </p:panel>
-                        </p:dataGrid>
-                    </p:panel>
-                </h:form>
-                
-                
-                <ui:remove>
-                <h:form>
 
-                    <p:commandButton value="Add One Piece entry" actionListener="#{comicController.dummyAddEntry()}"/>
-                    <p></p>
-                    <p:commandButton value="Is Added One Piece?" actionListener="#{comicController.dummyIsAdded()}" update="isAdded"/>
-                    <h:outputLabel id="isAdded" value="#{comicController.isAdded}" />
-                    
-                    <p>ChapterList</p>
-                    <p:commandButton value="Show Chapters One Piece" actionListener="#{comicController.dummyListChapters()}" update="chapters"/>
-                    <h:inputTextarea id="chapters" value="#{comicController.chapterList}" />
-                    <p>Reviews</p>
-                    <p:commandButton value="Show Reviews One Piece" actionListener="#{comicController.dummyListReviews()}" update="reviews"/>
-                    <h:inputTextarea id="reviews" value="#{comicController.reviewList}" />
-                    <p>Genres</p>
-                    <p:commandButton value="Show Genres One Piece" actionListener="#{comicController.dummyListGenres()}" update="genres"/>
-                    <h:inputTextarea id="genres" value="#{comicController.genres}" />
-                    <p>Authors</p>
-                    <p:commandButton value="Show Authors One Piece" actionListener="#{comicController.dummyListAuthors()}" update="authors"/>
-                    <h:inputTextarea id="authors" value="#{comicController.authors}" />
-                    <p>Global score</p>
-                    <p:commandButton value="Global score One Piece" actionListener="#{comicController.dummyGetGlobalSocre()}" update="score"/>
-                    <h:inputTextarea id="score" value="#{comicController.globalScore}" />
+                    <p:fieldset legend="Capitulos">
+                        <p:dataGrid var="chapter" value="#{comicController.chapterResults}" columns="1" layout="grid"
+                                    rows="12" paginator="true" id="caps"
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
+                                    rowsPerPageTemplate="6,12,16">
+                            <p:growl keepAlive="1000" id="premiumGrowl" severity="info, fatal" showDetail="true" showSummary="true" />
+                            <p:panelGrid   style="width:1800px; border:none" >
+                             
+                                    <p:column style="width:33%;border:none;">
+                                        <p:outputLabel value="Capitulo #{chapter.chapterNumber} #{chapter.chapterName}" /> 
+                                    </p:column>
+                                
+                                    <p:column style="width:33%;border:none;">
+                                        <p:outputLabel value="Añadido en #{chapter.addedDate}" /> 
+                                    </p:column>
+                                
+                                    <p:column style="width:33%;border:none;">
+                                        <p:commandButton  value="Leer" actionListener="#{comicController.setSelectedChapter(chapter)}" action="#{comicController.checkPremium()}" update="premiumGrowl"/> 
+                                    </p:column>
+                            </p:panelGrid>
+
+
+                        </p:dataGrid>
+                    </p:fieldset>
                 </h:form>
-                    </ui:remove>
+
+
+                <ui:remove>
+                    <h:form>
+
+                        <p:commandButton value="Add One Piece entry" actionListener="#{comicController.dummyAddEntry()}"/>
+                        <p></p>
+                        <p:commandButton value="Is Added One Piece?" actionListener="#{comicController.dummyIsAdded()}" update="isAdded"/>
+                        <h:outputLabel id="isAdded" value="#{comicController.isAdded}" />
+
+                        <p>ChapterList</p>
+                        <p:commandButton value="Show Chapters One Piece" actionListener="#{comicController.dummyListChapters()}" update="chapters"/>
+                        <h:inputTextarea id="chapters" value="#{comicController.chapterList}" />
+                        <p>Reviews</p>
+                        <p:commandButton value="Show Reviews One Piece" actionListener="#{comicController.dummyListReviews()}" update="reviews"/>
+                        <h:inputTextarea id="reviews" value="#{comicController.reviewList}" />
+                        <p>Genres</p>
+                        <p:commandButton value="Show Genres One Piece" actionListener="#{comicController.dummyListGenres()}" update="genres"/>
+                        <h:inputTextarea id="genres" value="#{comicController.genres}" />
+                        <p>Authors</p>
+                        <p:commandButton value="Show Authors One Piece" actionListener="#{comicController.dummyListAuthors()}" update="authors"/>
+                        <h:inputTextarea id="authors" value="#{comicController.authors}" />
+                        <p>Global score</p>
+                        <p:commandButton value="Global score One Piece" actionListener="#{comicController.dummyGetGlobalSocre()}" update="score"/>
+                        <h:inputTextarea id="score" value="#{comicController.globalScore}" />
+                    </h:form>
+                </ui:remove>
             </ui:define>
 
             <ui:define name="bottom">
