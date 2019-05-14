@@ -20,13 +20,13 @@
 
             <ui:define name="content">
                 <h:form>
-                    <p:panel header="#{chapterAdminController.comic.name}" footer="#{comicController.comic.publishDate}">
-                        <p:graphicImage name="#{chapterAdminController.comic.imagePath}"
+                    <p:panel header="#{chapterAdminController.comic.name}" footer="#{chapterAdminController.comic.publishDate}">
+                        <p:graphicImage name="#{chapterAdminController.comic.imagePath}"/>
+                        <p:commandButton value="Crear capitulo" oncomplete="PF('wcreate').show();" update="formCreate"/>
                     </p:panel>
-                    <p:commandButton value="Crear capitulo"/>
                     
                     <p:fieldset legend="Capitulos">
-                        <p:dataGrid var="chapter" value="#{chapterAdminController.chapterResults}" columns="2" layout="grid"
+                        <p:dataGrid var="chapter" value="#{chapterAdminController.chapterResults}" columns="1" layout="grid"
                                     rows="12" paginator="true" id="caps"
                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
                                     rowsPerPageTemplate="6,12,16">
@@ -44,11 +44,29 @@
                                         <p:commandButton  value="Editar capitulo"/> 
                                     </p:column>
                             </p:panelGrid>
-
-
                         </p:dataGrid>
                     </p:fieldset>
                 </h:form>
+                
+                <p:dialog header="Crear capitulo" widgetVar="wcreate">
+                    <h:form id="formCreate">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nombre:"/>
+                            <p:inputText value="#{chapterAdminController.chapterCreated.chapterName}"/>
+
+                            <p:outputLabel value="Numero:"/>
+                            <p:inputText value="#{chapterAdminController.chapterCreated.chapterNumber}"/>
+
+                            <p:outputLabel value="Contenido:"/>
+                            <p:fileUpload value="#{chapterAdminController.chapterCreated.contentPath}" mode="simple"/>
+                            
+                            <p:outputLabel value="Fecha:"/>
+                            <p:calendar id="calendar" value="#{chapterAdminController.chapterCreated.addedDate}" showOn="button"/>
+                            
+                            <p:selectBooleanCheckbox value="#{chapterAdminController.chapterCreated.visible}" itemLabel="Visible"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
             </ui:define>
             
             <ui:define name="bottom">
