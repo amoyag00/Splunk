@@ -38,6 +38,8 @@ public class ChapterAdminController implements Serializable{
     
     private Chapter chapterCreated;
     
+    private Chapter chapterSelected;
+    
     private List<Chapter> chapterResults;
     
     @PostConstruct
@@ -52,9 +54,29 @@ public class ChapterAdminController implements Serializable{
         chapterResults = chapterEJB.list(comic);
     }
     
+    public void selectChapter(Chapter chapter) {
+        chapterSelected = chapter;
+    }
+    
+    public void create() {
+        chapterEJB.create(chapterCreated);
+    }
+    
+    public void edit() {
+        chapterEJB.edit(chapterSelected);
+    }
+    
     public String dateToString(Date date){
         SimpleDateFormat formatter = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'a las' HH:mm:ss", new Locale("es","ES"));
         return formatter.format(date);
+    }
+
+    public Chapter getChapterSelected() {
+        return chapterSelected;
+    }
+
+    public void setChapterSelected(Chapter chapterSelected) {
+        this.chapterSelected = chapterSelected;
     }
 
     public Comic getComic() {
