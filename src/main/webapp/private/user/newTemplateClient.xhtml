@@ -14,16 +14,16 @@
             </ui:define>
 
             <ui:define name="content">
-                <p:panel header="#{comicController.comic.name}" footer="Fecha de publicacion: #{comicController.comic.publishDate}">
-                    <p:graphicImage name="#{comicController.comic.imagePath}"/> 
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <h:outputLabel value="Capitulos: "/>
-                        <h:outputLabel value="#{comicController.comic.numChapters}"/>
-                    </h:panelGrid>
-                </p:panel>
-                
+                <h:form id="form">
+                <p:dataTable var="comic" value="#{searcherController.resultComics}">
+                    <p:column headerText="#{comic.name}">
+                        <p:commandButton value="boton" actionListener="#{searcherController.viewComic(comic)}" action="comic"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
             </ui:define>
-
+            
+            
             <ui:define name="bottom">
                 bottom
             </ui:define>

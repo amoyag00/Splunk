@@ -69,6 +69,7 @@ public class ComicController implements Serializable{
     public void init(){
         //TODO
         //search();
+        System.out.println("entra comic");
         comic = searcher.getComicSelected();
     }
     

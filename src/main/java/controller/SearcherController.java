@@ -11,6 +11,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import model.Comic;
@@ -49,6 +50,8 @@ public class SearcherController implements Serializable{
     @PostConstruct
     public void init(){
         //TODO
+        System.out.println("entra search");
+        resultComics = comicEJB.searchOrder("dragon ball", Order.ASC);
     }
     
     public void search(){
