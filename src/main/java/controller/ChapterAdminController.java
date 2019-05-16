@@ -45,6 +45,7 @@ public class ChapterAdminController implements Serializable{
     @PostConstruct
     public void init() {
         prueba();
+        chapterCreated = new Chapter();
     }
     
     public void prueba() {
@@ -59,6 +60,7 @@ public class ChapterAdminController implements Serializable{
     }
     
     public void create() {
+        chapterCreated.setComic(comic);
         chapterEJB.create(chapterCreated);
     }
     

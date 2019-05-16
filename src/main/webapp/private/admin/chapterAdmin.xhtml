@@ -19,7 +19,7 @@
             </ui:define>
 
             <ui:define name="content">
-                <h:form>
+                <h:form id="formData">
                     <p:panel header="#{chapterAdminController.comic.name}" footer="#{chapterAdminController.comic.publishDate}">
                         <p:graphicImage name="#{chapterAdminController.comic.imagePath}"/>
                         <p:commandButton value="Crear capitulo" oncomplete="PF('wcreate').show();" update="formCreate"/>
@@ -27,7 +27,7 @@
                     
                     <p:fieldset legend="Capitulos">
                         <p:dataGrid var="chapter" value="#{chapterAdminController.chapterResults}" columns="1" layout="grid"
-                                    rows="12" paginator="true" id="caps"
+                                    rows="12" paginator="true" id="results"
                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
                                     rowsPerPageTemplate="6,12,16">
                             <p:panelGrid   style="width:1800px; border:none" >
@@ -64,7 +64,7 @@
                             <p:calendar id="calendar" value="#{chapterAdminController.chapterCreated.addedDate}" showOn="button"/>
                             
                             <p:selectBooleanCheckbox value="#{chapterAdminController.chapterCreated.visible}" itemLabel="Visible"/>
-                            <p:commandButton value="Crear"/>
+                            <p:commandButton value="Crear" actionListener="#{chapterAdminController.create()}" oncomplete="PF('wedit').hide();" update=":formData:results"/>
                         </p:panelGrid>
                     </h:form>
                 </p:dialog>
@@ -85,7 +85,7 @@
                             <p:calendar id="calendar" value="#{chapterAdminController.chapterSelected.addedDate}" showOn="button"/>
                             
                             <p:selectBooleanCheckbox value="#{chapterAdminController.chapterSelected.visible}" itemLabel="Visible"/>
-                            <p:commandButton value="Editar" oncomplete="PF('wcreate').show();" update="formCreate"/>
+                            <p:commandButton value="Editar" actionListener="#{chapterAdminController.edit()}" oncomplete="PF('wedit').hide();" update=":formData:results"/>
                         </p:panelGrid>
                     </h:form>
                 </p:dialog>
