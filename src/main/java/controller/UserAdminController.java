@@ -1,21 +1,32 @@
 package controller;
 
+import EJB.ComicFacadeLocal;
+import EJB.UserFacadeLocal;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import model.User;
 
 /**
  *
  * @author splunk
  */
-public class UserAdminController {
+@Named
+@ViewScoped
+public class UserAdminController implements Serializable{
     private List<User> userResults;
     
-    private User userSelected;
+    private User selectedUser;
+    
+    @EJB
+    private UserFacadeLocal userEJB;
     
     @PostConstruct
     public void init() {
-        
+        userResults=userEJB.findAll();
     }
 
     public List<User> getUserResults() {
@@ -26,15 +37,16 @@ public class UserAdminController {
         this.userResults = userResults;
     }
 
-    public User getUserSelected() {
-        return userSelected;
+    public User getSelectedUser() {
+        return selectedUser;
     }
 
-    public void setUserSelected(User userSelected) {
-        this.userSelected = userSelected;
+    public void setSelectedUser(User selectedUser) {
+        this.selectedUser = selectedUser;
+    }  
+    
+    
+    public void edit(){
+        userEJB.edit(selectedUser);
     }
-    
-    
-    
-    
 }
