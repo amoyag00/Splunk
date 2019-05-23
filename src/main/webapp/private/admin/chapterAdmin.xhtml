@@ -64,7 +64,7 @@
                             <p:calendar id="calendar" value="#{chapterAdminController.chapterCreated.addedDate}" showOn="button"/>
                             
                             <p:selectBooleanCheckbox value="#{chapterAdminController.chapterCreated.visible}" itemLabel="Visible"/>
-                            <p:commandButton value="Crear" actionListener="#{chapterAdminController.create()}" oncomplete="PF('wedit').hide();" update=":formData:results"/>
+                            <p:commandButton value="Crear" actionListener="#{chapterAdminController.create()}" oncomplete="PF('wcreate').hide();" update=":formData:results"/>
                         </p:panelGrid>
                     </h:form>
                 </p:dialog>

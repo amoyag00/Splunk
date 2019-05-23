@@ -35,7 +35,7 @@ public class ChapterFacade extends AbstractFacade<Chapter> implements ChapterFac
         String queryStr;
         
         try{
-            queryStr="FROM Chapter c WHERE c.comic.comicId=?1";
+            queryStr="FROM Chapter c WHERE c.comic.comicId=?1 AND c.visible=1";
             Query query = em.createQuery(queryStr);
             query.setParameter(1, comic.getComicId());
             chapters=query.getResultList();      
