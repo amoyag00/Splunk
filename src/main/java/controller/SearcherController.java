@@ -23,7 +23,7 @@ import model.User;
  * @author splunk
  */
 @Named 
-@RequestScoped
+@SessionScoped
 public class SearcherController implements Serializable{
     @EJB
     private ComicFacadeLocal comicEJB;
@@ -50,8 +50,8 @@ public class SearcherController implements Serializable{
     @PostConstruct
     public void init(){
         //TODO
-        System.out.println("entra search");
-        resultComics = comicEJB.searchOrder("dragon ball", Order.ASC);
+        /*System.out.println("entra search");
+        resultComics = comicEJB.searchOrder("dragon ball", Order.ASC);**/
     }
     
     public void search(){

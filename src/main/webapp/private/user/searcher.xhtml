@@ -15,7 +15,7 @@
             </ui:define>
 
             <ui:define name="content">
-                <h:form id="form">
+                <h:form id="formSearch">
                     <h1>BUSCADOR</h1>
                     <p:inputText id="search" value="#{searcherController.textSearch}" required="true"/>
                     <p:selectOneMenu id="selection" value="#{searcherController.searchType}" style="width:125px">
@@ -27,54 +27,48 @@
                         <f:selectItem itemLabel="Desc" itemValue="desc" />
                     </p:selectOneMenu>
                     
+                    <p:commandButton value="Buscar" actionListener="#{searcherController.search()}" update=":formResults:comicSearch"/>
+                </h:form>
+                
                     <ui:remove>
-                    <p:commandButton value="Buscar" actionListener="#{searcherController.search()}" update="comicSearch"/>
+                        <p:panelGrid id="comicSearh">
+                            <p:column>
+                                <h:outputLabel value="alksdbvcqeibviebviebveb"/>
+                                <p:commandButton value="Buscar" action="comic"/>
+                            </p:column>
+                        </p:panelGrid>
                     </ui:remove>
                     
-                    <p:panelGrid id="comicSearh">
-                        <p:column>
-                            <h:outputLabel value="alksdbvcqeibviebviebveb"/>
-                            <p:commandButton value="Buscar" action="comic"/>
-                        </p:column>
-                    </p:panelGrid>
-                    
-                    <ui:remove>
+                    <h:form id="formResults">
                         <p:dataGrid  var="comic" value="#{searcherController.resultComics}" columns="3" layout="grid"
                         rows="12" paginator="true" id="comicSearch"
                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="6,12,16">
-                        
+
                             <f:facet name="headerResultados">
                                 Resultados de busqueda de comics
                             </f:facet>
 
-                            
                             <p:panel header="#{comic.name}" style="text-align:center">
                                 <h:panelGrid columns="1" style="width:100%">
                                     <p:commandLink actionListener="#{searcherController.viewComic(comic)}" action="comic">
                                         <p:graphicImage name="#{comic.imagePath}" height="200"/>
                                     </p:commandLink>
-
-                                    <h:link outcome="comic" value="Detalles">
-                                        <ui:remove>
-                                        <f:param name="authors" value="autor"/>
-                                        </ui:remove>
-                                    </h:link>
                                 </h:panelGrid>
                             </p:panel>
                         </p:dataGrid>
-                    </ui:remove>
-                    
+                    </h:form>
+                            
                     <ui:remove>
                     <p:dataTable id="comicSearch">
                             <p:column headerText="#{comic.name}">
-                                <p:commandLink actionListener="#{searcherController.viewComic(comic)}" action="comic">
+                                <p:commandLink actionListener="#{searcherController.viewComic(comic)}" action="comic2">
                                     <p:graphicImage  name="#{comic.imagePath}" height="200"/>
                                 </p:commandLink>
                                 <p:commandButton value="Buscar" actionListener="#{searcherController.viewComic(comic)}" action="comic"/>
                             </p:column>
                     </p:dataTable>
-                     </ui:remove>
+                    </ui:remove>
                     
                     <ui:remove>
                         <p:dataGrid  var="user" value="#{searcherController.resultUsers}" columns="3" layout="grid"
@@ -95,7 +89,6 @@
                     </p:dataGrid>
                     </ui:remove>
                     
-                </h:form>
             </ui:define>
 
             <ui:define name="bottom">
