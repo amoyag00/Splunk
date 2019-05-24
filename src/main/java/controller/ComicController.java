@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -48,10 +49,15 @@ public class ComicController implements Serializable{
     @EJB
     private AuthorFacadeLocal authorEJB;
     
+    @EJB
+    private ComicEntryFacadeLocal entryEJB;
+    
     @Inject
     private SearcherController searcher;
     
     private Comic comic;
+    
+    private List<ComicEntry> entry;
     
     private List<Review> reviewResults;
     
@@ -76,6 +82,8 @@ public class ComicController implements Serializable{
         authorResults = authorEJB.list((comic));
         genreResults = genreEJB.list(comic);
         chapterResults = chapterEJB.list(comic);
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        isAdded = comicEJB.isAdded(comic, user);
         
         List<Author> authors=authorEJB.list(comic);
         this.authors="";
@@ -89,134 +97,121 @@ public class ComicController implements Serializable{
             this.genres+= genre.getName()+" ";
         } 
     }
-    
+
+
+    public List<ComicEntry> getEntry() {
+        return entry;
+    }
+
     /*public void search(){
-        List<Comic> tmp;
-        tmp = comicEJB.search("dragon ball");
-        comic = tmp.get(0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        
-=======
-
->>>>>>> origin/menus
-        reviewResults = reviewEJB.list(comic);
-        System.out.println(reviewResults);
-        authorResults = authorEJB.list((comic));
-        genreResults = genreEJB.list(comic);
-        chapterResults = chapterEJB.list(comic);
-        
-        List<Author> authors=authorEJB.list(comic);
-        this.authors="";
-        for(Author author: authors){
-            this.authors+= author.getName()+", "+ author.getCategory()+"\n";
-        }
-        
-        List<Genre> genres=genreEJB.list(comic);
-        chapterList="";
-        this.genres="";
-        for(Genre genre: genres){
-            this.genres+= genre.getName()+" ";
-        }   
-<<<<<<< HEAD
->>>>>>> origin/comic
-=======
->>>>>>> origin/menus
+    List<Comic> tmp;
+    tmp = comicEJB.search("dragon ball");
+    comic = tmp.get(0);
+    <<<<<<< HEAD
+    <<<<<<< HEAD
+    =======
+    =======
+    >>>>>>> origin/menus
+    reviewResults = reviewEJB.list(comic);
+    System.out.println(reviewResults);
+    authorResults = authorEJB.list((comic));
+    genreResults = genreEJB.list(comic);
+    chapterResults = chapterEJB.list(comic);
+    List<Author> authors=authorEJB.list(comic);
+    this.authors="";
+    for(Author author: authors){
+    this.authors+= author.getName()+", "+ author.getCategory()+"\n";
     }
-    
+    List<Genre> genres=genreEJB.list(comic);    
+    chapterList="";
+    this.genres="";
+    for(Genre genre: genres){
+    this.genres+= genre.getName()+" ";
+    }
+    <<<<<<< HEAD
+    >>>>>>> origin/comic
+    =======
+    >>>>>>> origin/menus
+    }
     public void dummyAddEntry(){
-        //TODO delete this
-        User user = new User();
-        user.setUserId(1);
-        
-        Comic comic = comicEJB.find(3);
-        
-        ComicEntry entry= new ComicEntry();
-        entry.setUser(user);
-        entry.setComic(comic);
-        entry.setComicStatus("P");
-        entry.setScore(50);
-        entry.setProgress(40);
-        entry.setListId(1);
-        entry.setAddedDate(new Date());
-
-        comicListEJB.create(entry);
+    //TODO delete this
+    User user = new User();
+    user.setUserId(1);
+    Comic comic = comicEJB.find(3);
+    ComicEntry entry= new ComicEntry();
+    entry.setUser(user);
+    entry.setComic(comic);
+    entry.setComicStatus("P");
+    entry.setScore(50);
+    entry.setProgress(40);
+    entry.setListId(1);
+    entry.setAddedDate(new Date());
+    comicListEJB.create(entry);
     }
-    
     public void dummyIsAdded(){
-        //TODO delete this
-        User user = new User();
-        user.setUserId(1);
-        
-        Comic comic = comicEJB.find(3);
-        
-        ComicEntry entry= new ComicEntry();
-        entry.setUser(user);
-        entry.setComic(comic);
-        entry.setComicStatus("P");
-        entry.setScore(50);
-        entry.setProgress(40);
-        entry.setListId(1);
-        entry.setAddedDate(new Date());
-       
-        this.isAdded=comicListEJB.exists(entry);
+    //TODO delete this
+    User user = new User();
+    user.setUserId(1);
+    Comic comic = comicEJB.find(3);
+    ComicEntry entry= new ComicEntry();
+    entry.setUser(user);
+    entry.setComic(comic);
+    entry.setComicStatus("P");
+    entry.setScore(50);
+    entry.setProgress(40);
+    entry.setListId(1);
+    entry.setAddedDate(new Date());
+    this.isAdded=comicListEJB.exists(entry);
     }
-    
     public void dummyListChapters(){
-        //TODO delete this
-        comic=comicEJB.find(3);
-        List<Chapter> chapters=chapterEJB.list(comic);
-        chapterList="";
-        
-        for(Chapter chapter : chapters){
-            chapterList+= "Chapter "+chapter.getChapterNumber()+"      "
-            +"Chapter name:  "+chapter.getChapterName()+ "      "
-            +" Pdf Path: "+chapter.getContentPath()+ "      "
-            +"date Added: "+chapter.getAddedDate()+"\n";
-        }
-        
+    //TODO delete this
+    comic=comicEJB.find(3);
+    List<Chapter> chapters=chapterEJB.list(comic);
+    chapterList="";
+    for(Chapter chapter : chapters){
+    chapterList+= "Chapter "+chapter.getChapterNumber()+"      "
+    +"Chapter name:  "+chapter.getChapterName()+ "      "
+    +" Pdf Path: "+chapter.getContentPath()+ "      "
+    +"date Added: "+chapter.getAddedDate()+"\n";
     }
-    
+    }    
     public void dummyListReviews(){
-        //TODO delete this
-        comic=comicEJB.find(3);
-        List<Review> reviews=reviewEJB.list(comic);
-        chapterList="";
-        
-        for(Review review : reviews){
-            reviewList+= "User "+review.getUser().getNickname()+"      "
-            +"Text:  "+review.getReviewText()+"\n";
-        }
-        
+    //TODO delete this
+    comic=comicEJB.find(3);
+    List<Review> reviews=reviewEJB.list(comic);
+    chapterList="";
+    for(Review review : reviews){
+    reviewList+= "User "+review.getUser().getNickname()+"      "
+    +"Text:  "+review.getReviewText()+"\n";
+    }
     }
     public void dummyListGenres(){
-        //TODO delete this
-        comic=comicEJB.find(3);
-        List<Genre> genres=genreEJB.list(comic);
-        chapterList="";
-        this.genres="";
-        for(Genre genre: genres){
-            this.genres+= genre.getName()+" ";
-        }
-        
+    //TODO delete this
+    comic=comicEJB.find(3);
+    List<Genre> genres=genreEJB.list(comic);
+    chapterList="";
+    this.genres="";
+    for(Genre genre: genres){
+    this.genres+= genre.getName()+" ";
+    }
     }
     public void dummyListAuthors(){
-        //TODO delete this
-        comic=comicEJB.find(3);
-        List<Author> authors=authorEJB.list(comic);
-        this.authors="";
-        for(Author author: authors){
-            this.authors+= author.getName()+", "+ author.getCategory()+"\n";
-        }
-        
+    //TODO delete this
+    comic=comicEJB.find(3);
+    List<Author> authors=authorEJB.list(comic);
+    this.authors="";
+    for(Author author: authors){
+    this.authors+= author.getName()+", "+ author.getCategory()+"\n";
     }
-    
+    }    
     public void dummyGetGlobalSocre(){
-        //TODO delete this
-       comic=comicEJB.find(3);
-       this.globalScore=String.valueOf(comicListEJB.getGlobalScore(comic));
+    //TODO delete this
+    comic=comicEJB.find(3);
+    this.globalScore=String.valueOf(comicListEJB.getGlobalScore(comic));
     }*/
+    public void setEntry(List<ComicEntry> entry) {
+        this.entry = entry;
+    }
 
     public boolean isIsAdded() {
         return isAdded;

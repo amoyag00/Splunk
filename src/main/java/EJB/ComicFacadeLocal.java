@@ -4,6 +4,7 @@ import EJB.AbstractFacade.Order;
 import java.util.List;
 import javax.ejb.Local;
 import model.Comic;
+import model.User;
 
 /**
  *
@@ -38,4 +39,5 @@ public interface ComicFacadeLocal {
     
     List<Comic> searchBy(String match, Param param, Order order);
     
+    boolean isAdded(Comic comic, User user);
 }

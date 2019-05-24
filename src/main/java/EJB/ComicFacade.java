@@ -7,7 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import model.Comic;
+import model.ComicEntry;
 import model.Genre;
+import model.User;
 
 /**
  *
@@ -100,5 +102,30 @@ public class ComicFacade extends AbstractFacade<Comic> implements ComicFacadeLoc
         }
         
         return comics;
+    }
+
+    @Override
+    public boolean isAdded(Comic comic, User user) {
+        boolean exists= false;
+        String queryStr;
+        List<ComicEntry> comicList;
+        int userId=user.getUserId();
+        int comicId=comic.getComicId();
+        
+        try{
+            queryStr="FROM ComicEntry etr WHERE etr.user.userId=?1 AND etr.comic.comicId=?2";
+            Query query = em.createQuery(queryStr);
+            query.setParameter(1, userId);
+            query.setParameter(2, comicId);
+            query.setMaxResults(1);
+            comicList=query.getResultList();      
+            if(!comicList.isEmpty()){
+                exists=true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Could not access to the database");
+        }
+        return exists;
     }
 }
