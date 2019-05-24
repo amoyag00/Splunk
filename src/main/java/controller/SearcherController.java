@@ -36,7 +36,7 @@ public class SearcherController implements Serializable{
     private String userResults;
     
     private String textSearch;
-    
+
     private String searchType;
     
     private String orderType;
@@ -128,6 +128,7 @@ public class SearcherController implements Serializable{
 
     public void setUserResults(String userResults) {
         this.userResults = userResults;
+
     }
 
     public Comic getComicSelected() {
