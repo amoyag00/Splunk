@@ -42,22 +42,9 @@
 
                         <p:panel header="#{comic.name}" style="text-align:center">
                             <h:panelGrid columns="1" style="width:100%">
-<<<<<<< HEAD
                                 <p:commandLink actionListener="#{searcherController.viewComic(comic)}" action="comic">
                                     <p:graphicImage name="#{comic.imagePath}" height="200"/>
                                 </p:commandLink>
-=======
-                                <p:commandLink actionListener="#{searcherController.viewComic(comic)}" action='comic'>
-                                    <p:graphicImage name="#{comic.imagePath}" height="200"/>
-                                </p:commandLink>
-                                
-                                <p:commandButton value='prueba' actionListener="#{searcherController.viewComic(comic)}" action='comic'/>
-                                <h:link outcome="comic" value="Detalles">
-                                    <ui:remove>
-                                    <f:param name="authors" value="autor"/>
-                                    </ui:remove>
-                                </h:link>
->>>>>>> origin/menus
                             </h:panelGrid>
                         </p:panel>
                     </p:dataGrid>

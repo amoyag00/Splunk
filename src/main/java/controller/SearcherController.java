@@ -36,11 +36,7 @@ public class SearcherController implements Serializable{
     private String userResults;
     
     private String textSearch;
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> origin/menus
     private String searchType;
     
     private String orderType;
@@ -49,13 +45,9 @@ public class SearcherController implements Serializable{
     
     private List<User> resultUsers;
     
-<<<<<<< HEAD
     private Comic comicSelected;
     
     @PostConstruct
-=======
-    //@PostConstruct
->>>>>>> origin/menus
     public void init(){
         //TODO
         /*System.out.println("entra search");
@@ -136,8 +128,6 @@ public class SearcherController implements Serializable{
 
     public void setUserResults(String userResults) {
         this.userResults = userResults;
-<<<<<<< HEAD
-
     }
 
     public Comic getComicSelected() {
@@ -146,8 +136,6 @@ public class SearcherController implements Serializable{
 
     public void setComicSelected(Comic comicSelected) {
         this.comicSelected = comicSelected;
-=======
->>>>>>> origin/menus
     }
 
     public String getTextSearch() {
@@ -188,9 +176,5 @@ public class SearcherController implements Serializable{
 
     public void setResultUsers(List<User> resultUsers) {
         this.resultUsers = resultUsers;
-<<<<<<< HEAD
     }
-=======
-    }  
->>>>>>> origin/menus
 }
