@@ -8,7 +8,10 @@ import EJB.UserFacadeLocal;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import model.Comic;
@@ -20,7 +23,7 @@ import model.User;
  * @author splunk
  */
 @Named 
-@ViewScoped
+@SessionScoped
 public class SearcherController implements Serializable{
     @EJB
     private ComicFacadeLocal comicEJB;
@@ -33,7 +36,7 @@ public class SearcherController implements Serializable{
     private String userResults;
     
     private String textSearch;
-    
+
     private String searchType;
     
     private String orderType;
@@ -42,9 +45,13 @@ public class SearcherController implements Serializable{
     
     private List<User> resultUsers;
     
-    //@PostConstruct
+    private Comic comicSelected;
+    
+    @PostConstruct
     public void init(){
         //TODO
+        /*System.out.println("entra search");
+        resultComics = comicEJB.searchOrder("dragon ball", Order.ASC);**/
     }
     
     public void search(){
@@ -64,6 +71,11 @@ public class SearcherController implements Serializable{
                 resultUsers = userEJB.search(textSearch, true, Order.DESC);
             }
         }
+    }
+    
+    public void viewComic(Comic comic) {
+        comicSelected = comic;
+        System.out.println("entra");
     }
     
     public void dummySearchComic(){
@@ -118,6 +130,14 @@ public class SearcherController implements Serializable{
         this.userResults = userResults;
     }
 
+    public Comic getComicSelected() {
+        return comicSelected;
+    }
+
+    public void setComicSelected(Comic comicSelected) {
+        this.comicSelected = comicSelected;
+    }
+
     public String getTextSearch() {
         return textSearch;
     }
@@ -156,5 +176,5 @@ public class SearcherController implements Serializable{
 
     public void setResultUsers(List<User> resultUsers) {
         this.resultUsers = resultUsers;
-    }  
+    }
 }

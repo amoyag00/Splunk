@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template.xhtml">
+
+            <ui:define name="top">
+                top
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form id="form">
+                <h1>BUSCADOR</h1>
+                    <p:inputText id="search" value="#{searcherController.textSearch}" required="true"/>
+                    <p:selectOneMenu id="selection" value="#{searcherController.searchType}" style="width:125px">
+                        <f:selectItem itemLabel="Comic" itemValue="comicSearch" />
+                        <f:selectItem itemLabel="User" itemValue="userSearch" />
+                    </p:selectOneMenu>
+                    <p:selectOneMenu id="order" value="#{searcherController.orderType}" style="width:125px">
+                        <f:selectItem itemLabel="Asc" itemValue="asc" />
+                        <f:selectItem itemLabel="Desc" itemValue="desc" />
+                    </p:selectOneMenu>
+                    
+                    <p:commandButton value="Buscar" actionListener="#{searcherController.search()}" update=":form2:comicSearch"/>
+                </h:form>
+                    <h:form id="form2">
+                <p:dataTable id="comicSearch" var="comic" value="#{searcherController.resultComics}">
+                    <p:column headerText="#{comic.name}">
+                        <p:commandButton value="boton" actionListener="#{searcherController.viewComic(comic)}" action="comic2"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            </ui:define>
+            
+            <ui:define name="bottom">
+                bottom
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

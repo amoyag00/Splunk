@@ -19,6 +19,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import model.Author;
 import model.Chapter;
@@ -53,6 +54,9 @@ public class ComicController implements Serializable{
     @EJB
     private AuthorFacadeLocal authorEJB;
     
+    @Inject
+    private SearcherController searcher;
+    
     private Comic comic;
     
     private Chapter selectedChapter;
@@ -66,11 +70,7 @@ public class ComicController implements Serializable{
     private List<Chapter> chapterResults;
     
     private boolean isAdded;
-    
-    private String chapterList;//TODO delete
-    
-    private String reviewList;//TODO delete
-    
+        
     private String genres;//TODO deldete
     
     private String authors;//TODO deldete
@@ -79,15 +79,36 @@ public class ComicController implements Serializable{
     
     @PostConstruct
     public void init(){
-        //TODO
-        search();
+        comic = searcher.getComicSelected();
+        reviewResults = reviewEJB.list(comic);
+        authorResults = authorEJB.list((comic));
+        genreResults = genreEJB.list(comic);
+        chapterResults = chapterEJB.list(comic);
+        
+        List<Author> authors=authorEJB.list(comic);
+        this.authors="";
+        for(Author author: authors){
+            this.authors+= author.getName()+", "+ author.getCategory()+"\n";
+        }
+        
+        List<Genre> genres=genreEJB.list(comic);
+        this.genres="";
+        for(Genre genre: genres){
+            this.genres+= genre.getName()+" ";
+        } 
     }
     
-    public void search(){
+    /*public void search(){
         List<Comic> tmp;
         tmp = comicEJB.search("dragon ball");
         comic = tmp.get(0);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        
+=======
 
+>>>>>>> origin/menus
         reviewResults = reviewEJB.list(comic);
         //System.out.println(reviewResults);
         authorResults = authorEJB.list((comic));
@@ -105,6 +126,7 @@ public class ComicController implements Serializable{
         this.genres="";
         for(Genre genre: genres){
             this.genres+= genre.getName()+" ";
+<<<<<<< HEAD
         }
         
     }
@@ -136,6 +158,13 @@ public class ComicController implements Serializable{
     public String dateToString(Date date){
         SimpleDateFormat formatter = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'a las' HH:mm:ss", new Locale("es","ES"));
         return formatter.format(date);
+=======
+        }   
+<<<<<<< HEAD
+>>>>>>> origin/comic
+=======
+>>>>>>> origin/menus
+>>>>>>> browser
     }
     
     public void dummyAddEntry(){
@@ -229,7 +258,7 @@ public class ComicController implements Serializable{
         //TODO delete this
        comic=comicEJB.find(3);
        this.globalScore=String.valueOf(comicListEJB.getGlobalScore(comic));
-    }
+    }*/
 
     public boolean isIsAdded() {
         return isAdded;
@@ -237,14 +266,6 @@ public class ComicController implements Serializable{
 
     public void setIsAdded(boolean isAdded) {
         this.isAdded = isAdded;
-    }
-
-    public String getChapterList() {
-        return chapterList;
-    }
-
-    public void setChapterList(String chapterList) {
-        this.chapterList = chapterList;
     }
 
     public Comic getComic() {
@@ -255,12 +276,12 @@ public class ComicController implements Serializable{
         this.comic = comic;
     }
 
-    public String getReviewList() {
-        return reviewList;
+    public SearcherController getComicSelected() {
+        return searcher;
     }
 
-    public void setReviewList(String reviewList) {
-        this.reviewList = reviewList;
+    public void setComicSelected(SearcherController searcher) {
+        this.searcher = searcher;
     }
 
     public String getGenres() {
@@ -317,9 +338,5 @@ public class ComicController implements Serializable{
 
     public void setGenreResults(List<Genre> genreResults) {
         this.genreResults = genreResults;
-    }
-    
-    
-    
-    
+    } 
 }

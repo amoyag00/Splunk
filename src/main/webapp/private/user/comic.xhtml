@@ -18,23 +18,35 @@
 
             <ui:define name="content">
                 <h:form>
+<<<<<<< HEAD
                     
                     <h:panelGrid columns="2">
+=======
+                    <h:panelGrid columns="2" width="100%">
+>>>>>>> browser
                         <p:panel header="#{comicController.comic.name}" footer="Fecha de publicacion: #{comicController.comic.publishDate}">
                             <h:panelGrid columns="3" cellpadding="10">
-                                <p:graphicImage name="#{comicController.comic.imagePath}"/>
+                                <p:graphicImage name="#{comicController.comic.imagePath}" height="400"/>
                                 <h:panelGrid columns="2">
+                                    <h:outputLabel value="Puntuación global" />
+                                    <h:outputLabel value="#{comicController.comic.globalScore}" />
                                     <h:outputLabel value="Nº capitulos: "/>
                                     <h:outputLabel value="#{comicController.comic.numChapters}"/>
                                     <h:outputLabel value="Genero: "/>
                                     <h:outputLabel value="#{comicController.genres}"/>
                                     <h:outputLabel value="Autor: "/>
                                     <h:outputLabel value="#{comicController.authors}"/>
+                                    <p:commandButton value="Añadir"/>
                                 </h:panelGrid>
                             </h:panelGrid>
                         </p:panel>
+<<<<<<< HEAD
 
                         <p:fieldset legend="Reviews">
+=======
+   
+                        <p:panel header="Reviews">
+>>>>>>> browser
                             <p:dataGrid var="review" value="#{comicController.reviewResults}" columns="1" layout="grid"
                                         rows="12" paginator="true" id="showReviews"
                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
@@ -43,6 +55,7 @@
                                     <h:outputLabel value="#{review.reviewText}"/>
                                 </p:panel>
                             </p:dataGrid>
+<<<<<<< HEAD
                         </p:fieldset>
                     </h:panelGrid>
 
@@ -68,9 +81,27 @@
                             </p:panelGrid>
 
 
+=======
+                            <p:inputTextarea rows="12" cols="110" maxlength="500"/>
+                            <p:commandButton value="Comentar"/>
+                        </p:panel>
+                    </h:panelGrid>
+                    
+                    <p:panel header="Capitulos">
+                        <p:dataGrid var="chapter" value="#{comicController.chapterResults}" columns="1" layout="grid"
+                            rows="12" paginator="true" id="showChapters"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
+                            rowsPerPageTemplate="6,12,16">
+                        <p:panel header="Capitulo #{chapter.chapterNumber} #{chapter.chapterName}" footer="Añadido en #{chapter.addedDate}">
+                            <h:panelGrid columns="2">
+                                <h:link outcome="" value="Leer"/>
+                            </h:panelGrid>
+                        </p:panel>
+>>>>>>> browser
                         </p:dataGrid>
                     </p:fieldset>
                 </h:form>
+<<<<<<< HEAD
 
 
                 <ui:remove>
@@ -98,6 +129,8 @@
                         <h:inputTextarea id="score" value="#{comicController.globalScore}" />
                     </h:form>
                 </ui:remove>
+=======
+>>>>>>> browser
             </ui:define>
 
             <ui:define name="bottom">
