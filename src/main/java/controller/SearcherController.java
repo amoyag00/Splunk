@@ -75,7 +75,6 @@ public class SearcherController implements Serializable{
     
     public void viewComic(Comic comic) {
         comicSelected = comic;
-        System.out.println("entra");
     }
     
     public void dummySearchComic(){
