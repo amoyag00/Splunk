@@ -1,9 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -15,11 +16,43 @@
 
             <ui:define name="content">
                 <h:form>
-                    <p:commandButton value="Print comic list" actionListener="#{homeController.dummyPrintList()}" update="theList"/>
-                    <h:inputTextarea id="theList" value="#{homeController.list}" />
-                    <p:commandButton value="Edit 2 entries" actionListener="#{homeController.dummyEditList()}"/>
-                    <p:commandButton value="Delete last entry" actionListener="#{homeController.dummyDeleteEntry()}"/>
-                    
+                    <!--
+                            <p:commandButton value="Print comic list" actionListener="{homeController.dummyPrintList()}"/>
+                            <h:inputTextarea id="theList" value=">{homeController.list}" /> -->
+
+                    <p:fieldset legend="Home">
+                        <p:panelGrid id="homeGrid" columns="2">
+
+                            <p:dataTable var="list" value="#{homeController.comicList}" rowIndexVar="row" editable="true" editMode="cell">
+
+                            <p:ajax event="cellEdit" listener="#{homeController.onCellEdit}" />                                
+                                <p:column headerText="Title">
+                                    <h:outputText value="#{list.comic.name}" />
+                                </p:column>
+
+                                <p:column headerText="Score">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{list.score}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{list.score}" style="width:100%" label="Score"/></f:facet>
+                                    </p:cellEditor>                                             
+                                </p:column>
+
+                                <p:column headerText="Status">
+                                    <h:outputText value="#{list.comicStatus}" />
+                                </p:column>
+
+                                <p:column headerText="Progress">
+                                    <h:outputText value="#{list.progress}" />
+                                </p:column>
+
+                                <p:column headerText="Delete">
+                                    <p:commandButton value="Delete"  actionListener="#{homeController.deleteEntry(row)}"/>
+                                </p:column>
+                            </p:dataTable>
+                            <p:chart type="pie" model="#{homeController.pieModel1}"/>
+                          
+                        </p:panelGrid>
+                    </p:fieldset>
                 </h:form>
             </ui:define>
 

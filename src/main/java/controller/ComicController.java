@@ -95,8 +95,12 @@ public class ComicController implements Serializable{
         tmp = comicEJB.search("dragon ball");
         comic = tmp.get(0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         
+=======
+
+>>>>>>> origin/menus
         reviewResults = reviewEJB.list(comic);
         System.out.println(reviewResults);
         authorResults = authorEJB.list((comic));
@@ -115,7 +119,10 @@ public class ComicController implements Serializable{
         for(Genre genre: genres){
             this.genres+= genre.getName()+" ";
         }   
+<<<<<<< HEAD
 >>>>>>> origin/comic
+=======
+>>>>>>> origin/menus
     }
     
     public void dummyAddEntry(){

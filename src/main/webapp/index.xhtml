@@ -6,10 +6,13 @@
     <h:head>
         <title>Index</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="index.css" />
+    
     </h:head>
-    <body>
-        <div>
+    <body id="indexBody">
+        <div id="login">
             <h:form>
+<<<<<<< HEAD
                 <p>
                     <h:link value="home" outcome="private/user/home.xhtml" />
                     <p/>
@@ -21,6 +24,47 @@
                  
                     
                 </p>
+=======
+                <p:growl keepAlive="1000" id="wrongLogin" severity="info, fatal" showDetail="true" showSummary="true" />
+                <p:panelGrid id="indexGrid" styleClass="indexPanel">
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Usuario"/>
+                        </p:column>
+                            
+                        <p:column>
+                             <p:inputText  id="nickname" value="#{indexController.user.nickname}" required="true" requiredMessage="Introduzca nickname"/>
+                        </p:column>
+                        
+                        <p:column>
+                             <p:outputLabel value="Contraseña"/>
+                        </p:column>
+                        
+                        <p:column>
+                           <p:password id="password" value="#{indexController.user.password}" required="true" requiredMessage="Introduzca contraseña"/> 
+                        </p:column>
+                        
+                        <p:column/>
+                        
+                        <p:column>
+                            <p:commandButton value="Acceder" action="#{indexController.checkUser()}" update="wrongLogin, indexGrid"/>
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                       <p:column colspan="2">
+                            <p:message for="nickname"/>
+                       </p:column> 
+                        
+                       <p:column colspan="2">
+                            <p:message for="password"/>
+                       </p:column> 
+                        
+                       <p:column colspan="2"/>
+                    </p:row>
+
+                </p:panelGrid>
+>>>>>>> origin/menus
             </h:form>   
         </div>
         

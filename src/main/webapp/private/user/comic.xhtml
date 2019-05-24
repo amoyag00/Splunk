@@ -60,6 +60,36 @@
                         </p:dataGrid>
                     </p:panel>
                 </h:form>
+<<<<<<< HEAD
+=======
+                
+                
+                <ui:remove>
+                <h:form>
+
+                    <p:commandButton value="Add One Piece entry" actionListener="#{comicController.dummyAddEntry()}"/>
+                    <p></p>
+                    <p:commandButton value="Is Added One Piece?" actionListener="#{comicController.dummyIsAdded()}" update="isAdded"/>
+                    <h:outputLabel id="isAdded" value="#{comicController.isAdded}" />
+                    
+                    <p>ChapterList</p>
+                    <p:commandButton value="Show Chapters One Piece" actionListener="#{comicController.dummyListChapters()}" update="chapters"/>
+                    <h:inputTextarea id="chapters" value="#{comicController.chapterList}" />
+                    <p>Reviews</p>
+                    <p:commandButton value="Show Reviews One Piece" actionListener="#{comicController.dummyListReviews()}" update="reviews"/>
+                    <h:inputTextarea id="reviews" value="#{comicController.reviewList}" />
+                    <p>Genres</p>
+                    <p:commandButton value="Show Genres One Piece" actionListener="#{comicController.dummyListGenres()}" update="genres"/>
+                    <h:inputTextarea id="genres" value="#{comicController.genres}" />
+                    <p>Authors</p>
+                    <p:commandButton value="Show Authors One Piece" actionListener="#{comicController.dummyListAuthors()}" update="authors"/>
+                    <h:inputTextarea id="authors" value="#{comicController.authors}" />
+                    <p>Global score</p>
+                    <p:commandButton value="Global score One Piece" actionListener="#{comicController.dummyGetGlobalSocre()}" update="score"/>
+                    <h:inputTextarea id="score" value="#{comicController.globalScore}" />
+                </h:form>
+                    </ui:remove>
+>>>>>>> origin/menus
             </ui:define>
 
             <ui:define name="bottom">
