@@ -18,15 +18,15 @@
                 <h:form id="formData">
 
                     <p:fieldset legend="Reseñas de #{reviewAdminController.nickname} ">
-                        <p:panelGrid style="width:100%; border:none">
+                        <p:panelGrid styleClass="panelGridCenter">
 
                             <f:facet name="header">
                                 
                                 <p:row>
-                                    <p:column style="width:25%; border:none">Comic</p:column>
-                                    <p:column style="width:25%; border:none">Texto</p:column>
-                                    <p:column style="width:25%; border:none">Fecha</p:column>
-                                    <p:column style="width:25%; border:none">asdf</p:column>
+                                    <p:column styleClass="fourth">Comic</p:column>
+                                    <p:column styleClass="fourth">Texto</p:column>
+                                    <p:column styleClass="fourth">Fecha</p:column>
+                                    <p:column styleClass="fourth"></p:column>
                                 </p:row>
 
                             </f:facet>
@@ -34,28 +34,25 @@
                         </p:panelGrid>
 
                         <p:dataGrid var="review" value="#{reviewAdminController.reviews}" columns="1" layout="grid"
-                                    id="results" style="width:100%;margin:0;">
+                                    id="results">
 
                             <p:panelGrid styleClass="panelGridCenter">
 
-                                <p:column style="width:25%;border:none;">
+                                <p:column styleClass="fourth">
                                     <p:outputLabel value="#{review.comic.name}" /> 
                                 </p:column>
 
-                                <p:column style="width:25%;border:none;">
+                                <p:column styleClass="fourth">
                                     <p:outputLabel value="#{review.reviewText}" /> 
                                 </p:column>
 
-                                <p:column style="width:25%;border:none;">
-                                    <p:outputLabel  value="#{review.writtenDate}"/> 
+                                <p:column styleClass="fourth">
+                                    <p:outputLabel  value="#{reviewAdminController.dateToString(review.writtenDate)}"/> 
                                 </p:column>
 
-                                <p:column style="width:25%;border:none;">
+                                <p:column styleClass="fourth">
                                     <p:commandButton  value="Editar reseña" actionListener="#{reviewAdminController.setSelectedReview(review)}" oncomplete="PF('wedit').show();" update="formEdit"/> 
                                 </p:column> 
-
-
-
                             </p:panelGrid>
                         </p:dataGrid>   
                     </p:fieldset>
@@ -70,9 +67,10 @@
                             <p:row>
                                 <p:column>
                                     <p:outputLabel value="Texto"/>
+                                </p:column>
+                                <p:column>
                                     <p:inputText value="#{reviewAdminController.selectedReview.reviewText}" required="true" requiredMessage="Introduzca un texto"/>      
                                 </p:column>
-
                             </p:row>
 
                             <p:row>
@@ -88,7 +86,12 @@
                             <p:row>
 
                                 <p:column>
-                                    <p:selectBooleanCheckbox value="#{reviewAdminController.selectedReview.visible}" itemLabel="Visible"/>
+                                    <p:outputLabel>
+                                        Visibilidad
+                                    </p:outputLabel>
+                                </p:column>
+                                <p:column>
+                                     <p:selectBooleanCheckbox value="#{reviewAdminController.selectedReview.visible}" itemLabel="Visible"/>
                                 </p:column>
                             </p:row>
 

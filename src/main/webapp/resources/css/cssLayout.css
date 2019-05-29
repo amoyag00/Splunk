@@ -64,14 +64,49 @@
     border: none;
 }
 
-.panelGridCenter td,.panelGridCenter tr {
+.panelGridCenter td,.panelGridCenter tr .ui-panelgrid-cell, .panelGridCenter tr{
     margin: 0 auto;
+    border:none;
+    border-width:0;
+    padding-bottom:7px;
+    padding-top:7px;
     
 }
 .panelGridCenter{
     width:100%;
     margin: 0 auto;
     text-align:center;
+    border:none;
 }
 
+
+#top, #bottom{
+    padding:0;
+    margin:0;
+}
+
+#bottom{
+     position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+html, body{
+    height:100%;
+    margin:0;
+    padding:0;
+}
+#content{
+    height:100%;
+}
+
+.third{
+    width:33%;
+}
+
+.fourth{
+    width:25%;
+}
 

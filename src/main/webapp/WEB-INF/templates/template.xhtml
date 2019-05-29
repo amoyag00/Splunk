@@ -17,7 +17,7 @@
     <h:body>
 
         <div id="top">
-            <ui:insert name="top">Top</ui:insert>
+            
             <h:form>
                 <p:menubar id="bar" model="#{menuController.modelo}">
                     <f:facet name="options">
@@ -31,8 +31,52 @@
             <ui:insert name="content">Content</ui:insert>
         </div>
 
-        <div id="bottom">
-            <ui:insert name="bottom">Bottom</ui:insert>
+        <div id="bottom" class="noBackground">
+            <ui:insert name="bottom">
+                <p:panelGrid styleClass="panelGridCenter">
+                  
+                    <p:row>
+                        <p:column><b>Productos</b></p:column>
+                        <p:column><b>Enlaces</b></p:column>
+                        <p:column><b>Contactos</b></p:column>
+                    </p:row>
+
+                    
+                    <p:row>
+                        <p:column>
+                            Comics
+                        </p:column>
+                         <p:column>
+                            Diseño y desarrollo
+                        </p:column>
+                         <p:column>
+                            Mapa del sitio
+                        </p:column> 
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            Colecciones
+                        </p:column>
+                         <p:column>
+                            Trabajos
+                        </p:column>
+                         <p:column>
+                            Nuestro equipo
+                        </p:column> 
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            Eventos
+                        </p:column>
+                         <p:column>
+                            Blog
+                        </p:column>
+                         <p:column>
+                            Sobre nosotros
+                        </p:column> 
+                    </p:row>
+                </p:panelGrid>
+            </ui:insert>
         </div>
 
     </h:body>

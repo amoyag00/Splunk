@@ -23,8 +23,10 @@
                     <p:selectOneMenu id="selection" value="#{searcherController.searchType}" style="width:125px">
                         <f:selectItem itemLabel="Comic" itemValue="comicSearch" />
                         <f:selectItem itemLabel="User" itemValue="userSearch" />
+                        <f:ajax event="change" execute="@this" listener="#{searcherController.changeResults}" render=":formResults:panel1 :formUsers:panel2"/>
                     </p:selectOneMenu>
-                    <p:selectOneMenu id="order" value="#{searcherController.orderType}" style="width:125px">
+                    
+                    <p:selectOneMenu id="order" value="#{searcherController.orderType}" style="width:125px" >
                         <f:selectItem itemLabel="A-Z" itemValue="asc" />
                         <f:selectItem itemLabel="Z-A" itemValue="desc" />
                     </p:selectOneMenu>
@@ -33,42 +35,48 @@
                 </h:form>
                     
                 <h:form id="formResults">
-                    <p:dataGrid  var="comic" value="#{searcherController.resultComics}" columns="3" layout="grid"
-                    rows="12" paginator="true" id="comicSearch"
-                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                    rowsPerPageTemplate="6,12,16">
+                    <h:panelGroup id="panel1" rendered="true">
+                        <p:dataGrid   var="comic" value="#{searcherController.resultComics}" columns="3" layout="grid"
+                        rows="12" paginator="true" id="comicSearch"
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="6,12,16">
 
-                        <f:facet name="headerResultados">
-                            Resultados de busqueda de comics
-                        </f:facet>
+                            <f:facet name="headerResultados">
+                                Resultados de busqueda de comics
+                            </f:facet>
 
-                        <p:panel header="#{comic.name}" style="text-align:center">
-                            <h:panelGrid columns="1" style="width:100%">
-                                <p:commandLink actionListener="#{searcherController.viewComic(comic)}" action="comic">
-                                    <p:graphicImage name="#{comic.imagePath}" height="200"/>
-                                </p:commandLink>
-                            </h:panelGrid>
-                        </p:panel>
-                    </p:dataGrid>
+                            <p:panel header="#{comic.name}" style="text-align:center">
+                                <h:panelGrid columns="1" style="width:100%">
+                                    <p:commandLink actionListener="#{searcherController.viewComic(comic)}" action="comic">
+                                        <p:graphicImage name="#{comic.imagePath}" height="200"/>
+                                    </p:commandLink>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:dataGrid>
+                    </h:panelGroup>
+                    
                 </h:form>
                     
                 <h:form id="formUsers">
-                    <p:dataGrid  var="user" value="#{searcherController.resultUsers}" columns="3" layout="grid"
-                    rows="12" paginator="true" id="userSearch"
-                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                    rowsPerPageTemplate="6,12,16">
+                    <h:panelGroup id="panel2" rendered="true">
+                       <p:dataGrid  var="user" value="#{searcherController.resultUsers}" columns="3" layout="grid"
+                        rows="12" paginator="true" id="userSearch"
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="6,12,16">
 
-                        <f:facet name="headerResultados">
-                            Resultados de busqueda de usuarios
-                        </f:facet>
+                            <f:facet name="headerResultados">
+                                Resultados de busqueda de usuarios
+                            </f:facet>
 
-                        <p:panel header="#{user.nickname}" style="text-align:center">
-                            <h:panelGrid columns="1" style="width:100%">
-                                <h:link outcome="" value="Ver perfil">
-                                </h:link>
-                            </h:panelGrid>
-                        </p:panel>
-                    </p:dataGrid>
+                            <p:panel header="#{user.nickname}" style="text-align:center">
+                                <h:panelGrid columns="1" style="width:100%">
+                                    <h:link outcome="" value="Ver perfil">
+                                    </h:link>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:dataGrid> 
+                    </h:panelGroup>
+                    
                 </h:form> 
             </ui:define>
 
