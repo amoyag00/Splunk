@@ -38,6 +38,9 @@ public class Review implements Serializable{
     
     @Column(name="reviewText")
     private String reviewText;
+    
+    @Column(name = "visible")
+    private boolean visible;
 
     public int getReviewId() {
         return reviewId;
@@ -78,6 +81,16 @@ public class Review implements Serializable{
     public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
     }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+    
+    
 
     @Override
     public String toString() {

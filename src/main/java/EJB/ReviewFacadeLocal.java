@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Local;
 import model.Comic;
 import model.Review;
+import model.User;
 
 /**
  *
@@ -32,5 +33,7 @@ public interface ReviewFacadeLocal {
     int count();
     
     List<Review> list(Comic comic);
+    
+    List<Review> list (User user);
     
 }
