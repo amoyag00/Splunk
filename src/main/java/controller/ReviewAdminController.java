@@ -2,7 +2,10 @@ package controller;
 
 import EJB.ReviewFacadeLocal;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
@@ -37,6 +40,11 @@ public class ReviewAdminController implements Serializable{
         this.reviews = reviewEJB.list(user);
         this.nickname = user.getNickname();
         
+    }
+    
+     public String dateToString(Date date){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'a las' HH:mm:ss", new Locale("es","ES"));
+        return formatter.format(date);
     }
     
     public void edit(){

@@ -25,16 +25,16 @@
                             
                             <p:panelGrid   styleClass="panelGridCenter" >
                                 
-                                    <p:column style="width:33%;border:none;">
+                                    <p:column styleClass="third">
                                         <p:outputLabel value="#{user.nickname}" /> 
                                     </p:column>
                                 
                                     
-                                    <p:column style="width:33%;border:none;">
+                                    <p:column styleClass="third">
                                         <p:commandButton  value="Editar usuario" actionListener="#{userAdminController.setSelectedUser(user)}" oncomplete="PF('wedit').show();" update="formEdit"/> 
                                     </p:column>
                                 
-                                    <p:column style="width:33%;border:none;">
+                                    <p:column styleClass="third">
                                         <p:commandButton  value="Ver reseñas" actionListener="#{userAdminController.setSelectedUser(user)}" action="reviewAdmin"/> 
                                     </p:column>
                             </p:panelGrid>
@@ -79,7 +79,7 @@
                             
                             <p:row>
                                 <p:column>
-                                    <p:outputLabel value="Privacidad"/>
+                                    <p:outputLabel value="Perfil"/>
                                 </p:column>
                                 <p:column>
                                     <p:selectBooleanCheckbox value="#{userAdminController.selectedUser.private}" itemLabel="Visible"/>
@@ -88,7 +88,7 @@
                             
                             <p:row>
                                 <p:column>
-                                   <p:outputLabel value="Baneado"/>
+                                   <p:outputLabel value="Acceso"/>
                                 </p:column>
                                 <p:column>
                                     <p:selectBooleanCheckbox value="#{userAdminController.selectedUser.banned}" itemLabel="Baneado"/> 

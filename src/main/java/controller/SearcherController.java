@@ -12,6 +12,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import model.Comic;
@@ -47,11 +49,20 @@ public class SearcherController implements Serializable{
     
     private Comic comicSelected;
     
+    private boolean flag;
+    
     @PostConstruct
     public void init(){
+        flag=false;
         //TODO
         /*System.out.println("entra search");
         resultComics = comicEJB.searchOrder("dragon ball", Order.ASC);**/
+    }
+    
+    
+    public void changeResults(AjaxBehaviorEvent event){
+        flag = !flag;
+        
     }
     
     public void search(){
@@ -176,4 +187,13 @@ public class SearcherController implements Serializable{
     public void setResultUsers(List<User> resultUsers) {
         this.resultUsers = resultUsers;
     }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
+ 
 }
