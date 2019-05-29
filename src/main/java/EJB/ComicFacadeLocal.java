@@ -35,7 +35,7 @@ public interface ComicFacadeLocal {
     
     List<Comic> search(String match);
     
-    List<Comic> searchOrder(String match, Order order);
+    List<Comic> searchOrder(String match, boolean normalUser, Order order);
     
     List<Comic> searchBy(String match, Param param, Order order);
     

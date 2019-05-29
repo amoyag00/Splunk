@@ -50,12 +50,17 @@ public class ComicFacade extends AbstractFacade<Comic> implements ComicFacadeLoc
     }
     
     @Override
-    public List<Comic> searchOrder(String match, Order order){
+    public List<Comic> searchOrder(String match, boolean normalUser, Order order){
         List<Comic> comics= new ArrayList<Comic>();
         String queryStr;
         
-        try{
+        try{ 
             queryStr="FROM Comic comic WHERE LOWER(comic.name) LIKE CONCAT('%',?1,'%')";
+            
+            if(normalUser){
+                queryStr+=" AND comic.visible=1";
+            }
+            
             queryStr+=" ORDER BY comic.name ";
             if(order == Order.ASC){
                 queryStr+="ASC";

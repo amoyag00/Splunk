@@ -98,12 +98,15 @@ public class ComicEntryFacade extends AbstractFacade<ComicEntry> implements Comi
     }
 
     @Override
-    public List<ComicEntry> searchOrder(String match, Order order) {
+    public List<ComicEntry> searchOrder(String match, boolean normalUser, Order order) {
         List<ComicEntry> comics= new ArrayList<ComicEntry>();
         String queryStr;
         
         try{
             queryStr="FROM ComicEntry ent WHERE LOWER(ent.comic.name) LIKE CONCAT('%',?1,'%')";
+            if(normalUser){
+                queryStr+=" AND user.isPrivate=1";
+            }
             queryStr+=" ORDER BY ent.score ";
             if(order == Order.ASC){
                 queryStr+="ASC";

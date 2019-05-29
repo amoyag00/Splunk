@@ -41,5 +41,5 @@ public interface ComicEntryFacadeLocal {
     
     double getGlobalScore(Comic comic);
     
-    List<ComicEntry> searchOrder(String match, Order order);
+    List<ComicEntry> searchOrder(String match, boolean normalUser, Order order);
 }

@@ -63,10 +63,10 @@ public class SearcherController implements Serializable{
     public void search(){
         if(searchType.equals("comicSearch")){
             if(orderType.equals("asc")){
-                resultComics = comicEJB.searchOrder(textSearch, Order.ASC);
+                resultComics = comicEJB.searchOrder(textSearch, true, Order.ASC);
             }
             else{
-                resultComics = comicEJB.searchOrder(textSearch, Order.DESC);
+                resultComics = comicEJB.searchOrder(textSearch, true, Order.DESC);
             }
        }
         else if(searchType.equals("userSearch")){
@@ -79,7 +79,7 @@ public class SearcherController implements Serializable{
         }
         else {
              if(orderType.equals("asc")){
-                resultEntry = entryEJB.searchOrder(textSearch, Order.ASC);
+                resultEntry = entryEJB.searchOrder(textSearch, true, Order.ASC);
                 resultComics = new ArrayList<Comic>();
                 
                 for(int i = 0; i < resultEntry.size(); i++) {
@@ -89,7 +89,7 @@ public class SearcherController implements Serializable{
                 }
             }
             else{
-                resultEntry = entryEJB.searchOrder(textSearch, Order.DESC);
+                resultEntry = entryEJB.searchOrder(textSearch, true, Order.DESC);
                 
                 resultComics = new ArrayList<Comic>();
                 
