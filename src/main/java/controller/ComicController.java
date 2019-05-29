@@ -57,6 +57,8 @@ public class ComicController implements Serializable{
     
     private Comic comic;
     
+    private ComicEntry comicEntry;
+    
     private List<ComicEntry> entry;
     
     private List<Review> reviewResults;
@@ -98,9 +100,27 @@ public class ComicController implements Serializable{
         } 
     }
 
-
     public List<ComicEntry> getEntry() {
         return entry;
+    }
+    
+    public void addComic() {
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        comicEntry = new ComicEntry();
+        comicEntry.setAddedDate(new Date());
+        comicEntry.setComic(comic);
+        comicEntry.setComicStatus("P");
+        comicEntry.setProgress(0);
+        comicEntry.setUser(user);
+        entryEJB.create(comicEntry);
+    }
+
+    public ComicEntry getComicEntry() {
+        return comicEntry;
+    }
+
+    public void setComicEntry(ComicEntry comicEntry) {
+        this.comicEntry = comicEntry;
     }
 
     /*public void search(){

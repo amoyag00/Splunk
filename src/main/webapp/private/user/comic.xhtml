@@ -28,7 +28,7 @@
                                     <h:outputLabel value="#{comicController.genres}"/>
                                     <h:outputLabel value="Autor: "/>
                                     <h:outputLabel value="#{comicController.authors}"/>
-                                    <p:commandButton value="Añadir" rendered="#{!comicController.isAdded}"/>
+                                    <p:commandButton value="Añadir" actionListener="#{comicController.addComic}" rendered="#{!comicController.isAdded}"/>
                                 </h:panelGrid>
                             </h:panelGrid>
                         </p:panel>
