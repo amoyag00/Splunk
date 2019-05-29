@@ -20,12 +20,10 @@
                  <h:form id="formData">
                     
                     <p:fieldset legend="Usuarios">
-                        <p:dataGrid var="user" value="#{userAdminController.userResults}" columns="1" layout="grid"
-                                    rows="12" paginator="true" id="results"
-                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
-                                    rowsPerPageTemplate="6,12,16">
+                        
+                        <p:dataGrid var="user" value="#{userAdminController.userResults}" columns="1" layout="grid"  id="results">
                             
-                            <p:panelGrid   style="width:1800px; border:none" >
+                            <p:panelGrid   styleClass="panelGridCenter" >
                                 
                                     <p:column style="width:33%;border:none;">
                                         <p:outputLabel value="#{user.nickname}" /> 
@@ -37,7 +35,7 @@
                                     </p:column>
                                 
                                     <p:column style="width:33%;border:none;">
-                                        <p:commandButton  value="Ver reseñas" actionListener="#{userAdminController.setSelectedUser(user)}" action="review"/> 
+                                        <p:commandButton  value="Ver reseñas" actionListener="#{userAdminController.setSelectedUser(user)}" action="reviewAdmin"/> 
                                     </p:column>
                             </p:panelGrid>
                         </p:dataGrid>

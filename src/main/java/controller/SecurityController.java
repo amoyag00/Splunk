@@ -26,7 +26,7 @@ public class SecurityController implements Serializable {
 
     private void checkPrivileges(String userType) {
         User us = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-        System.out.println("log");
+      
                
         if (!us.getRol().getRol().equals(userType)) {
             try {

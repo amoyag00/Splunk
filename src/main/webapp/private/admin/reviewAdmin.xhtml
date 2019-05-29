@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{securityController.checkAdminPrivileges()}" />
+    </f:metadata>
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template.xhtml">
+
+            <ui:define name="content">
+                <h:form id="formData">
+
+                    <p:fieldset legend="Reseñas de #{reviewAdminController.nickname} ">
+                        <p:panelGrid style="width:100%; border:none">
+
+                            <f:facet name="header">
+                                
+                                <p:row>
+                                    <p:column style="width:25%; border:none">Comic</p:column>
+                                    <p:column style="width:25%; border:none">Texto</p:column>
+                                    <p:column style="width:25%; border:none">Fecha</p:column>
+                                    <p:column style="width:25%; border:none">asdf</p:column>
+                                </p:row>
+
+                            </f:facet>
+
+                        </p:panelGrid>
+
+                        <p:dataGrid var="review" value="#{reviewAdminController.reviews}" columns="1" layout="grid"
+                                    id="results" style="width:100%;margin:0;">
+
+                            <p:panelGrid styleClass="panelGridCenter">
+
+                                <p:column style="width:25%;border:none;">
+                                    <p:outputLabel value="#{review.comic.name}" /> 
+                                </p:column>
+
+                                <p:column style="width:25%;border:none;">
+                                    <p:outputLabel value="#{review.reviewText}" /> 
+                                </p:column>
+
+                                <p:column style="width:25%;border:none;">
+                                    <p:outputLabel  value="#{review.writtenDate}"/> 
+                                </p:column>
+
+                                <p:column style="width:25%;border:none;">
+                                    <p:commandButton  value="Editar reseña" actionListener="#{reviewAdminController.setSelectedReview(review)}" oncomplete="PF('wedit').show();" update="formEdit"/> 
+                                </p:column> 
+
+
+
+                            </p:panelGrid>
+                        </p:dataGrid>   
+                    </p:fieldset>
+                </h:form>
+
+
+
+                <p:dialog header="Editar Reseña" widgetVar="wedit">
+                    <h:form id="formEdit">
+                        <p:panelGrid styleClass="borderless">
+
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Texto"/>
+                                    <p:inputText value="#{reviewAdminController.selectedReview.reviewText}" required="true" requiredMessage="Introduzca un texto"/>      
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <p:outputLabel value="Contraseña:"/>
+                                </p:column>
+                                <p:column>
+                                    <p:calendar id="calendar" value="#{reviewAdminController.selectedReview.writtenDate}" showOn="button"/> 
+                                </p:column>
+                            </p:row>
+
+
+                            <p:row>
+
+                                <p:column>
+                                    <p:selectBooleanCheckbox value="#{reviewAdminController.selectedReview.visible}" itemLabel="Visible"/>
+                                </p:column>
+                            </p:row>
+
+
+
+                            <p:row>
+                                <p:column colspan="2">
+                                    <p:commandButton value="Editar" actionListener="#{reviewAdminController.edit()}" oncomplete="PF('wedit').hide();" update=":formData:results"/>
+                                </p:column>
+                            </p:row>
+
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

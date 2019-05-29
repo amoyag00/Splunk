@@ -64,5 +64,14 @@
     border: none;
 }
 
+.panelGridCenter td,.panelGridCenter tr {
+    margin: 0 auto;
+    
+}
+.panelGridCenter{
+    width:100%;
+    margin: 0 auto;
+    text-align:center;
+}
 
 
