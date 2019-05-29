@@ -6,6 +6,7 @@ import EJB.ComicFacadeLocal;
 import EJB.ComicFacadeLocal.Param;
 import EJB.UserFacadeLocal;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -31,6 +32,9 @@ public class SearcherController implements Serializable{
     @EJB
     private UserFacadeLocal userEJB;
     
+    @EJB
+    private ComicEntryFacadeLocal entryEJB;
+    
     private String comicResults;
     
     private String userResults;
@@ -44,6 +48,8 @@ public class SearcherController implements Serializable{
     private List<Comic> resultComics;
     
     private List<User> resultUsers;
+    
+    private List<ComicEntry> resultEntry;
     
     private Comic comicSelected;
     
@@ -63,12 +69,33 @@ public class SearcherController implements Serializable{
                 resultComics = comicEJB.searchOrder(textSearch, Order.DESC);
             }
        }
-        else{
+        else if(searchType.equals("userSearch")){
             if(orderType.equals("asc")){
                 resultUsers = userEJB.search(textSearch, true, Order.ASC);
             }
             else{
                 resultUsers = userEJB.search(textSearch, true, Order.DESC);
+            }
+        }
+        else {
+             if(orderType.equals("asc")){
+                resultEntry = entryEJB.searchOrder(textSearch, Order.ASC);
+                resultComics = new ArrayList<Comic>();
+                
+                for(int i = 0; i < resultEntry.size(); i++) {
+                    if(!resultComics.contains(resultEntry.get(i).getComic())){
+                        resultComics.add(resultEntry.get(i).getComic());
+                    }
+                }
+            }
+            else{
+                resultEntry = entryEJB.searchOrder(textSearch, Order.DESC);
+                
+                resultComics = new ArrayList<Comic>();
+                
+                for(int i = 0; i < resultEntry.size(); i++) {
+                    resultComics.add(resultEntry.get(i).getComic());
+                }
             }
         }
     }
@@ -113,6 +140,14 @@ public class SearcherController implements Serializable{
             userResults+="Nickname: "+user.getNickname()+" Private profile? "+user.isPrivate()+"\n";
         }
     }*/
+
+    public List<ComicEntry> getResultEntry() {
+        return resultEntry;
+    }
+
+    public void setResultEntry(List<ComicEntry> resultEntry) {
+        this.resultEntry = resultEntry;
+    }
 
     public String getComicResults() {
         return comicResults;

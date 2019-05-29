@@ -21,10 +21,11 @@
                     <p:selectOneMenu id="selection" value="#{searcherController.searchType}" style="width:125px">
                         <f:selectItem itemLabel="Comic" itemValue="comicSearch" />
                         <f:selectItem itemLabel="User" itemValue="userSearch" />
+                        <f:selectItem itemLabel="Score" itemValue="scoreSearch" />
                     </p:selectOneMenu>
                     <p:selectOneMenu id="order" value="#{searcherController.orderType}" style="width:125px">
-                        <f:selectItem itemLabel="A-Z" itemValue="asc" />
-                        <f:selectItem itemLabel="Z-A" itemValue="desc" />
+                        <f:selectItem itemLabel="Asc" itemValue="asc" />
+                        <f:selectItem itemLabel="Desc" itemValue="desc" />
                     </p:selectOneMenu>
                     
                     <p:commandButton value="Buscar" actionListener="#{searcherController.search()}" update=":formResults:comicSearch :formUsers:userSearch"/>

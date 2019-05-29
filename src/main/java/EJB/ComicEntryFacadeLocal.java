@@ -5,6 +5,7 @@
  */
 package EJB;
 
+import EJB.AbstractFacade.Order;
 import java.util.List;
 import javax.ejb.Local;
 import model.Comic;
@@ -39,4 +40,6 @@ public interface ComicEntryFacadeLocal {
     boolean exists(ComicEntry entry);
     
     double getGlobalScore(Comic comic);
+    
+    List<ComicEntry> searchOrder(String match, Order order);
 }

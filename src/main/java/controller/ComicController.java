@@ -70,7 +70,7 @@ public class ComicController implements Serializable{
     private List<Chapter> chapterResults;
     
     private boolean isAdded;
-        
+            
     private String genres;//TODO deldete
     
     private String authors;//TODO deldete
@@ -86,6 +86,7 @@ public class ComicController implements Serializable{
         chapterResults = chapterEJB.list(comic);
         User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         isAdded = comicEJB.isAdded(comic, user);
+        globalScore = Double.toString(entryEJB.getGlobalScore(comic));
         
         List<Author> authors=authorEJB.list(comic);
         this.authors="";
@@ -97,7 +98,7 @@ public class ComicController implements Serializable{
         this.genres="";
         for(Genre genre: genres){
             this.genres+= genre.getName()+" ";
-        } 
+        }
     }
 
     public List<ComicEntry> getEntry() {

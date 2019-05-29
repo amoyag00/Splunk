@@ -96,5 +96,30 @@ public class ComicEntryFacade extends AbstractFacade<ComicEntry> implements Comi
         }
         return score;
     }
+
+    @Override
+    public List<ComicEntry> searchOrder(String match, Order order) {
+        List<ComicEntry> comics= new ArrayList<ComicEntry>();
+        String queryStr;
+        
+        try{
+            queryStr="FROM ComicEntry ent WHERE LOWER(ent.comic.name) LIKE CONCAT('%',?1,'%')";
+            queryStr+=" ORDER BY ent.score ";
+            if(order == Order.ASC){
+                queryStr+="ASC";
+            }else if(order == Order.DESC){
+                queryStr+="DESC";
+            }
+            Query query = em.createQuery(queryStr);
+            query.setParameter(1, match.toLowerCase());
+            comics=query.getResultList();      
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Could not access to the database");
+        }
+        
+        return comics;
+    }
     
 }
