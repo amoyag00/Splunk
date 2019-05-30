@@ -45,7 +45,9 @@
                                     <h:outputLabel value="#{review.reviewText}"/>
                                 </p:panel>
                             </p:dataGrid>
-                        </p:fieldset>
+                            <p:inputTextarea cols="50" rows="10" value="#{comicController.reviewText}"/>
+                            <p:commandButton value="Comentar" actionListener="#{comicController.addReview}"/>
+                        </p:fieldset>  
                     </h:panelGrid>
 
                     <p:fieldset legend="Capitulos">
