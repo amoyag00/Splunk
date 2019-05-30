@@ -55,20 +55,29 @@ public class SearcherController implements Serializable{
     
     private Comic comicSelected;
     
-    private boolean flag;
+    private boolean flagComic;
+    private boolean flagUser;
     
     @PostConstruct
     public void init(){
-        flag=false;
+        flagUser=false;
+        flagComic=true;
         //TODO
         /*System.out.println("entra search");
         resultComics = comicEJB.searchOrder("dragon ball", Order.ASC);**/
     }
     
     
-    public void changeResults(AjaxBehaviorEvent event){
-        flag = !flag;
-        
+    public void changeResults(){
+         if(searchType.equals("comicSearch")){
+            flagComic = true;
+            flagUser = false;
+           
+        }else if(searchType.equals("userSearch")){
+            flagUser = true;
+            flagComic = false;
+            
+       }
     }
     
     public void search(){
@@ -79,8 +88,10 @@ public class SearcherController implements Serializable{
             else{
                 resultComics = comicEJB.searchOrder(textSearch, true, Order.DESC);
             }
+           
        }
         else if(searchType.equals("userSearch")){
+            
             if(orderType.equals("asc")){
                 resultUsers = userEJB.search(textSearch, true, Order.ASC);
             }
@@ -223,12 +234,22 @@ public class SearcherController implements Serializable{
         this.resultUsers = resultUsers;
     }
 
-    public boolean isFlag() {
-        return flag;
+    public boolean isFlagComic() {
+        return flagComic;
     }
 
-    public void setFlag(boolean flag) {
-        this.flag = flag;
+    public void setFlagComic(boolean flagComic) {
+        this.flagComic = flagComic;
     }
+
+    public boolean isFlagUser() {
+        return flagUser;
+    }
+
+    public void setFlagUser(boolean flagUser) {
+        this.flagUser = flagUser;
+    }
+
+    
  
 }
