@@ -66,6 +66,8 @@ public class ComicController implements Serializable{
 
     private ComicEntry comicEntry;
     
+    private Review review;
+    
     private List<ComicEntry> entry;
     
     private List<Review> reviewResults;
@@ -78,11 +80,13 @@ public class ComicController implements Serializable{
     
     private boolean isAdded;
             
-    private String genres;//TODO deldete
+    private String genres;
     
-    private String authors;//TODO deldete
+    private String authors;
     
-    private String globalScore;//TODO deldete
+    private String globalScore;
+    
+    private String reviewText;
     
     @PostConstruct
     public void init(){
@@ -106,6 +110,33 @@ public class ComicController implements Serializable{
         for(Genre genre: genres){
             this.genres+= genre.getName()+" ";
         }
+    }
+    
+    public void addReview() {
+        review = new Review();
+        review.setComic(comic);
+        review.setReviewText(reviewText);
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        review.setUserId(user);
+        review.setVisible(true);
+        review.setWrittenDate(new Date());
+        reviewEJB.create(review);
+    }
+
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
+    }
+
+    public String getReviewText() {
+        return reviewText;
+    }
+
+    public void setReviewText(String reviewText) {
+        this.reviewText = reviewText;
     }
     
     public void setSelectedChapter(Chapter chapter){
