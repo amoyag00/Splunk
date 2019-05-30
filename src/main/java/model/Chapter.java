@@ -40,6 +40,17 @@ public class Chapter implements Serializable{
     
     @Column(name="contentPath")
     private String contentPath;
+    
+    @Column(name="visible")
+    private boolean visible;
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 
     public int getChapterId() {
         return chapterId;

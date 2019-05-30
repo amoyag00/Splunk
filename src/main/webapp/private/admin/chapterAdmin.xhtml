@@ -19,15 +19,15 @@
             </ui:define>
 
             <ui:define name="content">
-                <h:form>
-                    <p:panel header="#{chapterAdminController.comic.name}" footer="#{comicController.comic.publishDate}">
-                        <p:graphicImage name="#{chapterAdminController.comic.imagePath}"
+                <h:form id="formData">
+                    <p:panel header="#{chapterAdminController.comic.name}" footer="#{chapterAdminController.comic.publishDate}">
+                        <p:graphicImage name="#{chapterAdminController.comic.imagePath}"/>
+                        <p:commandButton value="Crear capitulo" oncomplete="PF('wcreate').show();" update="formCreate"/>
                     </p:panel>
-                    <p:commandButton value="Crear capitulo"/>
                     
                     <p:fieldset legend="Capitulos">
-                        <p:dataGrid var="chapter" value="#{chapterAdminController.chapterResults}" columns="2" layout="grid"
-                                    rows="12" paginator="true" id="caps"
+                        <p:dataGrid var="chapter" value="#{chapterAdminController.chapterResults}" columns="1" layout="grid"
+                                    rows="12" paginator="true" id="results"
                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
                                     rowsPerPageTemplate="6,12,16">
                             <p:panelGrid   style="width:1800px; border:none" >
@@ -41,14 +41,54 @@
                                     </p:column>
                                 
                                     <p:column style="width:33%;border:none;">
-                                        <p:commandButton  value="Editar capitulo"/> 
+                                        <p:commandButton  value="Editar capitulo" actionListener="#{chapterAdminController.selectChapter(chapter)}" oncomplete="PF('wedit').show();" update="formEdit"/> 
                                     </p:column>
                             </p:panelGrid>
-
-
                         </p:dataGrid>
                     </p:fieldset>
                 </h:form>
+                
+                <p:dialog header="Crear capitulo" widgetVar="wcreate">
+                    <h:form id="formCreate">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nombre:"/>
+                            <p:inputText value="#{chapterAdminController.chapterCreated.chapterName}"/>
+
+                            <p:outputLabel value="Numero:"/>
+                            <p:inputText value="#{chapterAdminController.chapterCreated.chapterNumber}"/>
+
+                            <p:outputLabel value="Contenido:"/>
+                            <p:fileUpload value="#{chapterAdminController.chapterCreated.contentPath}" mode="simple"/>
+                            
+                            <p:outputLabel value="Fecha:"/>
+                            <p:calendar id="calendar" value="#{chapterAdminController.chapterCreated.addedDate}" showOn="button"/>
+                            
+                            <p:selectBooleanCheckbox value="#{chapterAdminController.chapterCreated.visible}" itemLabel="Visible"/>
+                            <p:commandButton value="Crear" actionListener="#{chapterAdminController.create()}" oncomplete="PF('wcreate').hide();" update=":formData:results"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+                
+                <p:dialog header="Editar capitulo" widgetVar="wedit">
+                    <h:form id="formEdit">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nombre:"/>
+                            <p:inputText value="#{chapterAdminController.chapterSelected.chapterName}"/>
+
+                            <p:outputLabel value="Numero:"/>
+                            <p:inputText value="#{chapterAdminController.chapterSelected.chapterNumber}"/>
+
+                            <p:outputLabel value="Contenido:"/>
+                            <p:fileUpload value="#{chapterAdminController.chapterSelected.contentPath}" mode="simple"/>
+                             
+                            <p:outputLabel value="Fecha:"/>
+                            <p:calendar id="calendar" value="#{chapterAdminController.chapterSelected.addedDate}" showOn="button"/>
+                            
+                            <p:selectBooleanCheckbox value="#{chapterAdminController.chapterSelected.visible}" itemLabel="Visible"/>
+                            <p:commandButton value="Editar" actionListener="#{chapterAdminController.edit()}" oncomplete="PF('wedit').hide();" update=":formData:results"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
             </ui:define>
             
             <ui:define name="bottom">

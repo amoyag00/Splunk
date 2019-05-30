@@ -42,6 +42,17 @@ public class Review implements Serializable{
     @Column(name = "visible")
     private boolean visible;
 
+    @Column(name="visible")
+    private boolean visible;
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+    
     public int getReviewId() {
         return reviewId;
     }
