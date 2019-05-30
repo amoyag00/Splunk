@@ -24,14 +24,14 @@
                                 <p:graphicImage name="#{comicController.comic.imagePath}" height="400"/>
                                 <h:panelGrid columns="2">
                                     <h:outputLabel value="Puntuación global" />
-                                    <h:outputLabel value="#{comicController.comic.globalScore}" />
+                                    <h:outputLabel value="#{comicController.globalScore}" />
                                     <h:outputLabel value="Nº capitulos: "/>
                                     <h:outputLabel value="#{comicController.comic.numChapters}"/>
                                     <h:outputLabel value="Genero: "/>
                                     <h:outputLabel value="#{comicController.genres}"/>
                                     <h:outputLabel value="Autor: "/>
                                     <h:outputLabel value="#{comicController.authors}"/>
-                                    <p:commandButton value="Añadir"/>
+                                    <p:commandButton value="Añadir" actionListener="#{comicController.addComic}" rendered="#{!comicController.isAdded}"/>
                                 </h:panelGrid>
                             </h:panelGrid>
                         </p:panel>

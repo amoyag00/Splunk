@@ -32,6 +32,9 @@ public class Comic implements Serializable{
     @Column(name="statusComic")
     private String statusComic;
     
+    @Column(name="visible")
+    private boolean visible;
+    
     @Column(name="imagePath")
     private String imagePath;
     
@@ -44,6 +47,14 @@ public class Comic implements Serializable{
 
     public int getComicId() {
         return comicId;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public void setComicId(int comicId) {

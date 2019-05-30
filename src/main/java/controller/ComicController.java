@@ -54,12 +54,19 @@ public class ComicController implements Serializable{
     @EJB
     private AuthorFacadeLocal authorEJB;
     
+    @EJB
+    private ComicEntryFacadeLocal entryEJB;
+    
     @Inject
     private SearcherController searcher;
     
     private Comic comic;
     
     private Chapter selectedChapter;
+
+    private ComicEntry comicEntry;
+    
+    private List<ComicEntry> entry;
     
     private List<Review> reviewResults;
     
@@ -70,7 +77,7 @@ public class ComicController implements Serializable{
     private List<Chapter> chapterResults;
     
     private boolean isAdded;
-        
+            
     private String genres;//TODO deldete
     
     private String authors;//TODO deldete
@@ -84,6 +91,9 @@ public class ComicController implements Serializable{
         authorResults = authorEJB.list((comic));
         genreResults = genreEJB.list(comic);
         chapterResults = chapterEJB.list(comic);
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        isAdded = comicEJB.isAdded(comic, user);
+        globalScore = Double.toString(entryEJB.getGlobalScore(comic));
         
         List<Author> authors=authorEJB.list(comic);
         this.authors="";
@@ -95,7 +105,7 @@ public class ComicController implements Serializable{
         this.genres="";
         for(Genre genre: genres){
             this.genres+= genre.getName()+" ";
-        } 
+        }
     }
     
     public void setSelectedChapter(Chapter chapter){
@@ -125,6 +135,33 @@ public class ComicController implements Serializable{
     public String dateToString(Date date){
         SimpleDateFormat formatter = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'a las' HH:mm:ss", new Locale("es","ES"));
         return formatter.format(date);
+    }
+
+    public List<ComicEntry> getEntry() {
+        return entry;
+    }
+    
+    public void addComic() {
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        comicEntry = new ComicEntry();
+        comicEntry.setAddedDate(new Date());
+        comicEntry.setComic(comic);
+        comicEntry.setComicStatus("P");
+        comicEntry.setProgress(0);
+        comicEntry.setUser(user);
+        entryEJB.create(comicEntry);
+    }
+
+    public ComicEntry getComicEntry() {
+        return comicEntry;
+    }
+
+    public void setComicEntry(ComicEntry comicEntry) {
+        this.comicEntry = comicEntry;
+    }
+
+    public void setEntry(List<ComicEntry> entry) {
+        this.entry = entry;
     }
 
     public boolean isIsAdded() {
