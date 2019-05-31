@@ -12,15 +12,11 @@
 
         <ui:composition template="./../../WEB-INF/templates/template.xhtml">
 
-            <ui:define name="top">
-                top
-            </ui:define>
+          
 
             <ui:define name="content">
                 <h:form id="form">
-                    <!--
-                            <p:commandButton value="Print comic list" actionListener="{homeController.dummyPrintList()}"/>
-                            <h:inputTextarea id="theList" value=">{homeController.list}" /> -->
+                   
                     
 
                     
@@ -30,39 +26,41 @@
                             <p:dataTable id="tablaHome" var="list" value="#{homeController.comicList}" rowIndexVar="row" editable="#{homeController.editable}" editMode="cell">
                                 <p:growl keepAlive="1000" id="cellEdit" severity="info, fatal" showDetail="true" showSummary="true" />
                                 <p:ajax event="cellEdit" listener="#{homeController.onCellEdit}"  update="cellEdit"/>                                
-                                <p:column headerText="Title">
+                                <p:column headerText="Titulo">
                                     <h:outputText value="#{list.comic.name}" />
                                 </p:column>
 
-                                <p:column headerText="Score">
+                                <p:column headerText="Puntuacion">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{list.score}" /></f:facet>
-                                        <f:facet name="input"><p:inputText value="#{list.score}" style="width:100%" label="Score"/></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{list.score}" styleClass="fullWidth" label="Score"/></f:facet>
                                     </p:cellEditor>                                             
                                 </p:column>
 
-                                <p:column headerText="Status">
+                                <p:column headerText="Estado">
                                     <p:cellEditor>
-                                        <f:facet name="output"><h:outputText value="#{list.comicStatus}" /></f:facet>
+                                        <f:facet name="output"><h:outputText value="#{homeController.prettyStatus(list.comicStatus)}" /></f:facet>
                                         <f:facet name="input">
-                                            <p:selectOneMenu id="lazy" value="#{list.comicStatus}" dynamic="true" style="width:125px" >
+                                            <p:selectOneMenu id="lazy" value="#{list.comicStatus}" dynamic="true" styleClass="selectOne" >
                                                 <f:selectItem itemLabel="Select One" itemValue=""/>
                                                 <f:selectItems value="#{homeController.statusComic}" />
+                                                <p:ajax event="change" update=":form:pie" listener="#{homeController.createPieModel1()}"/>
+                                               
                                             </p:selectOneMenu>
                                         </f:facet>
                                     </p:cellEditor>  
                                 </p:column>
 
-                                <p:column headerText="Progress">
+                                <p:column headerText="Progreso">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{list.progress}" /></f:facet>
-                                        <f:facet name="input"><p:inputText value="#{list.progress}" style="width:100%" label="Progress"/></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{list.progress}" styleClass="fullWidth" label="Progress"/></f:facet>
                                     </p:cellEditor>  
                                     
                                 </p:column>
                                 
                                            
-                                <p:column headerText="Delete">
+                                <p:column headerText="Eliminar">
                                     <p:commandButton value="Delete" disabled="#{!homeController.editable}"  actionListener="#{homeController.deleteEntry(row)}" update="@form @form:pie" ajax="true"/>
                                 </p:column>
                             </p:dataTable>

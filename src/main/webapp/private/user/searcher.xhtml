@@ -17,14 +17,14 @@
             <ui:define name="content">
                 <h:form id="formSearch">
                     <p:inputText id="search" value="#{searcherController.textSearch}" required="true"/>
-                    <p:selectOneMenu id="selection" value="#{searcherController.searchType}" style="width:125px">
+                    <p:selectOneMenu id="selection" value="#{searcherController.searchType}" styleClass="image">
                         <f:selectItem itemLabel="Comic" itemValue="comicSearch" />
                         <f:selectItem itemLabel="User" itemValue="userSearch" />
                         <f:ajax listener="#{searcherController.changeResults()}" render="formResults formUsers order"/>
                         
                     </p:selectOneMenu>
                     
-                    <p:selectOneMenu id="order" value="#{searcherController.orderType}" style="width:125px" >
+                    <p:selectOneMenu id="order" value="#{searcherController.orderType}" styleClass="selectOne" >
                         <f:selectItem itemLabel="Asc" itemValue="asc" />
                         <f:selectItem itemLabel="Desc" itemValue="desc" />
 
@@ -46,7 +46,7 @@
                             </f:facet>
 
                             <p:panel header="#{comic.name}" style="text-align:center">
-                                <h:panelGrid columns="1" style="width:100%">
+                                <h:panelGrid columns="1" styleClass="panelGridCenter">
                                     <p:commandLink actionListener="#{searcherController.viewComic(comic)}" action="comic">
                                         <p:graphicImage name="#{comic.imagePath}" height="200"/>
                                     </p:commandLink>
@@ -66,7 +66,7 @@
                             </f:facet>
 
                             <p:panel header="#{user.nickname}" style="text-align:center">
-                                <h:panelGrid columns="1" style="width:100%">
+                                <h:panelGrid columns="1" style="panelGridCenter">
                                     <p:commandButton value="Ver perfil" actionListener="#{searcherController.setUserSelected(user)}" action="home" />
                                 </h:panelGrid>
                             </p:panel>

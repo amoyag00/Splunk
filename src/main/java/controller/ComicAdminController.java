@@ -150,7 +150,6 @@ public class ComicAdminController implements Serializable {
 
     @PostConstruct
     public void init() {
-        //TODO
         comicList = comicEJB.findAll();
         newComic = new Comic();
         comicSeleccionado = comicList.get(0);
@@ -179,19 +178,7 @@ public class ComicAdminController implements Serializable {
 
     }
 
-    /*public void addAuthor(){
     
-        //newComicAuthorList.add(newComicAuthor);
-        System.out.println("PATATA");
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion","Nuevo autor");  
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-    
-    public void addGenre(){
-    
-        newComicGenreList.add(newComicGenre);
-
-    }*/
     public void delete(int row) {
 
         comicEJB.remove(comicList.get(row));
@@ -199,7 +186,6 @@ public class ComicAdminController implements Serializable {
     }
 
     public void save() {
-        newComic.setPublishDate(new Date(year, month, day));
         comicEJB.create(newComic);
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Nuevo comic creado");
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -214,6 +200,8 @@ public class ComicAdminController implements Serializable {
         genero.setName(newComicGenre);
         genero.setComic(newComic);
         genreEJB.create(genero);
+        
+        comicList.add(newComic);
 
     }
 

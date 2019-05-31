@@ -124,3 +124,11 @@ html, body{
     background-color:inherit;
 }
 
+.fullWidth{
+    width:100%;
+}
+
+.selectOne{
+    width:125px;
+}
+
