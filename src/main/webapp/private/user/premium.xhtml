@@ -12,32 +12,38 @@
 
         <ui:composition template="./../../WEB-INF/templates/template.xhtml">
 
-            <ui:define name="content">
-                content
-            </ui:define>
+            
 
             <ui:define name="content">
                 <h:form id="tabla">
+                    <p:growl keepAlive="1000" id="suscription" severity="info, fatal" showDetail="true" showSummary="true" />
+                    <h3>OBTÉN 1 MES DE SUSCRIPCIÓN POR 2 EUROS</h3>
                     <p:panelGrid columns="3" id="pgr2">
-                        <p:outputLabel value="Name" for="name"/>
+                        <p:outputLabel value="Nombre del titular" for="name"/>
                         <p:inputText id="name" required="true" requiredMessage="Campo obligatorio"  label="Title"/>
                         <p:message for="name"/>
 
-                        <p:outputLabel value="Creit card number" for="cCard"/>
+                        <p:outputLabel value="Numero de la tarjeta de credito" for="cCard"/>
                         <p:inputText id="cCard" required="true" requiredMessage="Campo obligatorio" label="CreditCard"/>
                         <p:message for="cCard"/>
                         
+                        <p:outputLabel value="CVV" for="cvv"/>
+                        <p:inputText id="cvv" required="true" requiredMessage="Campo obligatorio" label="cvv"/>
+                        <p:message for="cvv"/>
+                        
+                        <p:outputLabel value="Fecha de caducidad" for="date"/>
+                        <p:calendar id="date" required="true" value="#{chapterAdminController.chapterCreated.addedDate}" showOn="button"/>
+                        <p:message for="date"/>
+                        
                         <p:column/>
-                        <p:commandButton value="Guardar" actionListener="#{premiumController.save()}" update="pgr2"/>
+                        <p:commandButton value="Guardar" actionListener="#{premiumController.save()}" update="suscription"/>
                         <p:column/>
                         
                     </p:panelGrid>
                 </h:form>
             </ui:define>
             
-            <ui:define name="bottom">
-                bottom
-            </ui:define>
+           
 
         </ui:composition>
 

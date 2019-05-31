@@ -42,6 +42,7 @@ public class ChapterFacade extends AbstractFacade<Chapter> implements ChapterFac
             if(visibleOnly){
                 queryStr+=  " AND c.visible=1";
             }
+            queryStr += " ORDER BY c.chapterNumber ASC";
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Could not access to the database");

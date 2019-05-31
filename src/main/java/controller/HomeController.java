@@ -31,6 +31,7 @@ public class HomeController implements Serializable{
     
     private List<ComicEntry>  comicList;
     private String statusComic[] = new String[4];
+    private String prettyStatusComic[] = new String[4];
     private boolean editable=true;
     
     private User usuario;
@@ -89,9 +90,23 @@ public class HomeController implements Serializable{
        statusComic[1] = "R";
        statusComic[2] = "P";
        statusComic[3] = "";
+       prettyStatusComic[0] = "Leido";
+       prettyStatusComic[1] = "Leyendo";
+       prettyStatusComic[2] = "Pendiente";
+       prettyStatusComic[3] = "";
        createPieModel1();        
     }
 
+    public String[] getPrettyStatusComic() {
+        return prettyStatusComic;
+    }
+
+    public void setPrettyStatusComic(String[] prettyStatusComic) {
+        this.prettyStatusComic = prettyStatusComic;
+    }
+    
+    
+    
     public String[] getStatusComic() {
         return statusComic;
     }

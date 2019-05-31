@@ -17,7 +17,7 @@
             <ui:define name="content">
                 <h:form id="formSearch">
                     <p:inputText id="search" value="#{searcherController.textSearch}" required="true"/>
-                    <p:selectOneMenu id="selection" value="#{searcherController.searchType}" styleClass="image">
+                    <p:selectOneMenu id="selection" value="#{searcherController.searchType}" styleClass="selectOne">
                         <f:selectItem itemLabel="Comic" itemValue="comicSearch" />
                         <f:selectItem itemLabel="User" itemValue="userSearch" />
                         <f:ajax listener="#{searcherController.changeResults()}" render="formResults formUsers order"/>
