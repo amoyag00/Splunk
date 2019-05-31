@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <f:metadata>
         <f:event type="preRenderView" listener="#{securityController.checkAdminPrivileges()}" />
@@ -17,8 +18,152 @@
             </ui:define>
 
             <ui:define name="content">
-               admin Home /admin comics 
-               <p:link value="prueba" outcome="chapterAdmin"/>
+                    
+                    <!--
+                            <p:commandButton value="Print comic list" actionListener="{homeController.dummyPrintList()}"/>
+                            <h:inputTextarea id="theList" value=">{homeController.list}" /> -->
+
+                    <p:fieldset legend="Administrar Comics">
+                        
+                        <p:panelGrid id="homeGrid" columns="1">
+                           <h:form id="tabla1">
+                            <p:growl id="messages" showDetail="true"/>
+                            <p:remoteCommand name="onCellEdit" actionListener="#{comicAdminController.onCellEdit()}" update=":tabla1:messages" />
+
+                            <p:dataTable id="tablaComics" var="list" value="#{comicAdminController.comicList}" rowIndexVar="row" editable="true" editMode="cell">
+
+                                
+                                <p:column headerText="Title">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{list.name}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{list.name}" style="width:100%" label="name"/></f:facet>
+                                    </p:cellEditor>                                             
+                                </p:column>
+
+                                <p:column headerText="Number of Chapters">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{list.numChapters}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{list.numChapters}" style="width:100%" label="numChapters"/></f:facet>
+                                    </p:cellEditor>                                             
+                                </p:column>
+
+                                <p:column headerText="Image Path">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{list.imagePath}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{list.imagePath}" style="width:100%" label="numChapters"/></f:facet>
+                                    </p:cellEditor>  
+                                </p:column>
+
+                                <p:column headerText="Publish Date">  
+
+                                    <p:calendar id="calendar" value="#{list.publishDate}" onchange="#{comicAdminController.onCellEdit()}" showOn="button">
+                                        <p:ajax event="dateSelect" update="@form" />
+                                    </p:calendar>    
+                                </p:column>
+
+                                <p:column headerText="Status">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{list.statusComic}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{list.statusComic}" style="width:100%" label="statusComic"/></f:facet>
+                                    </p:cellEditor>  
+                                    
+                                </p:column>
+                                
+                                <p:column headerText="Authors">
+                                    <p:dataTable id="authors" var="author" value="#{comicAdminController.listAuthorsComic(list)}" rowIndexVar="row" editable="true" editMode="cell">
+                                        <p:column>
+                                        <p:cellEditor>
+                                            <f:facet name="output"><h:outputText value="#{author.name}" /></f:facet>
+                                            <f:facet name="input"><p:inputText value="#{author.name}" style="width:100%" label="statusComic"/></f:facet>
+                                        </p:cellEditor>  
+
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:column>
+                                
+                                <p:column headerText="Genres">
+                                    <p:dataTable id="genre" var="genre" value="#{comicAdminController.listGenreComic(list)}" rowIndexVar="row" editable="true" editMode="cell">
+                                        <p:column>
+                                            <p:cellEditor>
+                                                <f:facet name="output"><h:outputText value="#{genre.name}" /></f:facet>
+                                                <f:facet name="input"><p:inputText value="#{genre.name}" style="width:100%" label="Genero"/></f:facet>
+                                            </p:cellEditor>  
+
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:column>
+                                
+                                <p:column headerText="Visible">
+                                    <p:selectBooleanCheckbox id="checkbox"  value="#{list.visible}"   itemLabel="Visible">
+                                        <p:ajax listener="#{comicAdminController.onCellEdit()}"/>
+                                    </p:selectBooleanCheckbox>
+                                </p:column>
+                                
+                                <p:column headerText="Edit">
+                                   
+                                    <p:commandButton value="Delete"  actionListener="#{comicAdminController.delete(row)}" update="tabla1"/>
+                                    <p:commandButton value="Edit Chapter" actionListener="#{comicAdminController.setComicSeleccionado(list)}" action="chapterAdmin" />
+                                </p:column>
+                                 <p:ajax event="cellEdit" oncomplete="onCellEdit()" />                            
+                            
+                            </p:dataTable>
+
+                            </h:form>  
+                            
+                               
+                           <h:form id="tabla2">
+   
+                           
+
+                                <p:panelGrid columns="3" id="pgr2" styleClass="createAccountPanel">
+                                    <p:outputLabel value="Title" for="title"/>
+                                    <p:inputText id="title" required="true" requiredMessage="Campo es obligatorio" value="#{comicAdminController.newComic.name}" label="Title"/>
+                                    <p:message for="title"/>
+
+                                    <p:outputLabel value="Status" for="status"/>
+                                    <p:inputText id="status" required="true" requiredMessage="Campo obligatorio" value="#{comicAdminController.newComic.statusComic}" label="Status"/>
+                                    <p:message for="status"/>
+                                    
+                                    <p:outputLabel value="Number of Chapters" for="nChapters"/>
+                                    <p:inputText id="nChapters" required="true" requiredMessage="Campo obligatorio" value="#{comicAdminController.newComic.numChapters}"  label="NChapters"/>
+                                    <p:message for="nChapters"/>
+
+                                    <p:outputLabel value="Image Path" for="image"/>
+                                    <p:inputText id="image" required="true" requiredMessage="Campo obligatorio" value="#{comicAdminController.newComic.imagePath}"  label="IPath"/>
+                                    <p:message for="image"/>
+
+                                    <p:outputLabel value="Publish Date - Day" for="publishDateDay"/>
+                                    <p:inputText id="publishDateDay" required="true" requiredMessage="Campo obligatorio" value="#{comicAdminController.day}"  label="PDateDay"/>
+                                    <p:message for="publishDateDay"/>
+                                    
+                                    <p:outputLabel value="Publish Date - Month" for="publishDateMonth"/>
+                                    <p:inputText id="publishDateMonth" required="true" requiredMessage="Campo obligatorio" value="#{comicAdminController.month}"  label="PDateMonth"/>
+                                    <p:message for="publishDateMonth"/>
+
+                                    <p:outputLabel value="Publish Date - Year" for="publishDateYear"/>
+                                    <p:inputText id="publishDateYear" required="true" requiredMessage="Campo obligatorio" value="#{comicAdminController.year}"  label="PDateYear"/>
+                                    <p:message for="publishDateYear"/>
+                                    
+                                    <p:outputLabel value="Authors " for="auth" id="aut"/>
+                                    <p:inputText id="auth" required="false" requiredMessage="Campo obligatorio" value="#{comicAdminController.newComicAuthor}"  label="Authors"/>
+                                    <p:message for="auth"/>
+                                    
+                                    <p:outputLabel value="Genre " for="gen"/>
+                                    <p:inputText id="gen" required="false" requiredMessage="Campo obligatorio" value="#{comicAdminController.newComicGenre}"  label="Genre"/>
+                                    <p:message for="auth"/>
+                                    
+                                    <p:column/>
+                                    <p:commandButton value="Guardar" actionListener="#{comicAdminController.save()}" update="pgr2"/>
+                                    <p:column/>
+
+                                    
+                                </p:panelGrid>
+                            </h:form>  
+
+                            
+                        </p:panelGrid>
+                    </p:fieldset>
+                
             </ui:define>
 
             <ui:define name="bottom">

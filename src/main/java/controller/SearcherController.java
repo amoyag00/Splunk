@@ -54,6 +54,16 @@ public class SearcherController implements Serializable{
     private List<ComicEntry> resultEntry;
     
     private Comic comicSelected;
+
+    private User userSelected;
+
+    public User getUserSelected() {
+        return userSelected;
+    }
+
+    public void setUserSelected(User userSelected) {
+        this.userSelected = userSelected;
+    }
     
     private boolean flag;
     

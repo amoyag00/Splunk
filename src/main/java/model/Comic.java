@@ -42,9 +42,7 @@ public class Comic implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date publishDate;
     
-    @Column(name="visible")
-    private boolean visible;
-    
+
     @Transient 
     private double globalScore;
 
@@ -59,15 +57,6 @@ public class Comic implements Serializable{
     public int getComicId() {
         return comicId;
     }
-
-    public boolean isVisible() {
-        return visible;
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
-
     public void setComicId(int comicId) {
         this.comicId = comicId;
     }

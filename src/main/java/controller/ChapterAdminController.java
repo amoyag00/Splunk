@@ -15,6 +15,7 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import model.Chapter;
 import model.Comic;
@@ -42,10 +43,24 @@ public class ChapterAdminController implements Serializable{
     
     private List<Chapter> chapterResults;
     
+    @Inject
+    private ComicAdminController adminController;
+
+    public ComicAdminController getAdminController() {
+        return adminController;
+    }
+
+    public void setAdminController(ComicAdminController adminController) {
+        this.adminController = adminController;
+    }
+    
     @PostConstruct
     public void init() {
-        prueba();
+        comic=adminController.getComicSeleccionado();
+        
         chapterCreated = new Chapter();
+        chapterResults = chapterEJB.list(comic);
+
     }
     
     public void prueba() {

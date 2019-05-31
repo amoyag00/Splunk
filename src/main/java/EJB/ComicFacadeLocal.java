@@ -39,5 +39,7 @@ public interface ComicFacadeLocal {
     
     List<Comic> searchBy(String match, Param param, Order order);
     
-    boolean isAdded(Comic comic, User user);    
+    boolean isAdded(Comic comic, User user);
+    
+    void update(List<Comic> comicList);
 }
