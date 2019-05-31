@@ -17,17 +17,19 @@
             </ui:define>
 
             <ui:define name="content">
-                <h:form>
+                <h:form id="form">
                     <!--
                             <p:commandButton value="Print comic list" actionListener="{homeController.dummyPrintList()}"/>
                             <h:inputTextarea id="theList" value=">{homeController.list}" /> -->
+                    
 
-                    <p:fieldset legend="Home">
+                    
+                    <p:fieldset legend="#{homeController.usuario.nickname}">
                         <p:panelGrid id="homeGrid" columns="2">
-
-                            <p:dataTable var="list" value="#{homeController.comicList}" rowIndexVar="row" editable="true" editMode="cell">
-
-                            <p:ajax event="cellEdit" listener="#{homeController.onCellEdit}" />                                
+                            
+                            <p:dataTable id="tablaHome" var="list" value="#{homeController.comicList}" rowIndexVar="row" editable="#{homeController.editable}" editMode="cell">
+                                <p:growl keepAlive="1000" id="cellEdit" severity="info, fatal" showDetail="true" showSummary="true" />
+                                <p:ajax event="cellEdit" listener="#{homeController.onCellEdit}"  update="cellEdit"/>                                
                                 <p:column headerText="Title">
                                     <h:outputText value="#{list.comic.name}" />
                                 </p:column>
@@ -40,18 +42,31 @@
                                 </p:column>
 
                                 <p:column headerText="Status">
-                                    <h:outputText value="#{list.comicStatus}" />
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{list.comicStatus}" /></f:facet>
+                                        <f:facet name="input">
+                                            <p:selectOneMenu id="lazy" value="#{list.comicStatus}" dynamic="true" style="width:125px" >
+                                                <f:selectItem itemLabel="Select One" itemValue=""/>
+                                                <f:selectItems value="#{homeController.statusComic}" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                    </p:cellEditor>  
                                 </p:column>
 
                                 <p:column headerText="Progress">
-                                    <h:outputText value="#{list.progress}" />
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{list.progress}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{list.progress}" style="width:100%" label="Progress"/></f:facet>
+                                    </p:cellEditor>  
+                                    
                                 </p:column>
-
+                                
+                                           
                                 <p:column headerText="Delete">
-                                    <p:commandButton value="Delete"  actionListener="#{homeController.deleteEntry(row)}"/>
+                                    <p:commandButton value="Delete" disabled="#{!homeController.editable}"  actionListener="#{homeController.deleteEntry(row)}" update="@form @form:pie" ajax="true"/>
                                 </p:column>
                             </p:dataTable>
-                            <p:chart type="pie" model="#{homeController.pieModel1}"/>
+                            <p:chart id="pie" type="pie" model="#{homeController.pieModel1}"/>
                           
                         </p:panelGrid>
                     </p:fieldset>

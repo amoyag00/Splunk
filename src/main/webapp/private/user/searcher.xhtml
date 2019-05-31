@@ -74,8 +74,7 @@
 
                             <p:panel header="#{user.nickname}" style="text-align:center">
                                 <h:panelGrid columns="1" style="width:100%">
-                                    <h:link outcome="" value="Ver perfil">
-                                    </h:link>
+                                    <p:commandButton value="Ver perfil" actionListener="#{searcherController.setUserSelected(user)}" action="home" />
                                 </h:panelGrid>
                             </p:panel>
                         </p:dataGrid> 

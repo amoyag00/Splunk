@@ -11,6 +11,7 @@ import model.User;
 import EJB.ComicEntryFacadeLocal;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.model.chart.PieChartModel;
 
@@ -25,8 +26,31 @@ public class HomeController implements Serializable{
     @EJB
     private ComicEntryFacadeLocal comicListEJB;
     
+    @Inject
+    private SearcherController searchController;
+    
     private List<ComicEntry>  comicList;
+    private String statusComic[] = new String[4];
+    private boolean editable=true;
+    
+    private User usuario;
 
+    public User getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(User usuario) {
+        this.usuario = usuario;
+    }
+    
+    public boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+    
     public List<ComicEntry> getComicList() {
         return comicList;
     }
@@ -47,10 +71,34 @@ public class HomeController implements Serializable{
     @PostConstruct
     public void init(){
         //TODO 
-       createPieModel1();
-       User user = new User(); 
-       user.setUserId(1); // FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user")
-       comicList=comicListEJB.getListOf(user);        
+       
+       usuario = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+       
+       if(searchController!=null){
+           if(searchController.getUserSelected()!=null){
+                if(!usuario.equals(searchController.getUserSelected())){
+
+                    editable = false;
+                    usuario=searchController.getUserSelected();
+                    searchController.setUserSelected(null);
+                }
+           }
+       }
+       
+       comicList=comicListEJB.getListOf(usuario);
+       statusComic[0] = "L";
+       statusComic[1] = "R";
+       statusComic[2] = "P";
+       statusComic[3] = "";
+       createPieModel1();        
+    }
+
+    public String[] getStatusComic() {
+        return statusComic;
+    }
+
+    public void setStatusComic(String[] statusComic) {
+        this.statusComic = statusComic;
     }
     
     public void editList(){
@@ -75,6 +123,8 @@ public class HomeController implements Serializable{
     public void deleteEntry(int row){
         //TODO delete this
         comicListEJB.remove(comicList.get(row));
+        comicList.remove(row);
+        createPieModel1();
     }
     
     /*public void dummyPrintList(){
@@ -96,6 +146,9 @@ public class HomeController implements Serializable{
     
     public String prettyStatus(String status){
         String prettyStatus="";
+        if (status==null){
+                status="";
+        }
         switch(status){
             case "L":
                 prettyStatus="Reading";
@@ -119,21 +172,55 @@ public class HomeController implements Serializable{
     private void createPieModel1() {
         pieModel1 = new PieChartModel();
  
-        pieModel1.set("Reading", 540);
-        pieModel1.set("Read", 325);
-        pieModel1.set("Plan to read", 702);
-        pieModel1.set("No specified", 421);
+        int rding=0;
+        int r=0;
+        int ptr=0;
+        int ns=0;
+        
+        for(int i=0;i<comicList.size();i++){
+            String status = comicList.get(i).getComicStatus();
+            if (status==null){
+                status="";
+            }
+            switch(status){
+                case "L":
+                    rding++;
+                    break;
+                case "R":
+                    r++;
+                    break;
+                case "P":
+                    ptr++;
+                    break;
+                default:
+                    ns++;
+            }
+        
+        }
+        
+        pieModel1.set("Reading", rding);
+        pieModel1.set("Read", r);
+        pieModel1.set("Plan to read", ptr);
+        pieModel1.set("No specified", ns);
         pieModel1.setLegendPosition("w");
         pieModel1.setShadow(true);
     }
     
-    public void onCellEdit(CellEditEvent event) {
-        Object oldValue = event.getOldValue();
-        Object newValue = event.getNewValue();
-         
-        if(newValue != null && !newValue.equals(oldValue)) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-        }
+    public void onCellEdit() {
+          
+          
+        System.out.println("////////////////////////");
+        
+        update(comicList);
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        comicList=comicListEJB.getListOf(user);
+        createPieModel1();
+                
+        
+
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Updated","");  
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+        
     }
 }
