@@ -16,16 +16,13 @@
 
             <ui:define name="content">
                 <h:form id="form">
-                   
-                    
-
-                    
+                    <p:growl keepAlive="1000" id="homeGrowl" severity="info, fatal" showDetail="true" showSummary="true" />
                     <p:fieldset legend="#{homeController.usuario.nickname}">
                         <p:panelGrid id="homeGrid" columns="2">
                             
                             <p:dataTable id="tablaHome" var="list" value="#{homeController.comicList}" rowIndexVar="row" editable="#{homeController.editable}" editMode="cell">
                                 <p:growl keepAlive="1000" id="cellEdit" severity="info, fatal" showDetail="true" showSummary="true" />
-                                <p:ajax event="cellEdit" listener="#{homeController.onCellEdit}"  update="cellEdit"/>                                
+                                <p:ajax event="cellEdit" listener="#{homeController.onCellEdit}"  update="cellEdit @form:homeGrowl"/>                                
                                 <p:column headerText="Titulo">
                                     <h:outputText value="#{list.comic.name}" />
                                 </p:column>
@@ -33,7 +30,7 @@
                                 <p:column headerText="Puntuacion">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{list.score}" /></f:facet>
-                                        <f:facet name="input"><p:inputText value="#{list.score}" styleClass="fullWidth" label="Score"/></f:facet>
+                                        <f:facet name="input"><p:inputNumber minValue="0" maxValue="100" value="#{list.score}" styleClass="fullWidth" label="Score"/></f:facet>
                                     </p:cellEditor>                                             
                                 </p:column>
 
@@ -46,7 +43,7 @@
                                                 <f:selectItem itemLabel="Pendiente" itemValue="P"/>
                                                 <f:selectItem itemLabel="Leido" itemValue="R"/>
                                                 <f:selectItem itemLabel="Leyendo" itemValue="L"/>
-                                                <p:ajax event="change" update=":form:pie" listener="#{homeController.createPieModel1()}"/>
+                                                <p:ajax event="change" update=":form:pie :form:homeGrowl" listener="#{homeController.createPieModel1()}"/>
                                                
                                             </p:selectOneMenu>
                                         </f:facet>
@@ -56,14 +53,14 @@
                                 <p:column headerText="Progreso">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{list.progress}" /></f:facet>
-                                        <f:facet name="input"><p:inputText value="#{list.progress}" styleClass="fullWidth" label="Progress"/></f:facet>
+                                        <f:facet name="input"><p:inputNumber minValue="0" maxValue="#{list.comic.numChapters}" value="#{list.progress}" styleClass="fullWidth" label="Progress"/></f:facet>
                                     </p:cellEditor>  
                                     
                                 </p:column>
                                 
                                            
                                 <p:column headerText="Eliminar">
-                                    <p:commandButton value="Delete" disabled="#{!homeController.editable}"  actionListener="#{homeController.deleteEntry(row)}" update="@form @form:pie" ajax="true"/>
+                                    <p:commandButton value="Delete" disabled="#{!homeController.editable}"  actionListener="#{homeController.deleteEntry(row)}" update="@form @form:pie @form:homeGrowl" ajax="true"/>
                                 </p:column>
                             </p:dataTable>
                             <p:chart id="pie" type="pie" model="#{homeController.pieModel1}"/>

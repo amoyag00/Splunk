@@ -116,27 +116,14 @@ public class HomeController implements Serializable{
     }
     
     public void deleteEntry(int row){
-        //TODO delete this
         comicListEJB.remove(comicList.get(row));
         comicList.remove(row);
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion","Entrada eliminada");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
         createPieModel1();
     }
     
-    public void editList(){
-        //TODO delete this
-   
-        comicList.get(0).setComicStatus("P");
-        comicList.get(0).setScore(9);
-        
-        comicList.get(1).setComicStatus("R");
-        comicList.get(1).setScore(87);
-        comicList.get(1).setProgress(87);
-        update(comicList);
 
-    }
-    
-    
-    
     public String prettyStatus(String status){
         String prettyStatus="";
         if (status==null){
@@ -160,6 +147,7 @@ public class HomeController implements Serializable{
     
     public void update(List<ComicEntry> comicList){
         comicListEJB.update(comicList);
+        
     }
 
     public void createPieModel1() {
@@ -200,18 +188,13 @@ public class HomeController implements Serializable{
     }
     
     public void onCellEdit() {
-          
-          
-       
         
         update(comicList);
         User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         comicList=comicListEJB.getListOf(user);
         createPieModel1();
                 
-        
-
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Updated","");  
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Entrada actualizada","");  
         FacesContext.getCurrentInstance().addMessage(null, msg);
         
         

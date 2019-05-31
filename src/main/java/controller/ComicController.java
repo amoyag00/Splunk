@@ -154,7 +154,7 @@ public class ComicController implements Serializable{
         String redirect="";
         if(this.chapterResults.get(0).equals(this.selectedChapter)
             || this.chapterResults.get(chapterResults.size()-1).equals(this.selectedChapter)){
-            redirect = "reader.xhtml";//Change for chapter xhtml
+            redirect = "reader.xhtml";
         }else{
             User user = (User)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user"); 
             Date expirationDate = user.getExpirationDate();
@@ -163,7 +163,7 @@ public class ComicController implements Serializable{
             
             
             if(diff>0){//User suscription has not expired
-                redirect="reader.xhtml"; //Change for chapter XHTML
+                redirect="reader.xhtml"; 
             }else{
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Info", "Su suscripción caducó el "+ dateToString(expirationDate))); 
