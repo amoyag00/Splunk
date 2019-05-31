@@ -31,6 +31,7 @@ public class HomeController implements Serializable{
     
     private List<ComicEntry>  comicList;
     private String statusComic[] = new String[4];
+    private String prettyStatusComic[] = new String[4];
     private boolean editable=true;
     
     private User usuario;
@@ -70,7 +71,6 @@ public class HomeController implements Serializable{
     
     @PostConstruct
     public void init(){
-        //TODO 
        
        usuario = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
        
@@ -90,15 +90,36 @@ public class HomeController implements Serializable{
        statusComic[1] = "R";
        statusComic[2] = "P";
        statusComic[3] = "";
+       prettyStatusComic[0] = "Leido";
+       prettyStatusComic[1] = "Leyendo";
+       prettyStatusComic[2] = "Pendiente";
+       prettyStatusComic[3] = "";
        createPieModel1();        
     }
 
+    public String[] getPrettyStatusComic() {
+        return prettyStatusComic;
+    }
+
+    public void setPrettyStatusComic(String[] prettyStatusComic) {
+        this.prettyStatusComic = prettyStatusComic;
+    }
+    
+    
+    
     public String[] getStatusComic() {
         return statusComic;
     }
 
     public void setStatusComic(String[] statusComic) {
         this.statusComic = statusComic;
+    }
+    
+    public void deleteEntry(int row){
+        //TODO delete this
+        comicListEJB.remove(comicList.get(row));
+        comicList.remove(row);
+        createPieModel1();
     }
     
     public void editList(){
@@ -114,35 +135,7 @@ public class HomeController implements Serializable{
 
     }
     
-    public void dummyDeleteEntry(){
-        //TODO delete this
-        
-        comicListEJB.remove(comicList.get(comicList.size()-1));
-    }
     
-    public void deleteEntry(int row){
-        //TODO delete this
-        comicListEJB.remove(comicList.get(row));
-        comicList.remove(row);
-        createPieModel1();
-    }
-    
-    /*public void dummyPrintList(){
-        //TODO delete this
-        list="";
-        User user = new User();
-        user.setUserId(1);
-        List<ComicEntry> comicList=comicListEJB.getListOf(user);
-        for(ComicEntry entry: comicList){
-            String strEntry=entry.getComic().getName() + "       "
-                    +entry.getScore()+"/100       "
-                    +prettyStatus(entry.getComicStatus())+ "       "
-                    +entry.getProgress()+" read of "+entry.getComic().getNumChapters()+"      "
-                    +"\n";
-            list+=strEntry;
-        }
-
-    }*/
     
     public String prettyStatus(String status){
         String prettyStatus="";
@@ -151,16 +144,16 @@ public class HomeController implements Serializable{
         }
         switch(status){
             case "L":
-                prettyStatus="Reading";
+                prettyStatus="Leyendo";
                 break;
             case "R":
-                prettyStatus="Read";
+                prettyStatus="Leido";
                 break;
             case "P":
-                prettyStatus="Plan to read";
+                prettyStatus="Pendiente";
                 break;
             default:
-                prettyStatus="No specified";
+                prettyStatus="Sin especificar";
         }
         return prettyStatus;
     }
@@ -169,7 +162,7 @@ public class HomeController implements Serializable{
         comicListEJB.update(comicList);
     }
 
-    private void createPieModel1() {
+    public void createPieModel1() {
         pieModel1 = new PieChartModel();
  
         int rding=0;
@@ -198,10 +191,10 @@ public class HomeController implements Serializable{
         
         }
         
-        pieModel1.set("Reading", rding);
-        pieModel1.set("Read", r);
-        pieModel1.set("Plan to read", ptr);
-        pieModel1.set("No specified", ns);
+        pieModel1.set("Leyendo", rding);
+        pieModel1.set("Leidos", r);
+        pieModel1.set("Pendientes", ptr);
+        pieModel1.set("Sin esecificar", ns);
         pieModel1.setLegendPosition("w");
         pieModel1.setShadow(true);
     }
@@ -209,7 +202,7 @@ public class HomeController implements Serializable{
     public void onCellEdit() {
           
           
-        System.out.println("////////////////////////");
+       
         
         update(comicList);
         User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");

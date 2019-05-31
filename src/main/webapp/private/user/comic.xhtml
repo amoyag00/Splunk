@@ -12,9 +12,7 @@
 
         <ui:composition template="./../../WEB-INF/templates/template.xhtml">
 
-            <ui:define name="top">
-                top
-            </ui:define>
+         
 
             <ui:define name="content">
                 <h:form>
@@ -72,17 +70,17 @@
                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
                                     rowsPerPageTemplate="6,12,16">
                             <p:growl keepAlive="1000" id="premiumGrowl" severity="info, fatal" showDetail="true" showSummary="true" />
-                            <p:panelGrid   style="width:1800px; border:none" >
+                            <p:panelGrid   styleClass="panelGridCenter" >
                              
-                                    <p:column style="width:33%;border:none;">
+                                    <p:column styleClass="third">
                                         <p:outputLabel value="Capitulo #{chapter.chapterNumber} #{chapter.chapterName}" /> 
                                     </p:column>
                                 
-                                    <p:column style="width:33%;border:none;">
+                                    <p:column styleClass="third">
                                         <p:outputLabel value="Añadido en #{comicController.dateToString(chapter.addedDate)}" /> 
                                     </p:column>
                                 
-                                    <p:column style="width:33%;border:none;">
+                                    <p:column styleClass="third">
                                         <p:commandButton  value="Leer" actionListener="#{comicController.setSelectedChapter(chapter)}" action="#{comicController.checkPremium()}" update="premiumGrowl"/> 
                                     </p:column>
                             </p:panelGrid>
