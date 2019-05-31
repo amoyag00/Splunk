@@ -109,3 +109,18 @@ html, body{
     width:25%;
 }
 
+.image{
+    height:350px;
+    width:250px;
+}
+
+.section{
+    margin:20px 0px 20px 0px;
+}
+
+.transparent.ui-panelgrid>*>tr,
+.transparent.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
+    background-color:inherit;
+}
+

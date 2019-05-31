@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import EJB.ChapterFacadeLocal;
@@ -19,10 +14,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import model.Chapter;
 import model.Comic;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
- * @author jack
+ * @author splunk
  */
 
 @Named
@@ -63,12 +59,6 @@ public class ChapterAdminController implements Serializable{
 
     }
     
-    public void prueba() {
-        List<Comic> tmp;
-        tmp = comicEJB.search("dragon ball");
-        comic = tmp.get(0);
-        chapterResults = chapterEJB.list(comic, false);
-    }
     
     public void selectChapter(Chapter chapter) {
         chapterSelected = chapter;
@@ -80,6 +70,7 @@ public class ChapterAdminController implements Serializable{
     }
     
     public void edit() {
+       
         chapterEJB.edit(chapterSelected);
     }
     
@@ -119,4 +110,5 @@ public class ChapterAdminController implements Serializable{
     public void setChapterCreated(Chapter chapterCreated) {
         this.chapterCreated = chapterCreated;
     }
+   
 }

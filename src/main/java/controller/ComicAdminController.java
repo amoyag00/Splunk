@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import EJB.AuthorFacadeLocal;
@@ -26,25 +21,25 @@ import model.Genre;
 
 /**
  *
- * @author Samuel
+ * @author splunk
  */
-@Named 
+@Named
 @SessionScoped
-public class ComicAdminController implements Serializable{
-    
+public class ComicAdminController implements Serializable {
+
     @EJB
     private ComicFacadeLocal comicEJB;
 
     @EJB
     private GenreFacadeLocal genreEJB;
-    
+
     @EJB
     private AuthorFacadeLocal authorEJB;
-    
-    private List<Comic>  comicList;
-    private List<Author> authorList; 
+
+    private List<Comic> comicList;
+    private List<Author> authorList;
     private List<Genre> genreList;
-    
+
     private Comic newComic;
     private int day;
     private int month;
@@ -63,9 +58,7 @@ public class ComicAdminController implements Serializable{
     public void setComicSeleccionado(Comic comicSeleccionado) {
         this.comicSeleccionado = comicSeleccionado;
     }
-    
-    
-    
+
     public ArrayList<String> getNewComicAuthorList() {
         return newComicAuthorList;
     }
@@ -130,7 +123,7 @@ public class ComicAdminController implements Serializable{
     public void setNewComic(Comic newComic) {
         this.newComic = newComic;
     }
-    
+
     public List<Comic> getComicList() {
         return comicList;
     }
@@ -154,37 +147,38 @@ public class ComicAdminController implements Serializable{
     public void setGenreList(List<Genre> genreList) {
         this.genreList = genreList;
     }
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         //TODO
-        comicList=comicEJB.findAll();
+        comicList = comicEJB.findAll();
         newComic = new Comic();
         comicSeleccionado = comicList.get(0);
 
     }
-    public void update(List<Comic> comicList){
+
+    public void update(List<Comic> comicList) {
         comicEJB.update(comicList);
     }
-    
-    public List<Author> listAuthorsComic(Comic comic){
-    
+
+    public List<Author> listAuthorsComic(Comic comic) {
+
         return authorEJB.list(comic);
-        
+
     }
-    
-    public List<Genre> listGenreComic(Comic comic){
-    
+
+    public List<Genre> listGenreComic(Comic comic) {
+
         return genreEJB.list(comic);
-        
+
     }
-    
-    public void setComicToChapter(int row){
-    
+
+    public void setComicToChapter(int row) {
+
         comicSeleccionado = comicList.get(row);
-        System.out.println(comicSeleccionado.getName());
+
     }
-    
+
     /*public void addAuthor(){
     
         //newComicAuthorList.add(newComicAuthor);
@@ -198,19 +192,18 @@ public class ComicAdminController implements Serializable{
         newComicGenreList.add(newComicGenre);
 
     }*/
-    
-    public void delete(int row){
-    
+    public void delete(int row) {
+
         comicEJB.remove(comicList.get(row));
-        
+
     }
-    
-    public void save(){
-        newComic.setPublishDate(new Date(year,month,day));
+
+    public void save() {
+        newComic.setPublishDate(new Date(year, month, day));
         comicEJB.create(newComic);
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion","Nuevo comic creado");  
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Nuevo comic creado");
         FacesContext.getCurrentInstance().addMessage(null, msg);
-       
+
         Author autor = new Author();
         autor.setName(newComicAuthor);
         autor.setCategory("Art & Script");
@@ -221,28 +214,22 @@ public class ComicAdminController implements Serializable{
         genero.setName(newComicGenre);
         genero.setComic(newComic);
         genreEJB.create(genero);
-        
+
     }
-    
-    public String dateToString(Date date){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'a las' HH:mm:ss", new Locale("es","ES"));
+
+    public String dateToString(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'a las' HH:mm:ss", new Locale("es", "ES"));
         return formatter.format(date);
     }
-    
+
     public void onCellEdit() {
 
+        update(comicList);
+        comicList = comicEJB.findAll();
 
-            System.out.println("////////////////////////");
-            System.out.println(comicList.get(0).getName()+"  "+comicList.get(0).isVisible());
-            
-            update(comicList);
-            comicList=comicEJB.findAll();
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Comic Updated");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
 
-
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion","Comic Updated");  
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-
-
-        }
+    }
 
 }
