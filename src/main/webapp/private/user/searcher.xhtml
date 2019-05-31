@@ -12,26 +12,23 @@
 
         <ui:composition template="./../../WEB-INF/templates/template.xhtml">
 
-            <ui:define name="top">
-                top
-            </ui:define>
+           
 
             <ui:define name="content">
                 <h:form id="formSearch">
-                    <h1>BUSCADOR</h1>
                     <p:inputText id="search" value="#{searcherController.textSearch}" required="true"/>
                     <p:selectOneMenu id="selection" value="#{searcherController.searchType}" style="width:125px">
                         <f:selectItem itemLabel="Comic" itemValue="comicSearch" />
                         <f:selectItem itemLabel="User" itemValue="userSearch" />
-
-                        <f:ajax event="change" execute="@this" listener="#{searcherController.changeResults}" render=":formResults:panel1 :formUsers:panel2"/>
+                        <f:ajax listener="#{searcherController.changeResults()}" render="formResults formUsers order"/>
+                        
                     </p:selectOneMenu>
                     
                     <p:selectOneMenu id="order" value="#{searcherController.orderType}" style="width:125px" >
                         <f:selectItem itemLabel="Asc" itemValue="asc" />
                         <f:selectItem itemLabel="Desc" itemValue="desc" />
 
-                        <f:selectItem itemLabel="Score" itemValue="scoreSearch" />
+                        <f:selectItem id="orderOpt" itemLabel="Score" itemValue="scoreSearch" itemDisabled="#{searcherController.flagUser}"/>
                     </p:selectOneMenu>
                    
                     
@@ -39,8 +36,7 @@
                 </h:form>
                     
                 <h:form id="formResults">
-                    <h:panelGroup id="panel1" rendered="true">
-                        <p:dataGrid   var="comic" value="#{searcherController.resultComics}" columns="3" layout="grid"
+                        <p:dataGrid rendered="#{searcherController.flagComic}"  var="comic" value="#{searcherController.resultComics}" columns="3" layout="grid"
                         rows="12" paginator="true" id="comicSearch"
                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="6,12,16">
@@ -57,13 +53,10 @@
                                 </h:panelGrid>
                             </p:panel>
                         </p:dataGrid>
-                    </h:panelGroup>
-                    
                 </h:form>
                     
                 <h:form id="formUsers">
-                    <h:panelGroup id="panel2" rendered="true">
-                       <p:dataGrid  var="user" value="#{searcherController.resultUsers}" columns="3" layout="grid"
+                       <p:dataGrid  rendered="#{searcherController.flagUser}" var="user" value="#{searcherController.resultUsers}" columns="3" layout="grid"
                         rows="12" paginator="true" id="userSearch"
                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="6,12,16">
@@ -78,14 +71,11 @@
                                 </h:panelGrid>
                             </p:panel>
                         </p:dataGrid> 
-                    </h:panelGroup>
                     
                 </h:form> 
             </ui:define>
 
-            <ui:define name="bottom">
-                bottom
-            </ui:define>
+           
 
         </ui:composition>
 

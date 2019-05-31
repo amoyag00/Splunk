@@ -37,7 +37,7 @@ public class ReviewAdminController implements Serializable{
     @PostConstruct
     public void init(){
         User user =userController.getSelectedUser();
-        this.reviews = reviewEJB.list(user);
+        this.reviews = reviewEJB.list(user, false);
         this.nickname = user.getNickname();
         
     }

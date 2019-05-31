@@ -59,7 +59,7 @@ public class ChapterAdminController implements Serializable{
         comic=adminController.getComicSeleccionado();
         
         chapterCreated = new Chapter();
-        chapterResults = chapterEJB.list(comic);
+        chapterResults = chapterEJB.list(comic,false);
 
     }
     
@@ -67,7 +67,7 @@ public class ChapterAdminController implements Serializable{
         List<Comic> tmp;
         tmp = comicEJB.search("dragon ball");
         comic = tmp.get(0);
-        chapterResults = chapterEJB.list(comic);
+        chapterResults = chapterEJB.list(comic, false);
     }
     
     public void selectChapter(Chapter chapter) {

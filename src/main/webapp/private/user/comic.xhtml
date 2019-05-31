@@ -18,9 +18,10 @@
 
             <ui:define name="content">
                 <h:form>
+                    <p:growl keepAlive="1000" id="addedReview" severity="info, fatal" showDetail="true" showSummary="true" />
                     <h:panelGrid columns="2" width="100%">
-                        <p:panel header="#{comicController.comic.name}" footer="Fecha de publicacion: #{comicController.comic.publishDate}">
-                            <h:panelGrid columns="3" cellpadding="10">
+                        <p:panel header="#{comicController.comic.name}" footer="Fecha de publicacion: #{comicController.dateToString(comicController.comic.publishDate)}">
+                            <h:panelGrid columns="3" cellpadding="10" >
                                 <p:graphicImage name="#{comicController.comic.imagePath}" height="400"/>
                                 <h:panelGrid columns="2">
                                     <h:outputLabel value="Puntuación global" />
@@ -31,23 +32,38 @@
                                     <h:outputLabel value="#{comicController.genres}"/>
                                     <h:outputLabel value="Autor: "/>
                                     <h:outputLabel value="#{comicController.authors}"/>
-                                    <p:commandButton value="Añadir" actionListener="#{comicController.addComic}" rendered="#{!comicController.isAdded}"/>
+                                    <p:commandButton id="addButton" value="Añadir" actionListener="#{comicController.addComic}" disabled="#{comicController.isAdded}" update="addButton"/>
                                 </h:panelGrid>
                             </h:panelGrid>
                         </p:panel>
 
-                        <p:fieldset legend="Reviews">
+                        <p:panel header="Reviews">
                             <p:dataGrid var="review" value="#{comicController.reviewResults}" columns="1" layout="grid"
-                                        rows="12" paginator="true" id="showReviews"
+                                        rows="12" paginator="true" id="showReviews" paginatorPosition="top"
                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
                                         rowsPerPageTemplate="6,12,16">
                                 <p:panel header="#{review.user.nickname}">
                                     <h:outputLabel value="#{review.reviewText}"/>
                                 </p:panel>
                             </p:dataGrid>
-                            <p:inputTextarea cols="50" rows="10" value="#{comicController.reviewText}"/>
-                            <p:commandButton value="Comentar" actionListener="#{comicController.addReview}"/>
-                        </p:fieldset>  
+                            
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column>
+                                        <p:inputTextarea cols="50" rows="10" value="#{comicController.reviewText}"/> 
+                                    </p:column>
+                                   
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:commandButton value="Comentar" actionListener="#{comicController.addReview}" update="addedReview"/>
+                                    </p:column>
+                                    
+                                </p:row>
+                            </p:panelGrid>
+                            
+                            
+                        </p:panel>  
                     </h:panelGrid>
 
                     <p:fieldset legend="Capitulos">
@@ -63,7 +79,7 @@
                                     </p:column>
                                 
                                     <p:column style="width:33%;border:none;">
-                                        <p:outputLabel value="Añadido en #{chapter.addedDate}" /> 
+                                        <p:outputLabel value="Añadido en #{comicController.dateToString(chapter.addedDate)}" /> 
                                     </p:column>
                                 
                                     <p:column style="width:33%;border:none;">
@@ -74,9 +90,7 @@
                     </p:fieldset>
                 </h:form>
             </ui:define>
-            <ui:define name="bottom">
-                bottom
-            </ui:define>
+           
 
         </ui:composition>
 

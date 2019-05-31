@@ -57,6 +57,7 @@ public class Comic implements Serializable{
     public int getComicId() {
         return comicId;
     }
+
     public void setComicId(int comicId) {
         this.comicId = comicId;
     }

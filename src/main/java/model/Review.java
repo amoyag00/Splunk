@@ -91,9 +91,6 @@ public class Review implements Serializable{
         this.reviewText = reviewText;
     }
 
-
-    
-
     @Override
     public String toString() {
         return "Review{" + "reviewId=" + reviewId + ", userId=" + user.toString() + ", comicId=" + comic.toString() + ", writtenDate=" + writtenDate + ", reviewText=" + reviewText + '}';
