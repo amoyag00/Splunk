@@ -32,8 +32,8 @@ public interface ReviewFacadeLocal {
 
     int count();
     
-    List<Review> list(Comic comic);
+    List<Review> list(Comic comic, boolean visibleOnly);
     
-    List<Review> list (User user);
+    List<Review> list (User user, boolean visibleOnly);
     
 }

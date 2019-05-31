@@ -36,7 +36,7 @@ public class ReviewFacade extends AbstractFacade<Review> implements ReviewFacade
     }
     
     @Override
-    public List<Review> list(Comic comic){
+    public List<Review> list(Comic comic, boolean visibleOnly){
         List<Review> reviews= new ArrayList<Review>();
         
         String queryStr;
@@ -46,7 +46,9 @@ public class ReviewFacade extends AbstractFacade<Review> implements ReviewFacade
             Query query = em.createQuery(queryStr);
             query.setParameter(1, comic.getComicId());
             reviews=query.getResultList();      
-            
+            if(visibleOnly){
+                queryStr+=" AND review.visible=1";
+            }
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Could not access to the database");
@@ -57,7 +59,7 @@ public class ReviewFacade extends AbstractFacade<Review> implements ReviewFacade
     }
     
     @Override
-    public List<Review> list(User user){
+    public List<Review> list(User user, boolean visibleOnly){
         List<Review> reviews= new ArrayList<Review>();
         
         String queryStr;
@@ -67,7 +69,9 @@ public class ReviewFacade extends AbstractFacade<Review> implements ReviewFacade
             Query query = em.createQuery(queryStr);
             query.setParameter(1, user.getUserId());
             reviews=query.getResultList();      
-            
+            if(visibleOnly){
+                queryStr+=" AND review.visible=1";
+            }
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Could not access to the database");

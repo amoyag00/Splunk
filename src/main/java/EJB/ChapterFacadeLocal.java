@@ -31,6 +31,6 @@ public interface ChapterFacadeLocal {
 
     int count();
     
-    List<Chapter> list(Comic comic);
+    List<Chapter> list(Comic comic, boolean visibleOnly);
     
 }

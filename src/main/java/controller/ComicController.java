@@ -91,10 +91,10 @@ public class ComicController implements Serializable{
     @PostConstruct
     public void init(){
         comic = searcher.getComicSelected();
-        reviewResults = reviewEJB.list(comic);
+        reviewResults = reviewEJB.list(comic, true);
         authorResults = authorEJB.list((comic));
         genreResults = genreEJB.list(comic);
-        chapterResults = chapterEJB.list(comic);
+        chapterResults = chapterEJB.list(comic, true);
         User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         isAdded = comicEJB.isAdded(comic, user);
         globalScore = Double.toString(entryEJB.getGlobalScore(comic));
@@ -121,6 +121,8 @@ public class ComicController implements Serializable{
         review.setVisible(true);
         review.setWrittenDate(new Date());
         reviewEJB.create(review);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Info", "Reseña añadida con éxito "));
     }
 
     public Review getReview() {
@@ -181,6 +183,7 @@ public class ComicController implements Serializable{
         comicEntry.setProgress(0);
         comicEntry.setUser(user);
         entryEJB.create(comicEntry);
+        isAdded=true;
     }
 
     public ComicEntry getComicEntry() {
