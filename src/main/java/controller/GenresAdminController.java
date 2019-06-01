@@ -48,6 +48,7 @@ public class GenresAdminController implements Serializable{
     public void create() {
         genreAdded.setComic(comic);
         genreEJB.create(genreAdded);
+        genresResults.add(genreAdded);
     }
     
     public void edit() {
@@ -56,6 +57,7 @@ public class GenresAdminController implements Serializable{
     
     public void remove(Genre genre) {
         genreEJB.remove(genre);
+        genresResults.remove(genre);
     }
 
     public GenreFacadeLocal getGenreEJB() {
