@@ -72,9 +72,6 @@ public class SearcherController implements Serializable{
     public void init(){
         flagUser=false;
         flagComic=true;
-        //TODO
-        /*System.out.println("entra search");
-        resultComics = comicEJB.searchOrder("dragon ball", Order.ASC);**/
     }
     
     
