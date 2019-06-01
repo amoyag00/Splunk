@@ -70,12 +70,9 @@ public class SearcherController implements Serializable {
     private boolean flagUser;
 
     @PostConstruct
-    public void init() {
-        flagUser = false;
-        flagComic = true;
-        //TODO
-        /*System.out.println("entra search");
-        resultComics = comicEJB.searchOrder("dragon ball", Order.ASC);**/
+    public void init(){
+        flagUser=false;
+        flagComic=true;
     }
 
     public void changeResults() {
@@ -130,6 +127,7 @@ public class SearcherController implements Serializable {
     public void viewComic(Comic comic) {
         comicSelected = comic;
     }
+<<<<<<< HEAD
 
     public void dummySearchComic() {
         //TODO delete this
@@ -168,6 +166,9 @@ public class SearcherController implements Serializable {
         }
     }*/
 
+=======
+    
+>>>>>>> adminGenres
     public List<ComicEntry> getResultEntry() {
         return resultEntry;
     }

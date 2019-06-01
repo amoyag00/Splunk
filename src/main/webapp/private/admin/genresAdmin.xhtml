@@ -11,6 +11,7 @@
 
             <ui:define name="content">
                 <h:form id="formGenres">
+                    <p:growl id="messages" showDetail="true" sticky="true"/>
                     <p:dataGrid id="gens" var="genre" value="#{genresAdminController.genresResults}" columns="1" layout="grid"
                                 rows="12" paginator="true"
                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
@@ -18,7 +19,12 @@
                         <p:panelGrid styleClass="panelGridCenter">
 
                             <p:column styleClass="third" >
-                                <p:outputLabel value="#{genre.name}" /> 
+                                <p:outputLabel value="#{genre.name}" />
+                            </p:column>
+                            
+                            <p:column styleClass="third" >
+                                <p:commandButton value="Editar genero" actionListener="#{genresAdminController.setGenreSelected(genre)}" oncomplete="PF('wedit').show();" update="formEdit"/>
+                                <p:commandButton value="Eliminar" actionListener="#{genresAdminController.remove(genre)}" update="gens"/>
                             </p:column>
                         </p:panelGrid>
                     </p:dataGrid>
@@ -27,16 +33,26 @@
                 
                 <p:dialog header="Añadir genero" widgetVar="wcreate">
                     <h:form id="formCreate">
-                        <p:panelGrid columns="2">
+                        <p:panelGrid id="gridCreate" columns="3">
                             <p:outputLabel value="Nombre:"/>
-                            <p:inputText value="#{genresAdminController.genreAdded.name}"/>
-                            <p:commandButton value="Añadir" actionListener="#{genresAdminController.create()}" oncomplete="PF('wcreate').hide();" update=":formGenres:gens"/>
+                            <p:inputText id="nameCreate" value="#{genresAdminController.genreAdded.name}" required="true" requiredMessage="Introduzca un nombre"/>
+                            <p:message for="nameCreate"/>
+                            <p:commandButton value="Añadir" actionListener="#{genresAdminController.create()}" oncomplete="if (!args.validationFailed)PF('wcreate').hide();" update=":formGenres:gens gridCreate :formGenres:messages"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+                
+                <p:dialog header="Editar genero" widgetVar="wedit">
+                    <h:form id="formEdit">
+                        <p:panelGrid id="gridEdit" columns="3">
+                            <p:outputLabel value="Nombre:"/>
+                            <p:inputText id="nameEdit" value="#{genresAdminController.genreSelected.name}" required="true" requiredMessage="Introduzca un nombre"/>
+                            <p:message for="nameEdit"/>
+                            <p:commandButton value="Editar" actionListener="#{genresAdminController.edit()}" oncomplete="if (!args.validationFailed)PF('wedit').hide();" update=":formGenres:gens gridEdit :formGenres:messages"/>
                         </p:panelGrid>
                     </h:form>
                 </p:dialog>
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

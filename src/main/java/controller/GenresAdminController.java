@@ -34,6 +34,8 @@ public class GenresAdminController implements Serializable{
     
     private Genre genreAdded;
     
+    private Genre genreSelected;
+    
     private List<Genre> genresResults;
     
     @PostConstruct
@@ -46,6 +48,16 @@ public class GenresAdminController implements Serializable{
     public void create() {
         genreAdded.setComic(comic);
         genreEJB.create(genreAdded);
+        genresResults.add(genreAdded);
+    }
+    
+    public void edit() {
+        genreEJB.edit(genreSelected);
+    }
+    
+    public void remove(Genre genre) {
+        genreEJB.remove(genre);
+        genresResults.remove(genre);
     }
 
     public GenreFacadeLocal getGenreEJB() {
@@ -54,6 +66,14 @@ public class GenresAdminController implements Serializable{
 
     public void setGenreEJB(GenreFacadeLocal genreEJB) {
         this.genreEJB = genreEJB;
+    }
+
+    public Genre getGenreSelected() {
+        return genreSelected;
+    }
+
+    public void setGenreSelected(Genre genreSelected) {
+        this.genreSelected = genreSelected;
     }
 
     public ComicAdminController getComicAdminController() {
