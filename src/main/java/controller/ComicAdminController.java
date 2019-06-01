@@ -50,6 +50,7 @@ public class ComicAdminController implements Serializable {
     private ArrayList<String> newComicGenreList;
 
     private Comic comicSeleccionado;
+    private Comic selected;
 
     public Comic getComicSeleccionado() {
         return comicSeleccionado;
@@ -73,6 +74,14 @@ public class ComicAdminController implements Serializable {
 
     public void setNewComicGenreList(ArrayList<String> newComicGenreList) {
         this.newComicGenreList = newComicGenreList;
+    }
+
+    public Comic getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Comic selected) {
+        this.selected = selected;
     }
 
     public String getNewComicAuthor() {

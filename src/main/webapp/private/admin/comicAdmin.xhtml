@@ -82,9 +82,9 @@
                                                 <f:facet name="output"><h:outputText value="#{genre.name}" /></f:facet>
                                                 <f:facet name="input"><p:inputText value="#{genre.name}" styleClass="fullWidth" label="Genero"/></f:facet>
                                             </p:cellEditor>  
-
                                         </p:column>
                                     </p:dataTable>
+                                    <p:commandButton value="Editar generos" actionListener="#{comicAdminController.setSelected(list)}" action="genresAdmin"/>
                                 </p:column>
 
                                 <p:column headerText="Visible">
