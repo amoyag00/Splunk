@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.Serializable;
@@ -16,18 +11,17 @@ import model.Chapter;
  *
  * @author Splunk
  */
-
-@Named 
+@Named
 @ViewScoped
-public class ReaderController implements Serializable{
-    
+public class ReaderController implements Serializable {
+
     @Inject
     private ComicController comicController;
 
     private Chapter chapter;
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         chapter = comicController.getSelectedChapter();
         //chapter.setContentPath("../../resources/chapters/"+chapter.getContentPath());
     }
@@ -39,7 +33,7 @@ public class ReaderController implements Serializable{
     public void setChapter(Chapter chapter) {
         this.chapter = chapter;
     }
-    
+
     public ComicController getComicController() {
         return comicController;
     }
@@ -48,5 +42,4 @@ public class ReaderController implements Serializable{
         this.comicController = comicController;
     }
 
-    
 }

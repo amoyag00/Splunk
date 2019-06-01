@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package EJB;
 
 import java.util.List;
@@ -13,7 +8,7 @@ import model.User;
 
 /**
  *
- * @author alex
+ * @author splunk
  */
 @Local
 public interface ReviewFacadeLocal {
@@ -31,9 +26,9 @@ public interface ReviewFacadeLocal {
     List<Review> findRange(int[] range);
 
     int count();
-    
+
     List<Review> list(Comic comic, boolean visibleOnly);
-    
-    List<Review> list (User user, boolean visibleOnly);
-    
+
+    List<Review> list(User user, boolean visibleOnly);
+
 }

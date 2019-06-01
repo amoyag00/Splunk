@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package EJB;
 
 import java.util.List;
@@ -15,7 +10,7 @@ import model.User;
 
 /**
  *
- * @author jack
+ * @author splunk
  */
 @Stateless
 public class MenuFacade extends AbstractFacade<Menu> implements MenuFacadeLocal {
@@ -31,17 +26,17 @@ public class MenuFacade extends AbstractFacade<Menu> implements MenuFacadeLocal 
     public MenuFacade() {
         super(Menu.class);
     }
-    
+
     @Override
-    public List<Menu> getMenus(User user){
-        List<Menu> listaMenus=null;
-        try{
-            String consulta="FROM Menu m WHERE m.rolId.rolId =?1";
+    public List<Menu> getMenus(User user) {
+        List<Menu> listaMenus = null;
+        try {
+            String consulta = "FROM Menu m WHERE m.rolId.rolId =?1";
             Query query = em.createQuery(consulta);
-            query.setParameter(1,user.getRol().getRolId());
+            query.setParameter(1, user.getRol().getRolId());
             listaMenus = query.getResultList();
-        }catch(Exception e){
-            e.printStackTrace();       
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return listaMenus;
     }

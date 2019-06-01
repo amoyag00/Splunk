@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.io.Serializable;
@@ -20,27 +15,28 @@ import javax.persistence.Table;
  * @author Splunk
  */
 @Entity
-@Table(name="MENUS")
-public class Menu implements Serializable{
+@Table(name = "MENUS")
+public class Menu implements Serializable {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int menuId;
-    
-    @Column(name="tipo")
+
+    @Column(name = "tipo")
     private String tipo;
-    
-    @JoinColumn(name="rolId")
+
+    @JoinColumn(name = "rolId")
     @ManyToOne
     private Rol rolId;
-    
-    @JoinColumn(name="menu_menuId")
+
+    @JoinColumn(name = "menu_menuId")
     @ManyToOne
     private Menu menu_menuId;
-    
-    @Column(name="url")
+
+    @Column(name = "url")
     private String url;
-    
-    @Column(name="nombre")
+
+    @Column(name = "nombre")
     private String nombre;
 
     public int getMenuId() {

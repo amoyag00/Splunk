@@ -1,4 +1,3 @@
-
 package model;
 
 import java.io.Serializable;
@@ -16,17 +15,18 @@ import javax.persistence.Table;
  * @author splunk
  */
 @Entity
-@Table(name="GENRES")
-public class Genre implements Serializable{
+@Table(name = "GENRES")
+public class Genre implements Serializable {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int genreId;
-    
-    @JoinColumn(name="comicId")
+
+    @JoinColumn(name = "comicId")
     @ManyToOne
     private Comic comic;
-    
-    @Column(name="name")
+
+    @Column(name = "name")
     private String name;
 
     public int getGenreId() {
@@ -70,13 +70,10 @@ public class Genre implements Serializable{
         }
         return true;
     }
-    
-    
+
     @Override
     public String toString() {
         return "Genre{" + "genreId=" + genreId + ", comic=" + comic + ", name=" + name + '}';
     }
-    
-    
-    
+
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package EJB;
 
 import EJB.AbstractFacade.Order;
@@ -32,14 +27,14 @@ public interface ComicEntryFacadeLocal {
     List<ComicEntry> findRange(int[] range);
 
     int count();
-    
+
     List<ComicEntry> getListOf(User user);
-    
+
     void update(List<ComicEntry> comicList);
-    
+
     boolean exists(ComicEntry entry);
-    
+
     double getGlobalScore(Comic comic);
-    
+
     List<ComicEntry> searchOrder(String match, boolean normalUser, Order order);
 }

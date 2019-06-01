@@ -42,11 +42,11 @@
                                 <p:column styleClass="fourth">
                                     <p:outputLabel value=" #{author.category}" /> 
                                 </p:column>
-                               
+
                                 <p:column styleClass="fourth">
                                     <p:commandButton value="Editar" actionListener="#{authorAdminController.setSelectedAuthor(author)}" oncomplete="PF('wedit').show();" update="results :formEdit @form:growl"/> 
                                 </p:column>
-                                
+
                                 <p:column  styleClass="fourth">
                                     <p:commandButton value="Eliminar" actionListener="#{authorAdminController.delete(author)}" update="results @form:growl"/> 
                                 </p:column>
@@ -58,7 +58,7 @@
                     </p:fieldset>
                 </h:form>
 
-              
+
                 <p:dialog header="Editar Autor" widgetVar="wedit">
                     <h:form id="formEdit">
                         <p:panelGrid styleClass="borderless">
@@ -76,7 +76,7 @@
                             </p:row>
 
                             <p:row>
-                                 <p:column>
+                                <p:column>
                                     <p:outputLabel value="Categoria" for="category"/>
                                 </p:column>
                                 <p:column>
@@ -96,7 +96,7 @@
                         </p:panelGrid>
                     </h:form>
                 </p:dialog>
-                
+
                 <p:dialog header="Añadir autor" widgetVar="wcreate">
                     <h:form id="formCreate">
                         <p:panelGrid styleClass="borderless">
@@ -114,7 +114,7 @@
                             </p:row>
 
                             <p:row>
-                                 <p:column>
+                                <p:column>
                                     <p:outputLabel value="Categoria" for="category"/>
                                 </p:column>
                                 <p:column>

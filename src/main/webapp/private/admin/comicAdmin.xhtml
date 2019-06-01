@@ -13,7 +13,7 @@
 
         <ui:composition template="./../../WEB-INF/templates/template.xhtml">
 
-          
+
             <ui:define name="content">
 
 
@@ -64,7 +64,7 @@
                                 </p:column>
 
                                 <p:column headerText="Autores">
-                                     <p:commandButton value="Editar autores" actionListener="#{comicAdminController.setComicSeleccionado(list)}" action="authorAdmin" />
+                                    <p:commandButton value="Editar autores" actionListener="#{comicAdminController.setComicSeleccionado(list)}" action="authorAdmin" />
                                 </p:column>
 
                                 <p:column headerText="Generos">
@@ -87,7 +87,7 @@
 
                                 <p:column headerText="Capitulos">
 
-                                   
+
                                     <p:commandButton value="Editar capitulos" actionListener="#{comicAdminController.setComicSeleccionado(list)}" action="chapterAdmin" />
                                 </p:column>
                                 <p:ajax event="cellEdit" oncomplete="onCellEdit()" />                            
@@ -95,7 +95,7 @@
                             </p:dataTable>
                             <p:commandButton value="Crear comic" oncomplete="PF('wcreate').show();" update="tabla2"/>
                         </h:form>  
-                        
+
                         <p:dialog header="Crear comic" widgetVar="wcreate">
                             <h:form id="tabla2">
                                 <p:panelGrid columns="3" id="pgr2" styleClass="createAccountPanel">
@@ -118,13 +118,13 @@
                                     <p:outputLabel value="Fecha de publicación" for="date"/>
                                     <p:calendar id="date" value="#{comicAdminController.newComic.publishDate}" showOn="button" required="true"/>
                                     <p:message for="date"/>
-                                    
+
                                     <p:outputLabel value="Visible " for="visible"/>
                                     <p:selectBooleanCheckbox id="visible" value="#{comicAdminController.newComic.visible}" itemLabel="Visible"/>
-                                    
-                                    
+
+
                                     <p:column/>
-                                        <p:commandButton value="Guardar" actionListener="#{comicAdminController.save()}" update=":tabla1:tablaComics :tabla2" oncomplete="if (!args.validationFailed)PF('wcreate').hide();"/>
+                                    <p:commandButton value="Guardar" actionListener="#{comicAdminController.save()}" update=":tabla1:tablaComics :tabla2" oncomplete="if (!args.validationFailed)PF('wcreate').hide();"/>
                                     <p:column/>
 
 

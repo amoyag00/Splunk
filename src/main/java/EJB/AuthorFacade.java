@@ -27,24 +27,24 @@ public class AuthorFacade extends AbstractFacade<Author> implements AuthorFacade
     public AuthorFacade() {
         super(Author.class);
     }
-    
+
     @Override
-    public List<Author> list(Comic comic){
-        List<Author> authors= new ArrayList<Author>();
+    public List<Author> list(Comic comic) {
+        List<Author> authors = new ArrayList<Author>();
         String queryStr;
-        
-        try{
-            queryStr="FROM Author author WHERE author.comic.comicId=?1";
+
+        try {
+            queryStr = "FROM Author author WHERE author.comic.comicId=?1";
             Query query = em.createQuery(queryStr);
             query.setParameter(1, comic.getComicId());
-            authors=query.getResultList();      
-            
-        }catch(Exception e){
+            authors = query.getResultList();
+
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Could not access to the database");
         }
-        
+
         return authors;
     }
-    
+
 }

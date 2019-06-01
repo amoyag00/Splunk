@@ -20,53 +20,54 @@ import model.Comic;
  */
 @Named
 @ViewScoped
-public class AuthorAdminController implements Serializable{
+public class AuthorAdminController implements Serializable {
+
     @EJB
     AuthorFacadeLocal authorEJB;
-    
+
     @Inject
     private ComicAdminController comicAdminController;
-    
+
     private Comic comic;
-    
+
     private List<Author> authors;
-    
+
     private List<Author> allAuthors;
-    
+
     private Author newAuthor;
-    
+
     private Author selectedAuthor;
-    
+
     @PostConstruct
-    public void init(){
-      this.comic = comicAdminController.getComicSeleccionado();
-      this.authors = comicAdminController.getAuthorList();
-      this.allAuthors=authorEJB.findAll();
-      this.newAuthor= new Author();
-     
+    public void init() {
+        this.comic = comicAdminController.getComicSeleccionado();
+        this.authors = comicAdminController.getAuthorList();
+        this.allAuthors = authorEJB.findAll();
+        this.newAuthor = new Author();
+
     }
-    
-    public void delete(Author author){
+
+    public void delete(Author author) {
         authorEJB.remove(author);
         authors.remove(author);
-        
+
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Autor eliminado");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
-    public void edit(){
+
+    public void edit() {
         authorEJB.edit(selectedAuthor);
-        
+
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Autor editado");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
-    public void create(){
+
+    public void create() {
         newAuthor.setComic(comic);
         authorEJB.create(newAuthor);
         authors.add(newAuthor);
         newAuthor = new Author();
-        
+
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Autor creado");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
@@ -87,7 +88,6 @@ public class AuthorAdminController implements Serializable{
         this.newAuthor = newAuthor;
     }
 
-    
     public List<Author> getAllAuthors() {
         return allAuthors;
     }
@@ -95,8 +95,6 @@ public class AuthorAdminController implements Serializable{
     public void setAllAuthors(List<Author> allAuthors) {
         this.allAuthors = allAuthors;
     }
-    
-   
 
     public Comic getComic() {
         return comic;
@@ -113,7 +111,5 @@ public class AuthorAdminController implements Serializable{
     public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
-    
-    
-    
+
 }

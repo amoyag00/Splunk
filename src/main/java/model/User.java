@@ -18,37 +18,37 @@ import javax.persistence.Transient;
  *
  * @author splunk
  */
-
 @Entity
-@Table(name="USERS")
-public class User implements Serializable{
+@Table(name = "USERS")
+public class User implements Serializable {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
-    
-    @Column(name="nickname")
+
+    @Column(name = "nickname")
     private String nickname;
-    
-    @Column(name="pass")
+
+    @Column(name = "pass")
     private String password;
-    
+
     @Transient
     private String password2;
-    
-    @JoinColumn(name="rol")
+
+    @JoinColumn(name = "rol")
     @ManyToOne
     private Rol rol;
-    
-    @Column(name="email")
+
+    @Column(name = "email")
     private String email;
-    
-    @Column(name="private")
+
+    @Column(name = "private")
     private boolean isPrivate;
-    
-    @Column(name="banned")
+
+    @Column(name = "banned")
     private boolean banned;
-    
-    @Column(name="expirationDate")
+
+    @Column(name = "expirationDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date expirationDate;
 
@@ -100,7 +100,6 @@ public class User implements Serializable{
         this.banned = banned;
     }
 
-    
     public Date getExpirationDate() {
         return expirationDate;
     }
@@ -124,9 +123,7 @@ public class User implements Serializable{
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
-    
+
     @Override
     public String toString() {
         return "User{" + "userId=" + userId + ", nickname=" + nickname + ", password=" + password + ", userType=" + rol.toString() + ", isPrivate=" + isPrivate + ", expirationDate=" + expirationDate + '}';
@@ -155,5 +152,5 @@ public class User implements Serializable{
             return false;
         }
         return true;
-    }  
+    }
 }

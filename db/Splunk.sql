@@ -1,56 +1,47 @@
--- MySQL dump 10.13  Distrib 5.7.25, for Linux (x86_64)
---
--- Host: localhost    Database: Splunk
--- ------------------------------------------------------
--- Server version	5.7.25-0ubuntu0.16.04.2
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Versión del servidor:         5.7.26-0ubuntu0.16.04.1 - (Ubuntu)
+-- SO del servidor:              Linux
+-- HeidiSQL Versión:             9.4.0.5189
+-- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Table structure for table `AUTHORS`
---
 
-DROP TABLE IF EXISTS `AUTHORS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `AUTHORS` (
+-- Volcando estructura de base de datos para Splunk
+CREATE DATABASE IF NOT EXISTS `Splunk` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `Splunk`;
+
+-- Volcando estructura para tabla Splunk.AUTHORS
+CREATE TABLE IF NOT EXISTS `AUTHORS` (
   `authorId` int(11) NOT NULL AUTO_INCREMENT,
   `comicId` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `category` varchar(50) NOT NULL,
   PRIMARY KEY (`authorId`),
   KEY `comicId` (`comicId`),
-  CONSTRAINT `AUTHORS_ibfk_1` FOREIGN KEY (`comicId`) REFERENCES `COMICS` (`comicId`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  CONSTRAINT `AUTHORS_ibfk_1` FOREIGN KEY (`comicId`) REFERENCES `COMICS` (`comicId`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `AUTHORS`
---
-
-LOCK TABLES `AUTHORS` WRITE;
+-- Volcando datos para la tabla Splunk.AUTHORS: ~7 rows (aproximadamente)
+DELETE FROM `AUTHORS`;
 /*!40000 ALTER TABLE `AUTHORS` DISABLE KEYS */;
-INSERT INTO `AUTHORS` VALUES (1,1,'Akira Toriyama','Art & Script'),(2,2,'Masashi Kishimoto','Art & Script'),(3,3,'Eiichiro Oda','Art'),(4,3,'Eiichiro Oda','Script'),(5,4,'Takehiko Inoue','Art & Script'),(7,5,'Kohei Horikoshi','Art & Script');
+INSERT INTO `AUTHORS` (`authorId`, `comicId`, `name`, `category`) VALUES
+	(2, 2, 'Masashi Kishimoto', 'Art & Script'),
+	(3, 3, 'Eiichiro Oda', 'Art'),
+	(4, 3, 'Eiichiro Oda', 'Script'),
+	(5, 4, 'Takehiko Inoue', 'Art & Script'),
+	(7, 5, 'Kohei Horikoshi', 'Art & Script'),
+	(11, 1, 'Akira Toriyama', 'Dibujo y guión'),
+	(16, 12, 'Akira Toriyama', 'Dibujo y guión');
 /*!40000 ALTER TABLE `AUTHORS` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `CHAPTERS`
---
-
-DROP TABLE IF EXISTS `CHAPTERS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `CHAPTERS` (
+-- Volcando estructura para tabla Splunk.CHAPTERS
+CREATE TABLE IF NOT EXISTS `CHAPTERS` (
   `chapterId` int(11) NOT NULL AUTO_INCREMENT,
   `comicId` int(11) NOT NULL,
   `chapterNumber` int(11) NOT NULL,
@@ -61,27 +52,32 @@ CREATE TABLE `CHAPTERS` (
   PRIMARY KEY (`chapterId`),
   KEY `comicId` (`comicId`),
   CONSTRAINT `CHAPTERS_ibfk_1` FOREIGN KEY (`comicId`) REFERENCES `COMICS` (`comicId`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `CHAPTERS`
---
-
-LOCK TABLES `CHAPTERS` WRITE;
+-- Volcando datos para la tabla Splunk.CHAPTERS: ~15 rows (aproximadamente)
+DELETE FROM `CHAPTERS`;
 /*!40000 ALTER TABLE `CHAPTERS` DISABLE KEYS */;
-INSERT INTO `CHAPTERS` VALUES (1,1,1,'2019-04-16 19:17:55','dragonball/dragonBall1.pdf','Bloomers and the Monkey King',NULL),(2,1,2,'2019-04-16 19:18:31','dragonball/dragonBall2.pdf','No Balls!',NULL),(4,1,3,'2019-04-16 19:19:20','dragonball/dragonBall3.pdf','Sea Monkeys!',NULL),(5,2,1,'2019-04-16 19:20:17','naruto/naruto1.pdf','Uzumaki Naruto!',NULL),(7,2,2,'2019-04-16 19:21:08','naruto/naruto2.pdf','Konohamaru!',NULL),(8,2,3,'2019-04-16 19:21:22','naruto/naruto3.pdf','Sasuke Uchiha!!',NULL),(10,3,1,'2019-04-16 19:23:22','onePiece/onePiece1.pdf','Romance Down',NULL),(11,3,2,'2019-04-16 19:25:20','onePiece/onePiece2.pdf','That Guy, Straw Hat Luffy',NULL),(12,3,3,'2019-04-16 19:25:39','onePiece/onePiece3.pdf','Introducing Pirate Hunter Zoro',NULL),(13,4,1,'2019-04-16 19:26:24','vagabond/vagabond1.pdf','Shinmen Takezo',NULL),(15,4,2,'2019-04-16 19:26:49','vagabond/vagabond2.pdf','Akemi',NULL),(16,4,3,'2019-04-16 19:27:00','vagabond/vagabond3.pdf','Oko',NULL),(17,5,1,'2019-04-16 19:27:55','bokuNoHero/bokuNoHero1.pdf','Izuku Midoriya: Origin',NULL),(18,5,2,'2019-04-16 19:28:15','bokuNoHero/bokuNoHero2.pdf','Roaring muscles',NULL),(19,5,3,'2019-04-16 19:28:30','bokuNoHero/bokuNoHero3.pdf','Entrance exam',NULL);
+INSERT INTO `CHAPTERS` (`chapterId`, `comicId`, `chapterNumber`, `addedDate`, `contentPath`, `chapterName`, `visible`) VALUES
+	(1, 1, 1, '2019-04-01 00:00:00', 'dragonball/dragonBall1.pdf', 'Bloomer And the Monkey King', b'0'),
+	(2, 1, 2, '2019-04-16 19:18:31', 'dragonball/dragonBall2.pdf', 'No Balls!', b'1'),
+	(4, 1, 3, '2019-04-16 19:19:20', 'dragonball/dragonBall3.pdf', 'Sea Monkeys!', b'1'),
+	(5, 2, 1, '2019-04-16 19:20:17', 'naruto/naruto1.pdf', 'Uzumaki Naruto!', b'1'),
+	(7, 2, 2, '2019-04-16 19:21:08', 'naruto/naruto2.pdf', 'Konohamaru!', b'1'),
+	(8, 2, 3, '2019-04-16 19:21:22', 'naruto/naruto3.pdf', 'Sasuke Uchiha!!', b'1'),
+	(10, 3, 1, '2019-04-16 19:23:22', 'onePiece/onePiece1.pdf', 'Romance Down', b'1'),
+	(11, 3, 2, '2019-04-16 19:25:20', 'onePiece/onePiece2.pdf', 'That Guy, Straw Hat Luffy', b'1'),
+	(12, 3, 3, '2019-04-16 19:25:39', 'onePiece/onePiece3.pdf', 'Introducing Pirate Hunter Zoro', b'1'),
+	(13, 4, 1, '2019-04-16 19:26:24', 'vagabond/vagabond1.pdf', 'Shinmen Takezo', b'1'),
+	(15, 4, 2, '2019-04-16 19:26:49', 'vagabond/vagabond2.pdf', 'Akemi', b'1'),
+	(16, 4, 3, '2019-04-16 19:27:00', 'vagabond/vagabond3.pdf', 'Oko', b'1'),
+	(17, 5, 1, '2019-04-16 19:27:55', 'bokuNoHero/bokuNoHero1.pdf', 'Izuku Midoriya: Origin', b'1'),
+	(18, 5, 2, '2019-04-16 19:28:15', 'bokuNoHero/bokuNoHero2.pdf', 'Roaring muscles', b'1'),
+	(19, 5, 3, '2019-04-16 19:28:30', 'bokuNoHero/bokuNoHero3.pdf', 'Entrance exam', b'1'),
+	(20, 1, 4, '2019-05-15 00:00:00', NULL, 'Nuevo cap', b'1');
 /*!40000 ALTER TABLE `CHAPTERS` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `COMICS`
---
-
-DROP TABLE IF EXISTS `COMICS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `COMICS` (
+-- Volcando estructura para tabla Splunk.COMICS
+CREATE TABLE IF NOT EXISTS `COMICS` (
   `comicId` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   `numberChapters` smallint(6) DEFAULT NULL,
@@ -90,54 +86,49 @@ CREATE TABLE `COMICS` (
   `imagePath` varchar(500) DEFAULT NULL,
   `visible` bit(1) DEFAULT NULL,
   PRIMARY KEY (`comicId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `COMICS`
---
-
-LOCK TABLES `COMICS` WRITE;
+-- Volcando datos para la tabla Splunk.COMICS: ~6 rows (aproximadamente)
+DELETE FROM `COMICS`;
 /*!40000 ALTER TABLE `COMICS` DISABLE KEYS */;
-INSERT INTO `COMICS` VALUES (1,'Dragon Ball',519,'finished','2019-04-16 13:24:22','img/dragonBall.jpg',NULL),(2,'Naruto',700,'finished','2019-04-16 13:24:54','img/Naruto.jpg',NULL),(3,'One Piece',939,'publishing','2019-04-16 13:25:11','img/OnePiece.jpg',NULL),(4,'Vagabond',327,'hiatus','2019-04-16 13:26:22','img/Vagabond.jpg',NULL),(5,'Boku no hero academia',224,'publishing','2019-04-16 13:28:56','img/BokuNoHero.jpg',NULL);
+INSERT INTO `COMICS` (`comicId`, `name`, `numberChapters`, `statusComic`, `publishDate`, `imagePath`, `visible`) VALUES
+	(1, 'Dragon Ball', 519, 'finished', '2019-04-16 00:00:00', 'img/dragonBall.jpg', b'1'),
+	(2, 'Naruto', 700, 'finished', '2019-04-16 00:00:00', 'img/Naruto.jpg', b'1'),
+	(3, 'One Piece', 939, 'publishing', '2019-04-16 00:00:00', 'img/OnePiece.jpg', b'1'),
+	(4, 'Vagabond', 327, 'hiatus', '2019-04-16 00:00:00', 'img/Vagabond.jpg', b'1'),
+	(5, 'Boku no hero academia', 224, 'publishing', '2019-04-16 00:00:00', 'img/BokuNoHero.jpg', b'1'),
+	(12, 'Dragon2', 300, 'Acabado', '2019-06-01 00:00:00', 'img/dragonBall.jpg', b'1');
 /*!40000 ALTER TABLE `COMICS` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `GENRES`
---
-
-DROP TABLE IF EXISTS `GENRES`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `GENRES` (
+-- Volcando estructura para tabla Splunk.GENRES
+CREATE TABLE IF NOT EXISTS `GENRES` (
   `genreId` int(11) NOT NULL AUTO_INCREMENT,
   `comicId` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`genreId`),
   KEY `comicId` (`comicId`),
-  CONSTRAINT `GENRES_ibfk_1` FOREIGN KEY (`comicId`) REFERENCES `COMICS` (`comicId`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  CONSTRAINT `GENRES_ibfk_1` FOREIGN KEY (`comicId`) REFERENCES `COMICS` (`comicId`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `GENRES`
---
-
-LOCK TABLES `GENRES` WRITE;
+-- Volcando datos para la tabla Splunk.GENRES: ~10 rows (aproximadamente)
+DELETE FROM `GENRES`;
 /*!40000 ALTER TABLE `GENRES` DISABLE KEYS */;
-INSERT INTO `GENRES` VALUES (1,1,'adventures'),(2,2,'adventures'),(3,3,'adventures'),(4,4,'adventures'),(5,5,'adventures'),(7,1,'fighting'),(8,2,'ninjas'),(10,4,'samurais'),(11,3,'pirates'),(12,5,'superheros');
+INSERT INTO `GENRES` (`genreId`, `comicId`, `name`) VALUES
+	(1, 1, 'adventures'),
+	(2, 2, 'adventures'),
+	(3, 3, 'adventures'),
+	(4, 4, 'adventures'),
+	(5, 5, 'adventures'),
+	(7, 1, 'fighting'),
+	(8, 2, 'ninjas'),
+	(10, 4, 'samurais'),
+	(11, 3, 'pirates'),
+	(12, 5, 'superheros'),
+	(16, 1, 'a');
 /*!40000 ALTER TABLE `GENRES` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `LISTS`
---
-
-DROP TABLE IF EXISTS `LISTS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `LISTS` (
+-- Volcando estructura para tabla Splunk.LISTS
+CREATE TABLE IF NOT EXISTS `LISTS` (
   `listId` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) NOT NULL,
   `comicId` int(11) NOT NULL,
@@ -150,27 +141,28 @@ CREATE TABLE `LISTS` (
   KEY `userId` (`userId`),
   CONSTRAINT `LISTS_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `USERS` (`userId`),
   CONSTRAINT `LISTS_ibfk_2` FOREIGN KEY (`comicId`) REFERENCES `COMICS` (`comicId`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `LISTS`
---
-
-LOCK TABLES `LISTS` WRITE;
+-- Volcando datos para la tabla Splunk.LISTS: ~12 rows (aproximadamente)
+DELETE FROM `LISTS`;
 /*!40000 ALTER TABLE `LISTS` DISABLE KEYS */;
-INSERT INTO `LISTS` VALUES (1,1,1,'P',9,87,'2019-04-16 13:33:49'),(9,2,1,NULL,50,NULL,'2019-04-17 01:08:08'),(10,2,2,NULL,40,NULL,'2019-04-17 01:08:19'),(11,2,3,NULL,90,NULL,'2019-04-17 01:08:25'),(12,2,4,NULL,100,NULL,'2019-04-17 01:08:32'),(13,2,5,NULL,20,NULL,'2019-04-17 01:08:39'),(14,3,1,NULL,10,NULL,'2019-04-17 01:08:48'),(15,3,2,NULL,35,NULL,'2019-04-17 01:08:59'),(16,3,3,NULL,75,NULL,'2019-04-17 01:09:08'),(17,3,4,NULL,80,NULL,'2019-04-17 01:09:16'),(19,3,5,NULL,98,NULL,'2019-04-17 01:11:52'),(20,1,3,'P',50,40,'2019-04-17 13:33:27');
+INSERT INTO `LISTS` (`listId`, `userId`, `comicId`, `comicStatus`, `score`, `progress`, `addedDate`) VALUES
+	(9, 2, 1, NULL, 50, NULL, '2019-04-17 01:08:08'),
+	(10, 2, 2, NULL, 40, NULL, '2019-04-17 01:08:19'),
+	(11, 2, 3, NULL, 90, NULL, '2019-04-17 01:08:25'),
+	(12, 2, 4, NULL, 100, NULL, '2019-04-17 01:08:32'),
+	(13, 2, 5, NULL, 20, NULL, '2019-04-17 01:08:39'),
+	(14, 3, 1, NULL, 10, NULL, '2019-04-17 01:08:48'),
+	(15, 3, 2, NULL, 35, NULL, '2019-04-17 01:08:59'),
+	(16, 3, 3, NULL, 75, NULL, '2019-04-17 01:09:08'),
+	(17, 3, 4, NULL, 80, NULL, '2019-04-17 01:09:16'),
+	(19, 3, 5, NULL, 98, NULL, '2019-04-17 01:11:52'),
+	(29, 1, 5, 'R', 0, 0, '2019-05-31 11:29:00'),
+	(33, 1, 1, 'R', 30, 519, '2019-06-01 00:42:13');
 /*!40000 ALTER TABLE `LISTS` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `MENUS`
---
-
-DROP TABLE IF EXISTS `MENUS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `MENUS` (
+-- Volcando estructura para tabla Splunk.MENUS
+CREATE TABLE IF NOT EXISTS `MENUS` (
   `menuId` int(11) NOT NULL AUTO_INCREMENT,
   `tipo` enum('S','I') DEFAULT NULL,
   `rolId` int(11) DEFAULT NULL,
@@ -182,27 +174,21 @@ CREATE TABLE `MENUS` (
   KEY `menu_menuId` (`menu_menuId`),
   CONSTRAINT `MENUS_ibfk_1` FOREIGN KEY (`rolId`) REFERENCES `ROL` (`rolId`),
   CONSTRAINT `MENUS_ibfk_2` FOREIGN KEY (`menu_menuId`) REFERENCES `MENUS` (`menuId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `MENUS`
---
-
-LOCK TABLES `MENUS` WRITE;
+-- Volcando datos para la tabla Splunk.MENUS: ~5 rows (aproximadamente)
+DELETE FROM `MENUS`;
 /*!40000 ALTER TABLE `MENUS` DISABLE KEYS */;
-INSERT INTO `MENUS` VALUES (1,'I',1,NULL,'/private/user/home.xhtml','Home'),(2,'I',1,NULL,'/private/user/searcher.xhtml','Buscar'),(3,'I',1,NULL,'/private/user/premium.xhtml','Premium'),(4,'I',2,NULL,'/private/admin/user.xhtml','Usuarios'),(5,'I',2,NULL,'/private/admin/comics.xhtml','Comics');
+INSERT INTO `MENUS` (`menuId`, `tipo`, `rolId`, `menu_menuId`, `url`, `nombre`) VALUES
+	(1, 'I', 1, NULL, '/private/user/home.xhtml', 'Home'),
+	(2, 'I', 1, NULL, '/private/user/searcher.xhtml', 'Buscar'),
+	(3, 'I', 1, NULL, '/private/user/premium.xhtml', 'Premium'),
+	(4, 'I', 2, NULL, '/private/admin/userAdmin.xhtml', 'Usuarios'),
+	(5, 'I', 2, NULL, '/private/admin/comicAdmin.xhtml', 'Comics');
 /*!40000 ALTER TABLE `MENUS` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `REVIEWS`
---
-
-DROP TABLE IF EXISTS `REVIEWS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `REVIEWS` (
+-- Volcando estructura para tabla Splunk.REVIEWS
+CREATE TABLE IF NOT EXISTS `REVIEWS` (
   `reviewId` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) NOT NULL,
   `comicId` int(11) NOT NULL,
@@ -214,51 +200,45 @@ CREATE TABLE `REVIEWS` (
   KEY `comicId` (`comicId`),
   CONSTRAINT `REVIEWS_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `USERS` (`userId`),
   CONSTRAINT `REVIEWS_ibfk_2` FOREIGN KEY (`comicId`) REFERENCES `COMICS` (`comicId`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `REVIEWS`
---
-
-LOCK TABLES `REVIEWS` WRITE;
+-- Volcando datos para la tabla Splunk.REVIEWS: ~13 rows (aproximadamente)
+DELETE FROM `REVIEWS`;
 /*!40000 ALTER TABLE `REVIEWS` DISABLE KEYS */;
-INSERT INTO `REVIEWS` VALUES (1,1,1,'2019-04-16 22:34:09','Nice',NULL),(2,1,2,'2019-04-16 22:34:18','Nice!',NULL),(3,1,3,'2019-04-16 22:34:25','Nice!!',NULL),(4,1,4,'2019-04-16 22:34:30','Nice!!!',NULL),(5,1,5,'2019-04-16 22:34:35','Nice!!!!',NULL),(6,2,1,'2019-04-16 22:34:46','Wow',NULL),(7,2,2,'2019-04-16 22:34:51','Wow!',NULL),(8,2,3,'2019-04-16 22:35:06','Wow!!',NULL),(9,2,4,'2019-04-16 22:35:10','Wow!!!',NULL),(10,2,5,'2019-04-16 22:35:15','Wow!!!!',NULL);
+INSERT INTO `REVIEWS` (`reviewId`, `userId`, `comicId`, `writtenDate`, `reviewText`, `visible`) VALUES
+	(1, 1, 1, '2019-06-06 00:00:00', 'Nice comics', b'1'),
+	(2, 1, 2, '2019-04-16 22:34:18', 'Nice!', b'1'),
+	(3, 1, 3, '2019-04-16 22:34:25', 'Nice!!', b'1'),
+	(4, 1, 4, '2019-04-16 22:34:30', 'Nice!!!', b'1'),
+	(5, 1, 5, '2019-04-16 22:34:35', 'Nice!!!!', b'1'),
+	(6, 2, 1, '2019-04-16 22:34:46', 'Wow', b'1'),
+	(7, 2, 2, '2019-04-16 22:34:51', 'Wow!', b'1'),
+	(8, 2, 3, '2019-04-16 22:35:06', 'Wow!!', b'1'),
+	(9, 2, 4, '2019-04-16 22:35:10', 'Wow!!!', b'1'),
+	(10, 2, 5, '2019-04-16 22:35:15', 'Wow!!!!', b'1'),
+	(11, 1, 5, '2019-05-30 18:54:32', 'Buena', b'1'),
+	(12, 1, 4, '2019-05-30 18:59:18', 'Buen dibujo e historia', b'1'),
+	(13, 1, 5, '2019-05-30 19:02:33', 'a', b'1'),
+	(14, 1, 5, '2019-05-30 19:05:43', 'Me ha gustado mucho', b'1');
 /*!40000 ALTER TABLE `REVIEWS` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `ROL`
---
-
-DROP TABLE IF EXISTS `ROL`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ROL` (
+-- Volcando estructura para tabla Splunk.ROL
+CREATE TABLE IF NOT EXISTS `ROL` (
   `rolId` int(11) NOT NULL AUTO_INCREMENT,
   `rol` enum('A','U') DEFAULT NULL,
   PRIMARY KEY (`rolId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `ROL`
---
-
-LOCK TABLES `ROL` WRITE;
+-- Volcando datos para la tabla Splunk.ROL: ~2 rows (aproximadamente)
+DELETE FROM `ROL`;
 /*!40000 ALTER TABLE `ROL` DISABLE KEYS */;
-INSERT INTO `ROL` VALUES (1,'U'),(2,'A');
+INSERT INTO `ROL` (`rolId`, `rol`) VALUES
+	(1, 'U'),
+	(2, 'A');
 /*!40000 ALTER TABLE `ROL` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `USERS`
---
-
-DROP TABLE IF EXISTS `USERS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `USERS` (
+-- Volcando estructura para tabla Splunk.USERS
+CREATE TABLE IF NOT EXISTS `USERS` (
   `userId` int(11) NOT NULL AUTO_INCREMENT,
   `nickname` varchar(10) DEFAULT NULL,
   `pass` varchar(20) NOT NULL,
@@ -271,25 +251,20 @@ CREATE TABLE `USERS` (
   KEY `rol` (`rol`),
   CONSTRAINT `USERS_ibfk_1` FOREIGN KEY (`rol`) REFERENCES `ROL` (`rolId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `USERS`
---
-
-LOCK TABLES `USERS` WRITE;
+-- Volcando datos para la tabla Splunk.USERS: ~7 rows (aproximadamente)
+DELETE FROM `USERS`;
 /*!40000 ALTER TABLE `USERS` DISABLE KEYS */;
-INSERT INTO `USERS` VALUES (1,'Johnny','Johnny',_binary '\0','2019-04-16 13:31:16',_binary '\0',1,NULL),(2,'Salty','Salty',_binary '\0','2019-04-16 13:31:54',_binary '\0',1,NULL),(3,'Blue','Blue',_binary '','2019-04-16 13:32:10',_binary '\0',1,NULL),(4,'admin','admin',_binary '','2019-05-05 11:05:16',_binary '\0',2,NULL),(5,'usuario','Usuario1',_binary '\0','2019-05-06 01:08:36',_binary '\0',1,NULL),(6,'usuario2','Usuario2',_binary '','2019-05-06 01:09:01',_binary '\0',1,NULL),(7,'usuario3','Usuario3',_binary '\0','2019-05-06 01:16:32',_binary '\0',1,'usuario3@gmail.com');
+INSERT INTO `USERS` (`userId`, `nickname`, `pass`, `private`, `expirationDate`, `banned`, `rol`, `email`) VALUES
+	(1, 'Johnny', 'Johnny', b'0', '2019-10-01 00:00:22', b'0', 1, 'Johnny@gmail.com'),
+	(2, 'Salty', 'Salty', b'0', '2019-04-16 13:31:54', b'0', 1, 'a@gmail.com'),
+	(3, 'Blue', 'Blue', b'1', '2019-04-16 13:32:10', b'0', 1, 'blue@gmail.com'),
+	(4, 'admin', 'admin', b'1', '2019-05-05 11:05:16', b'0', 2, 'admin@gmail.com'),
+	(5, 'usuario', 'Usuario1', b'0', '2019-05-06 01:08:36', b'0', 1, 'usuario1@gmail.com'),
+	(6, 'usuario2', 'Usuario2', b'1', '2019-05-06 01:09:01', b'0', 1, 'usuario2@gmail.com'),
+	(7, 'usuario3', 'Usuario3', b'0', '2019-05-06 01:16:32', b'0', 1, 'usuario3@gmail.com');
 /*!40000 ALTER TABLE `USERS` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2019-05-13 19:17:32

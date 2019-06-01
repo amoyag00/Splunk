@@ -5,22 +5,22 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-    
+
     <f:metadata>
         <f:event type="preRenderView" listener="#{securityController.checkAdminPrivileges()}" />
     </f:metadata>
-    
+
     <body>
 
         <ui:composition template="./../../WEB-INF/templates/template.xhtml">
-            
-            
+
+
 
             <ui:define name="content">
-                 <h:form id="formData">
+                <h:form id="formData">
                     <p:growl keepAlive="1000" id="growl" severity="info, fatal" showDetail="true" showSummary="true" />
                     <p:fieldset legend="Adiministrar usuarios">
-                         <p:panelGrid styleClass="panelGridCenter">
+                        <p:panelGrid styleClass="panelGridCenter">
 
                             <f:facet name="header">
 
@@ -33,35 +33,35 @@
 
                         </p:panelGrid>
                         <p:dataGrid var="user" value="#{userAdminController.userResults}" columns="1" layout="grid"  id="results">
-                            
+
                             <p:panelGrid   styleClass="panelGridCenter" >
-                                
-                                    <p:column styleClass="third">
-                                        <p:outputLabel value="#{user.nickname}" /> 
-                                    </p:column>
-                                
-                                    
-                                    <p:column styleClass="third">
-                                        <p:commandButton  value="Editar usuario" actionListener="#{userAdminController.setSelectedUser(user)}" oncomplete="PF('wedit').show();" update="formEdit"/> 
-                                    </p:column>
-                                
-                                    <p:column styleClass="third">
-                                        <p:commandButton  value="Ver reseñas" actionListener="#{userAdminController.setSelectedUser(user)}" action="reviewAdmin"/> 
-                                    </p:column>
+
+                                <p:column styleClass="third">
+                                    <p:outputLabel value="#{user.nickname}" /> 
+                                </p:column>
+
+
+                                <p:column styleClass="third">
+                                    <p:commandButton  value="Editar usuario" actionListener="#{userAdminController.setSelectedUser(user)}" oncomplete="PF('wedit').show();" update="formEdit"/> 
+                                </p:column>
+
+                                <p:column styleClass="third">
+                                    <p:commandButton  value="Ver reseñas" actionListener="#{userAdminController.setSelectedUser(user)}" action="reviewAdmin"/> 
+                                </p:column>
                             </p:panelGrid>
                         </p:dataGrid>
                     </p:fieldset>
                 </h:form>
-                
-                
-                
+
+
+
                 <p:dialog header="Editar Usuario" widgetVar="wedit">
                     <h:form id="formEdit">
                         <p:panelGrid styleClass="borderless">
-                            
+
                             <p:row>
                                 <p:column>
-                                   <p:outputLabel value="Nombre:" for="name"/>
+                                    <p:outputLabel value="Nombre:" for="name"/>
                                 </p:column>
                                 <p:column>
                                     <p:inputText id="name" value="#{userAdminController.selectedUser.nickname}" required="true" requiredMessage="Introduzca nickname"/>      
@@ -69,12 +69,12 @@
                                 <p:column>
                                     <p:message for="name"/>
                                 </p:column>
-                               
+
                             </p:row>
-                            
+
                             <p:row>
                                 <p:column>
-                                   <p:outputLabel value="Contraseña:" for="password"/>
+                                    <p:outputLabel value="Contraseña:" for="password"/>
                                 </p:column>
                                 <p:column>
                                     <p:inputText id="password" value="#{userAdminController.selectedUser.password}"  required="true" requiredMessage="Introduzca contraseña"/>  
@@ -83,11 +83,11 @@
                                     <p:message for="password"/>
                                 </p:column>
                             </p:row>
-                                
-                            
+
+
                             <p:row>
                                 <p:column>
-                                   <p:outputLabel value="Email:" for="email"/>
+                                    <p:outputLabel value="Email:" for="email"/>
                                 </p:column>
                                 <p:column>
                                     <p:inputText id="email" value="#{userAdminController.selectedUser.email}"  required="true" requiredMessage="Introduzca nickname"/> 
@@ -96,7 +96,7 @@
                                     <p:message for="email"/>
                                 </p:column>
                             </p:row>
-                            
+
                             <p:row>
                                 <p:column>
                                     <p:outputLabel value="Perfil" for="visible"/>
@@ -106,24 +106,24 @@
                                 </p:column>
                                 <p:column/>
                             </p:row>
-                            
+
                             <p:row>
                                 <p:column>
-                                   <p:outputLabel value="Acceso" for="ban"/>
+                                    <p:outputLabel value="Acceso" for="ban"/>
                                 </p:column>
                                 <p:column>
                                     <p:selectBooleanCheckbox id="ban" value="#{userAdminController.selectedUser.banned}" itemLabel="Baneado"/> 
                                 </p:column>
                                 <p:column/>
                             </p:row>
-                            
-                            
+
+
                             <p:row>
                                 <p:column colspan="3">
                                     <p:commandButton value="Editar" actionListener="#{userAdminController.edit()}" oncomplete="if (!args.validationFailed)PF('wedit').hide();" update=":formData:results @form :formData:growl"/>
                                 </p:column>
                             </p:row>
-                            
+
                         </p:panelGrid>
                     </h:form>
                 </p:dialog>

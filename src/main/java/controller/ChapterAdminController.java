@@ -22,25 +22,24 @@ import org.primefaces.model.UploadedFile;
  *
  * @author splunk
  */
-
 @Named
 @ViewScoped
-public class ChapterAdminController implements Serializable{
-    
+public class ChapterAdminController implements Serializable {
+
     @EJB
     private ComicFacadeLocal comicEJB;
-    
+
     @EJB
     private ChapterFacadeLocal chapterEJB;
-    
+
     private Comic comic;
-    
+
     private Chapter chapterCreated;
-    
+
     private Chapter chapterSelected;
-    
+
     private List<Chapter> chapterResults;
-    
+
     @Inject
     private ComicAdminController adminController;
 
@@ -51,21 +50,20 @@ public class ChapterAdminController implements Serializable{
     public void setAdminController(ComicAdminController adminController) {
         this.adminController = adminController;
     }
-    
+
     @PostConstruct
     public void init() {
-        comic=adminController.getComicSeleccionado();
-        
+        comic = adminController.getComicSeleccionado();
+
         chapterCreated = new Chapter();
-        chapterResults = chapterEJB.list(comic,false);
+        chapterResults = chapterEJB.list(comic, false);
 
     }
-    
-    
+
     public void selectChapter(Chapter chapter) {
         chapterSelected = chapter;
     }
-    
+
     public void create() {
         chapterCreated.setComic(comic);
         chapterEJB.create(chapterCreated);
@@ -73,15 +71,15 @@ public class ChapterAdminController implements Serializable{
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Nuevo capítulo creado");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
+
     public void edit() {
         chapterEJB.edit(chapterSelected);
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Capítulo editado");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
-    public String dateToString(Date date){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'a las' HH:mm:ss", new Locale("es","ES"));
+
+    public String dateToString(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'a las' HH:mm:ss", new Locale("es", "ES"));
         return formatter.format(date);
     }
 
@@ -116,5 +114,5 @@ public class ChapterAdminController implements Serializable{
     public void setChapterCreated(Chapter chapterCreated) {
         this.chapterCreated = chapterCreated;
     }
-   
+
 }

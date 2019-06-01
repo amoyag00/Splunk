@@ -27,28 +27,29 @@ public class ChapterFacade extends AbstractFacade<Chapter> implements ChapterFac
     public ChapterFacade() {
         super(Chapter.class);
     }
-    
+
     @Override
-    public List<Chapter> list(Comic comic, boolean visibleOnly){
-        List<Chapter> chapters= new ArrayList<Chapter>();
-        
+    public List<Chapter> list(Comic comic, boolean visibleOnly) {
+        List<Chapter> chapters = new ArrayList<Chapter>();
+
         String queryStr;
-        
-        try{
-            queryStr="FROM Chapter c WHERE c.comic.comicId=?1";
-            Query query = em.createQuery(queryStr);
-            query.setParameter(1, comic.getComicId());
-            chapters=query.getResultList();      
-            if(visibleOnly){
-                queryStr+=  " AND c.visible=1";
+
+        try {
+            queryStr = "FROM Chapter c WHERE c.comic.comicId=?1";
+            if (visibleOnly) {
+                queryStr += " AND c.visible=1";
             }
             queryStr += " ORDER BY c.chapterNumber ASC";
-        }catch(Exception e){
+            Query query = em.createQuery(queryStr);
+            query.setParameter(1, comic.getComicId());
+            chapters = query.getResultList();
+
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Could not access to the database");
         }
-        
+
         return chapters;
     }
-    
+
 }

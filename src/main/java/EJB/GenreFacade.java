@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package EJB;
 
 import java.util.ArrayList;
@@ -32,25 +27,25 @@ public class GenreFacade extends AbstractFacade<Genre> implements GenreFacadeLoc
     public GenreFacade() {
         super(Genre.class);
     }
-    
+
     @Override
-    public List<Genre> list(Comic comic){
-        List<Genre> genres= new ArrayList<Genre>();
-        
+    public List<Genre> list(Comic comic) {
+        List<Genre> genres = new ArrayList<Genre>();
+
         String queryStr;
-        
-        try{
-            queryStr="FROM Genre genre WHERE genre.comic.comicId=?1";
+
+        try {
+            queryStr = "FROM Genre genre WHERE genre.comic.comicId=?1";
             Query query = em.createQuery(queryStr);
             query.setParameter(1, comic.getComicId());
-            genres=query.getResultList();      
-            
-        }catch(Exception e){
+            genres = query.getResultList();
+
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Could not access to the database");
         }
-        
+
         return genres;
     }
-    
+
 }
