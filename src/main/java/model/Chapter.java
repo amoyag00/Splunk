@@ -18,30 +18,31 @@ import javax.persistence.TemporalType;
  * @author splunk
  */
 @Entity
-@Table(name="CHAPTERS")
-public class Chapter implements Serializable{
+@Table(name = "CHAPTERS")
+public class Chapter implements Serializable {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int chapterId;
-    
-    @JoinColumn(name="comicId")
+
+    @JoinColumn(name = "comicId")
     @ManyToOne
     private Comic comic;
-    
-    @Column(name="chapterNumber")
+
+    @Column(name = "chapterNumber")
     private int chapterNumber;
-    
-    @Column(name="chapterName")
+
+    @Column(name = "chapterName")
     private String chapterName;
-    
-    @Column(name="addedDate")
+
+    @Column(name = "addedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date addedDate;
-    
-    @Column(name="contentPath")
+
+    @Column(name = "contentPath")
     private String contentPath;
-    
-    @Column(name="visible")
+
+    @Column(name = "visible")
     private boolean visible;
 
     public boolean isVisible() {
@@ -99,8 +100,6 @@ public class Chapter implements Serializable{
     public void setChapterName(String chapterName) {
         this.chapterName = chapterName;
     }
-    
-    
 
     @Override
     public boolean equals(Object obj) {
@@ -125,8 +124,4 @@ public class Chapter implements Serializable{
         return "Chapter{" + "chapterId=" + chapterId + ", comic=" + comic + ", chapterNumber=" + chapterNumber + ", chapterName=" + chapterName + ", addedDate=" + addedDate + ", contentPath=" + contentPath + '}';
     }
 
-    
-    
-    
-    
 }

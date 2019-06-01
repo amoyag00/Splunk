@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package EJB;
 
 import java.util.ArrayList;
@@ -18,7 +13,7 @@ import model.User;
 
 /**
  *
- * @author alex
+ * @author splunk
  */
 @Stateless
 public class ReviewFacade extends AbstractFacade<Review> implements ReviewFacadeLocal {
@@ -34,51 +29,53 @@ public class ReviewFacade extends AbstractFacade<Review> implements ReviewFacade
     public ReviewFacade() {
         super(Review.class);
     }
-    
+
     @Override
-    public List<Review> list(Comic comic, boolean visibleOnly){
-        List<Review> reviews= new ArrayList<Review>();
-        
+    public List<Review> list(Comic comic, boolean visibleOnly) {
+        List<Review> reviews = new ArrayList<Review>();
+
         String queryStr;
-        
-        try{
-            queryStr="FROM Review review WHERE review.comic.comicId=?1";
+
+        try {
+            queryStr = "FROM Review review WHERE review.comic.comicId=?1";
+            if (visibleOnly) {
+                queryStr += " AND review.visible=1";
+            }
             Query query = em.createQuery(queryStr);
             query.setParameter(1, comic.getComicId());
-            reviews=query.getResultList();      
-            if(visibleOnly){
-                queryStr+=" AND review.visible=1";
-            }
-        }catch(Exception e){
+            reviews = query.getResultList();
+
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Could not access to the database");
         }
-        
-        return reviews; 
-        
+
+        return reviews;
+
     }
-    
+
     @Override
-    public List<Review> list(User user, boolean visibleOnly){
-        List<Review> reviews= new ArrayList<Review>();
-        
+    public List<Review> list(User user, boolean visibleOnly) {
+        List<Review> reviews = new ArrayList<Review>();
+
         String queryStr;
-        
-        try{
-            queryStr="FROM Review review WHERE review.user.userId=?1";
+
+        try {
+            queryStr = "FROM Review review WHERE review.user.userId=?1";
+            if (visibleOnly) {
+                queryStr += " AND review.visible=1";
+            }
             Query query = em.createQuery(queryStr);
             query.setParameter(1, user.getUserId());
-            reviews=query.getResultList();      
-            if(visibleOnly){
-                queryStr+=" AND review.visible=1";
-            }
-        }catch(Exception e){
+            reviews = query.getResultList();
+
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Could not access to the database");
         }
-        
-        return reviews; 
-        
+
+        return reviews;
+
     }
-    
+
 }

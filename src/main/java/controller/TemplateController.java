@@ -15,28 +15,28 @@ import model.User;
  *
  * @author Splunk
  */
-@Named 
+@Named
 @SessionScoped
-public class TemplateController implements Serializable{
-   
+public class TemplateController implements Serializable {
+
     @PostConstruct
     public void init() {
         //MenuController menus = new MenuController();
     }
-    
-    public void checkPermissions(){
-       User us =(User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-       HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-       //TODO check if this url has rol user.gerRol().getRolId()
-      // String path = request.getRequestURI().substring(request.getContextPath().length());
-      // System.out.println("URL: "+path);
-        
-       if(us==null){
-           try {
-               FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/public/error.xhtml?faces-redirect=true");
-           } catch (IOException ex) {
-               System.out.println("Error al redireccionar");
-           }
-       }
+
+    public void checkPermissions() {
+        User us = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        //TODO check if this url has rol user.gerRol().getRolId()
+        // String path = request.getRequestURI().substring(request.getContextPath().length());
+        // System.out.println("URL: "+path);
+
+        if (us == null) {
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/public/error.xhtml?faces-redirect=true");
+            } catch (IOException ex) {
+                System.out.println("Error al redireccionar");
+            }
+        }
     }
 }

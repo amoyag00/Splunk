@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,33 +18,33 @@ import javax.persistence.Transient;
  * @author splunk
  */
 @Entity
-@Table(name="COMICS")
-public class Comic implements Serializable{
+@Table(name = "COMICS")
+public class Comic implements Serializable {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int comicId;
-    
-    @Column(name="name")
+
+    @Column(name = "name")
     private String name;
-    
-    @Column(name="numberChapters")
+
+    @Column(name = "numberChapters")
     private int numChapters;
-    
-    @Column(name="statusComic")
+
+    @Column(name = "statusComic")
     private String statusComic;
-    
-    @Column(name="visible")
+
+    @Column(name = "visible")
     private boolean visible;
-    
-    @Column(name="imagePath")
+
+    @Column(name = "imagePath")
     private String imagePath;
-    
-    @Column(name="publishDate")
+
+    @Column(name = "publishDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date publishDate;
-    
 
-    @Transient 
+    @Transient
     private double globalScore;
 
     public boolean isVisible() {
@@ -109,10 +110,6 @@ public class Comic implements Serializable{
     public void setGlobalScore(double globalScore) {
         this.globalScore = globalScore;
     }
-    
-    
-    
-    
 
     @Override
     public String toString() {
@@ -136,6 +133,5 @@ public class Comic implements Serializable{
         }
         return true;
     }
-    
-    
+
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.io.Serializable;
@@ -22,34 +17,33 @@ import javax.persistence.TemporalType;
  *
  * @author splunk
  */
-
 @Entity
-@Table(name="LISTS")
+@Table(name = "LISTS")
 public class ComicEntry implements Serializable {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int listId;
-    
+
     //What this class really contains are list entries, so many entries (comics added) can belong to a single User
-    @JoinColumn(name="userId")
-    @ManyToOne 
+    @JoinColumn(name = "userId")
+    @ManyToOne
     private User user;
-    
-    @JoinColumn(name="comicID")
+
+    @JoinColumn(name = "comicID")
     @ManyToOne
     private Comic comic;
-    
-    @Column(name="comicStatus")
+
+    @Column(name = "comicStatus")
     private String comicStatus;
-    
-    
-    @Column(name="score")
+
+    @Column(name = "score")
     private int score;
-    
-    @Column(name="progress")
+
+    @Column(name = "progress")
     private int progress;
-    
-    @Column(name="addedDate")
+
+    @Column(name = "addedDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date addedDate;
 
@@ -109,7 +103,6 @@ public class ComicEntry implements Serializable {
         this.addedDate = addedDate;
     }
 
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -127,13 +120,10 @@ public class ComicEntry implements Serializable {
         }
         return true;
     }
-    
-    
+
     @Override
     public String toString() {
         return "ComicList{" + "listId=" + listId + ", user=" + user + ", comic=" + comic + ", comicStatus=" + comicStatus + ", score=" + score + ", progress=" + progress + ", addedDate=" + addedDate + '}';
     }
-    
-    
-    
+
 }

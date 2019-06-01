@@ -12,12 +12,10 @@ import model.User;
  */
 @Local
 public interface ComicFacadeLocal {
-    
-    public enum Param{
+
+    public enum Param {
         NAME, SCORE
     }
-    
-   
 
     void create(Comic comic);
 
@@ -32,14 +30,14 @@ public interface ComicFacadeLocal {
     List<Comic> findRange(int[] range);
 
     int count();
-    
+
     List<Comic> search(String match);
-    
+
     List<Comic> searchOrder(String match, boolean normalUser, Order order);
-    
+
     List<Comic> searchBy(String match, Param param, Order order);
-    
+
     boolean isAdded(Comic comic, User user);
-    
+
     void update(List<Comic> comicList);
 }

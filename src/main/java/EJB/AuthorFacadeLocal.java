@@ -25,7 +25,7 @@ public interface AuthorFacadeLocal {
     List<Author> findRange(int[] range);
 
     int count();
-    
+
     List<Author> list(Comic comic);
-    
+
 }

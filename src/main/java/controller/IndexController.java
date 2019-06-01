@@ -1,6 +1,5 @@
 package controller;
 
-
 import EJB.UserFacadeLocal;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -16,54 +15,53 @@ import model.User;
  *
  * @author Splunk
  */
-
 @Named
 @ViewScoped
-public class IndexController implements Serializable{
-    
+public class IndexController implements Serializable {
+
     @EJB
     private UserFacadeLocal userEJB;
-    
+
     @Inject
     private User user;
-    
+
     @PostConstruct
-    public void init(){
-        user= new User();
+    public void init() {
+        user = new User();
     }
-    
-    public String checkUser(){
-        String direction="";
-        try{
-            if(userEJB.exists(user.getNickname())){
+
+    public String checkUser() {
+        String direction = "";
+        try {
+            if (userEJB.exists(user.getNickname())) {
                 User u = userEJB.getUser(user);
-                if(u==null){
+                if (u == null) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
                             "Error", "La contraseña es incorrecta"));
-                }else{
-                    if(!u.isBanned()){
-                       String rol = u.getRol().getRol();
-                        if(rol.equals("U")){
-                            direction="/private/user/home.xhtml";
-                        }else if(rol.equals("A")){
-                            direction="/private/admin/comicAdmin.xhtml";
+                } else {
+                    if (!u.isBanned()) {
+                        String rol = u.getRol().getRol();
+                        if (rol.equals("U")) {
+                            direction = "/private/user/home.xhtml";
+                        } else if (rol.equals("A")) {
+                            direction = "/private/admin/comicAdmin.xhtml";
                         }
 
-                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", u); 
-                    }else{
-                       FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
-                        "Error", "Estás baneado "+ user.getNickname())); 
+                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", u);
+                    } else {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                                "Error", "Estás baneado " + user.getNickname()));
                     }
-                    
+
                 }
-            }else{
-               FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
-                        "Error", "No existe el usuario "+ user.getNickname())); 
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                        "Error", "No existe el usuario " + user.getNickname()));
             }
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
         }
-        
+
         return direction;
     }
 
@@ -75,7 +73,4 @@ public class IndexController implements Serializable{
         this.user = user;
     }
 
-    
-    
-    
 }

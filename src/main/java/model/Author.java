@@ -14,20 +14,20 @@ import javax.persistence.Table;
  * @author splunk
  */
 @Entity
-@Table(name="AUTHORS")
-public class Author implements Serializable{
+@Table(name = "AUTHORS")
+public class Author implements Serializable {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int authorId;
-    
-    
-    @JoinColumn(name="comicId")
+
+    @JoinColumn(name = "comicId")
     private Comic comic;
-    
-    @Column(name="name")
+
+    @Column(name = "name")
     private String name;
-    
-    @Column(name="category")
+
+    @Column(name = "category")
     private String category;
 
     public int getAuthorId() {
@@ -61,7 +61,7 @@ public class Author implements Serializable{
     public void setCategory(String category) {
         this.category = category;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -79,13 +79,10 @@ public class Author implements Serializable{
         }
         return true;
     }
-   
+
     @Override
     public String toString() {
-        return "Author{" + "authorId=" + authorId + ", comic=" + comic + ", name=" + name + ", category=" + category + '}';
+        return name = ", " + category;
     }
 
-    
-    
-    
-}   
+}

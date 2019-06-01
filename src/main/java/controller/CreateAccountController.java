@@ -65,7 +65,7 @@ public class CreateAccountController implements Serializable {
                         user.setBanned(false);
                         usuarioEJB.create(user);
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Usuario registrado"));
-                        
+
                     } else {
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "El usuario ya existe"));
                     }
@@ -87,23 +87,21 @@ public class CreateAccountController implements Serializable {
         boolean isStrong = false;
 
         for (int i = 0; i < password.length(); i++) {
-            
 
             if (Character.isDigit(password.charAt(i))) {
                 hasNumber = true;
             }
-            
 
             if (Character.isUpperCase(password.charAt(i))) {
                 hasUpperCase = true;
             }
 
         }
-        
-        if(password.length() >= 8 && hasNumber && hasUpperCase  ){
+
+        if (password.length() >= 8 && hasNumber && hasUpperCase) {
             isStrong = true;
         }
-        
+
         return isStrong;
     }
 

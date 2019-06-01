@@ -15,15 +15,15 @@ import javax.persistence.TemporalType;
  *
  * @author splunk
  */
-
 @Entity
-@Table(name="ROL")
-public class Rol implements Serializable{
+@Table(name = "ROL")
+public class Rol implements Serializable {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int rolId;
-    
-    @Column(name="rol")
+
+    @Column(name = "rol")
     private String rol;
 
     public int getRolId() {
@@ -71,8 +71,4 @@ public class Rol implements Serializable{
         return "Rol{" + "rolId=" + rolId + ", rol=" + rol + '}';
     }
 
-   
-            
-    
-    
 }

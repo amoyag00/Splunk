@@ -16,18 +16,17 @@ import model.User;
 @SessionScoped
 public class SecurityController implements Serializable {
 
-    public void checkAdminPrivileges(){
+    public void checkAdminPrivileges() {
         checkPrivileges("A");
     }
-    
-    public void checkUserPrivileges(){
+
+    public void checkUserPrivileges() {
         checkPrivileges("U");
     }
 
     private void checkPrivileges(String userType) {
         User us = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-      
-               
+
         if (!us.getRol().getRol().equals(userType)) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/public/error.xhtml?faces-redirect=true");

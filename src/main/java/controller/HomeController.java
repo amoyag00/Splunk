@@ -19,21 +19,21 @@ import org.primefaces.model.chart.PieChartModel;
  *
  * @author splunk
  */
-
-@Named 
+@Named
 @ViewScoped
-public class HomeController implements Serializable{
+public class HomeController implements Serializable {
+
     @EJB
     private ComicEntryFacadeLocal comicListEJB;
-    
+
     @Inject
     private SearcherController searchController;
-    
-    private List<ComicEntry>  comicList;
+
+    private List<ComicEntry> comicList;
     private String statusComic[] = new String[4];
     private String prettyStatusComic[] = new String[4];
-    private boolean editable=true;
-    
+    private boolean editable = true;
+
     private User usuario;
 
     public User getUsuario() {
@@ -43,7 +43,7 @@ public class HomeController implements Serializable{
     public void setUsuario(User usuario) {
         this.usuario = usuario;
     }
-    
+
     public boolean getEditable() {
         return editable;
     }
@@ -51,7 +51,7 @@ public class HomeController implements Serializable{
     public void setEditable(boolean editable) {
         this.editable = editable;
     }
-    
+
     public List<ComicEntry> getComicList() {
         return comicList;
     }
@@ -68,33 +68,33 @@ public class HomeController implements Serializable{
         this.pieModel1 = pieModel1;
     }
     private PieChartModel pieModel1;
-    
+
     @PostConstruct
-    public void init(){
-       
-       usuario = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-       
-       if(searchController!=null){
-           if(searchController.getUserSelected()!=null){
-                if(!usuario.equals(searchController.getUserSelected())){
+    public void init() {
+
+        usuario = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+
+        if (searchController != null) {
+            if (searchController.getUserSelected() != null) {
+                if (!usuario.equals(searchController.getUserSelected())) {
 
                     editable = false;
-                    usuario=searchController.getUserSelected();
+                    usuario = searchController.getUserSelected();
                     searchController.setUserSelected(null);
                 }
-           }
-       }
-       
-       comicList=comicListEJB.getListOf(usuario);
-       statusComic[0] = "L";
-       statusComic[1] = "R";
-       statusComic[2] = "P";
-       statusComic[3] = "";
-       prettyStatusComic[0] = "Leido";
-       prettyStatusComic[1] = "Leyendo";
-       prettyStatusComic[2] = "Pendiente";
-       prettyStatusComic[3] = "";
-       createPieModel1();        
+            }
+        }
+
+        comicList = comicListEJB.getListOf(usuario);
+        statusComic[0] = "L";
+        statusComic[1] = "R";
+        statusComic[2] = "P";
+        statusComic[3] = "";
+        prettyStatusComic[0] = "Leido";
+        prettyStatusComic[1] = "Leyendo";
+        prettyStatusComic[2] = "Pendiente";
+        prettyStatusComic[3] = "";
+        createPieModel1();
     }
 
     public String[] getPrettyStatusComic() {
@@ -104,9 +104,7 @@ public class HomeController implements Serializable{
     public void setPrettyStatusComic(String[] prettyStatusComic) {
         this.prettyStatusComic = prettyStatusComic;
     }
-    
-    
-    
+
     public String[] getStatusComic() {
         return statusComic;
     }
@@ -114,68 +112,55 @@ public class HomeController implements Serializable{
     public void setStatusComic(String[] statusComic) {
         this.statusComic = statusComic;
     }
-    
-    public void deleteEntry(int row){
-        //TODO delete this
+
+    public void deleteEntry(int row) {
         comicListEJB.remove(comicList.get(row));
         comicList.remove(row);
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Entrada eliminada");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
         createPieModel1();
     }
-    
-    public void editList(){
-        //TODO delete this
-   
-        comicList.get(0).setComicStatus("P");
-        comicList.get(0).setScore(9);
-        
-        comicList.get(1).setComicStatus("R");
-        comicList.get(1).setScore(87);
-        comicList.get(1).setProgress(87);
-        update(comicList);
 
-    }
-    
-    
-    
-    public String prettyStatus(String status){
-        String prettyStatus="";
-        if (status==null){
-                status="";
+    public String prettyStatus(String status) {
+        String prettyStatus = "";
+        if (status == null) {
+            status = "";
         }
-        switch(status){
+        switch (status) {
             case "L":
-                prettyStatus="Leyendo";
+                prettyStatus = "Leyendo";
                 break;
             case "R":
-                prettyStatus="Leido";
+                prettyStatus = "Leido";
                 break;
             case "P":
-                prettyStatus="Pendiente";
+                prettyStatus = "Pendiente";
                 break;
             default:
-                prettyStatus="Sin especificar";
+                prettyStatus = "Sin especificar";
         }
         return prettyStatus;
     }
-    
-    public void update(List<ComicEntry> comicList){
+
+    public void update(List<ComicEntry> comicList) {
         comicListEJB.update(comicList);
+
     }
 
     public void createPieModel1() {
         pieModel1 = new PieChartModel();
- 
-        int rding=0;
-        int r=0;
-        int ptr=0;
-        int ns=0;
-        
-        for(int i=0;i<comicList.size();i++){
+
+        int rding = 0;
+        int r = 0;
+        int ptr = 0;
+        int ns = 0;
+
+        for (int i = 0; i < comicList.size(); i++) {
             String status = comicList.get(i).getComicStatus();
-            if (status==null){
-                status="";
+            if (status == null) {
+                status = "";
             }
-            switch(status){
+            switch (status) {
                 case "L":
                     rding++;
                     break;
@@ -188,9 +173,9 @@ public class HomeController implements Serializable{
                 default:
                     ns++;
             }
-        
+
         }
-        
+
         pieModel1.set("Leyendo", rding);
         pieModel1.set("Leidos", r);
         pieModel1.set("Pendientes", ptr);
@@ -198,22 +183,16 @@ public class HomeController implements Serializable{
         pieModel1.setLegendPosition("w");
         pieModel1.setShadow(true);
     }
-    
+
     public void onCellEdit() {
-          
-          
-       
-        
+
         update(comicList);
         User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-        comicList=comicListEJB.getListOf(user);
+        comicList = comicListEJB.getListOf(user);
         createPieModel1();
-                
-        
 
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Updated","");  
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Entrada actualizada", "");
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        
-        
+
     }
 }

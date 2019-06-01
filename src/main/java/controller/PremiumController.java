@@ -16,7 +16,8 @@ import model.Comic;
 import model.User;
 import org.primefaces.util.DateUtils;
 
-/**  *
+/**
+ * *
  *
  * @author splunk
  */
@@ -65,14 +66,14 @@ public class PremiumController implements Serializable {
         usuario.setExpirationDate(newExpirationDate);
         userEJB.edit(usuario);
 
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion","Su suscripción premium caduca el "+
-                dateToString(newExpirationDate));
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Su suscripción premium caduca el "
+                + dateToString(newExpirationDate));
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
     }
-    
-    public String dateToString(Date date){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'a las' HH:mm:ss", new Locale("es","ES"));
+
+    public String dateToString(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'a las' HH:mm:ss", new Locale("es", "ES"));
         return formatter.format(date);
     }
 }

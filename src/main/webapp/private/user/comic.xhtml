@@ -12,10 +12,10 @@
 
         <ui:composition template="./../../WEB-INF/templates/template.xhtml">
 
-         
+
 
             <ui:define name="content">
-                <h:form>
+                <h:form id="reviewForm">
                     <p:growl keepAlive="1000" id="addedReview" severity="info, fatal" showDetail="true" showSummary="true" />
                     <h:panelGrid columns="2" width="100%">
                         <p:panel header="#{comicController.comic.name}" footer="Fecha de publicacion: #{comicController.dateToString(comicController.comic.publishDate)}">
@@ -44,23 +44,23 @@
                                     <h:outputLabel value="#{review.reviewText}"/>
                                 </p:panel>
                             </p:dataGrid>
-                            
+
                             <p:panelGrid>
                                 <p:row>
                                     <p:column>
                                         <p:inputTextarea cols="50" rows="10" value="#{comicController.reviewText}"/> 
                                     </p:column>
-                                   
+
                                 </p:row>
                                 <p:row>
                                     <p:column>
-                                        <p:commandButton value="Comentar" actionListener="#{comicController.addReview}" update="addedReview"/>
+                                        <p:commandButton value="Comentar" actionListener="#{comicController.addReview}" update="addedReview @form"/>
                                     </p:column>
-                                    
+
                                 </p:row>
                             </p:panelGrid>
-                            
-                            
+
+
                         </p:panel>  
                     </h:panelGrid>
 
@@ -71,24 +71,24 @@
                                     rowsPerPageTemplate="6,12,16">
                             <p:growl keepAlive="1000" id="premiumGrowl" severity="info, fatal" showDetail="true" showSummary="true" />
                             <p:panelGrid   styleClass="panelGridCenter" >
-                             
-                                    <p:column styleClass="third">
-                                        <p:outputLabel value="Capitulo #{chapter.chapterNumber} #{chapter.chapterName}" /> 
-                                    </p:column>
-                                
-                                    <p:column styleClass="third">
-                                        <p:outputLabel value="Añadido en #{comicController.dateToString(chapter.addedDate)}" /> 
-                                    </p:column>
-                                
-                                    <p:column styleClass="third">
-                                        <p:commandButton  value="Leer" actionListener="#{comicController.setSelectedChapter(chapter)}" action="#{comicController.checkPremium()}" update="premiumGrowl"/> 
-                                    </p:column>
+
+                                <p:column styleClass="third">
+                                    <p:outputLabel value="Capitulo #{chapter.chapterNumber} #{chapter.chapterName}" /> 
+                                </p:column>
+
+                                <p:column styleClass="third">
+                                    <p:outputLabel value="Añadido en #{comicController.dateToString(chapter.addedDate)}" /> 
+                                </p:column>
+
+                                <p:column styleClass="third">
+                                    <p:commandButton  value="Leer" actionListener="#{comicController.setSelectedChapter(chapter)}" action="#{comicController.checkPremium()}" update="premiumGrowl"/> 
+                                </p:column>
                             </p:panelGrid>
                         </p:dataGrid>
                     </p:fieldset>
                 </h:form>
             </ui:define>
-           
+
 
         </ui:composition>
 

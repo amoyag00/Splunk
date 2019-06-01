@@ -18,30 +18,30 @@ import javax.persistence.TemporalType;
  * @author splunk
  */
 @Entity
-@Table(name="REVIEWS")
-public class Review implements Serializable{
+@Table(name = "REVIEWS")
+public class Review implements Serializable {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reviewId;
-    
-    @JoinColumn(name="userId")
+
+    @JoinColumn(name = "userId")
     @ManyToOne
     private User user;
-    
-    @JoinColumn(name="comicId")
+
+    @JoinColumn(name = "comicId")
     @ManyToOne
     private Comic comic;
-    
-    @Column(name="writtenDate")
+
+    @Column(name = "writtenDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date writtenDate;
-    
-    @Column(name="reviewText")
+
+    @Column(name = "reviewText")
     private String reviewText;
-    
+
     @Column(name = "visible")
     private boolean visible;
-
 
     public boolean isVisible() {
         return visible;
@@ -50,7 +50,7 @@ public class Review implements Serializable{
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
-    
+
     public int getReviewId() {
         return reviewId;
     }
@@ -113,7 +113,5 @@ public class Review implements Serializable{
         }
         return true;
     }
-    
-    
-    
+
 }

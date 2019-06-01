@@ -10,14 +10,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
-        
+
     </h:head>
     <f:event type="preRenderView" listener="#{templateController.checkPermissions()}" />
     <f:event type="preRenderView" listener="#{menuController.loadMenu()}" />
     <h:body>
 
         <div id="top">
-            
+
             <h:form>
                 <p:menubar id="bar" model="#{menuController.modelo}">
                     <f:facet name="options">
@@ -34,22 +34,22 @@
         <div id="footer" class="noBackground">
             <ui:insert name="bottom">
                 <p:panelGrid styleClass="panelGridCenter">
-                  
+
                     <p:row>
                         <p:column><b>Productos</b></p:column>
                         <p:column><b>Enlaces</b></p:column>
                         <p:column><b>Contactos</b></p:column>
                     </p:row>
 
-                    
+
                     <p:row>
                         <p:column>
                             Comics
                         </p:column>
-                         <p:column>
+                        <p:column>
                             Diseño y desarrollo
                         </p:column>
-                         <p:column>
+                        <p:column>
                             Mapa del sitio
                         </p:column> 
                     </p:row>
@@ -57,10 +57,10 @@
                         <p:column>
                             Colecciones
                         </p:column>
-                         <p:column>
+                        <p:column>
                             Trabajos
                         </p:column>
-                         <p:column>
+                        <p:column>
                             Nuestro equipo
                         </p:column> 
                     </p:row>
@@ -68,10 +68,10 @@
                         <p:column>
                             Eventos
                         </p:column>
-                         <p:column>
+                        <p:column>
                             Blog
                         </p:column>
-                         <p:column>
+                        <p:column>
                             Sobre nosotros
                         </p:column> 
                     </p:row>

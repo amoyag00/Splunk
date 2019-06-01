@@ -34,63 +34,64 @@ import model.User;
  *
  * @author splunk
  */
-@Named 
+@Named
 @RequestScoped
-public class ComicController implements Serializable{
+public class ComicController implements Serializable {
+
     @EJB
     private ComicEntryFacadeLocal comicListEJB;
-    
+
     @EJB
     private ComicFacadeLocal comicEJB;
-    
+
     @EJB
     private ChapterFacadeLocal chapterEJB;
-    
+
     @EJB
     private ReviewFacadeLocal reviewEJB;
-    
+
     @EJB
     private GenreFacadeLocal genreEJB;
-    
+
     @EJB
     private AuthorFacadeLocal authorEJB;
-    
+
     @EJB
     private ComicEntryFacadeLocal entryEJB;
-    
+
     @Inject
     private SearcherController searcher;
-    
+
     private Comic comic;
-    
+
     private Chapter selectedChapter;
 
     private ComicEntry comicEntry;
-    
+
     private Review review;
-    
+
     private List<ComicEntry> entry;
-    
+
     private List<Review> reviewResults;
-    
+
     private List<Author> authorResults;
-    
+
     private List<Genre> genreResults;
-    
+
     private List<Chapter> chapterResults;
-    
+
     private boolean isAdded;
-            
+
     private String genres;
-    
+
     private String authors;
-    
+
     private String globalScore;
-    
+
     private String reviewText;
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         comic = searcher.getComicSelected();
         reviewResults = reviewEJB.list(comic, true);
         authorResults = authorEJB.list((comic));
@@ -99,20 +100,20 @@ public class ComicController implements Serializable{
         User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         isAdded = comicEJB.isAdded(comic, user);
         globalScore = Double.toString(entryEJB.getGlobalScore(comic));
-        
-        List<Author> authors=authorEJB.list(comic);
-        this.authors="";
-        for(Author author: authors){
-            this.authors+= author.getName()+", "+ author.getCategory()+"\n";
+
+        List<Author> authors = authorEJB.list(comic);
+        this.authors = "";
+        for (Author author : authors) {
+            this.authors += author.getName() + ", " + author.getCategory() + "\n";
         }
-        
-        List<Genre> genres=genreEJB.list(comic);
-        this.genres="";
-        for(Genre genre: genres){
-            this.genres+= genre.getName()+" ";
+
+        List<Genre> genres = genreEJB.list(comic);
+        this.genres = "";
+        for (Genre genre : genres) {
+            this.genres += genre.getName() + " ";
         }
     }
-    
+
     public void addReview() {
         review = new Review();
         review.setComic(comic);
@@ -122,8 +123,9 @@ public class ComicController implements Serializable{
         review.setVisible(true);
         review.setWrittenDate(new Date());
         reviewEJB.create(review);
+        reviewResults.add(review);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "Info", "Reseña añadida con éxito "));
+                "Info", "Reseña añadida con éxito "));
     }
 
     public Review getReview() {
@@ -141,46 +143,44 @@ public class ComicController implements Serializable{
     public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
     }
-    
-    public void setSelectedChapter(Chapter chapter){
+
+    public void setSelectedChapter(Chapter chapter) {
         this.selectedChapter = chapter;
     }
-    
-    public Chapter getSelectedChapter(){
+
+    public Chapter getSelectedChapter() {
         return this.selectedChapter;
     }
-    
-    public String checkPremium(){
-        String redirect="";
-        if(this.chapterResults.get(0).equals(this.selectedChapter)
-            || this.chapterResults.get(chapterResults.size()-1).equals(this.selectedChapter)){
-            redirect = "reader.xhtml";//Change for chapter xhtml
-        }else{
-            User user = (User)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user"); 
+
+    public String checkPremium() {
+        String redirect = "";
+        if (this.chapterResults.get(0).equals(this.selectedChapter)
+                || this.chapterResults.get(chapterResults.size() - 1).equals(this.selectedChapter)) {
+            redirect = "reader.xhtml";
+        } else {
+            User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
             Date expirationDate = user.getExpirationDate();
             long diff = expirationDate.getTime() - new Date().getTime();
-            
-            
-            
-            if(diff>0){//User suscription has not expired
-                redirect="reader.xhtml"; //Change for chapter XHTML
-            }else{
+
+            if (diff > 0) {//User suscription has not expired
+                redirect = "reader.xhtml";
+            } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "Info", "Su suscripción caducó el "+ dateToString(expirationDate))); 
+                        "Info", "Su suscripción caducó el " + dateToString(expirationDate)));
             }
         }
         return redirect;
     }
-    
-    public String dateToString(Date date){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'a las' HH:mm:ss", new Locale("es","ES"));
+
+    public String dateToString(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'a las' HH:mm:ss", new Locale("es", "ES"));
         return formatter.format(date);
     }
 
     public List<ComicEntry> getEntry() {
         return entry;
     }
-    
+
     public void addComic() {
         User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         comicEntry = new ComicEntry();
@@ -190,7 +190,7 @@ public class ComicController implements Serializable{
         comicEntry.setProgress(0);
         comicEntry.setUser(user);
         entryEJB.create(comicEntry);
-        isAdded=true;
+        isAdded = true;
     }
 
     public ComicEntry getComicEntry() {
@@ -283,5 +283,5 @@ public class ComicController implements Serializable{
 
     public void setGenreResults(List<Genre> genreResults) {
         this.genreResults = genreResults;
-    } 
+    }
 }

@@ -12,7 +12,7 @@
     <h:body>
         <h:form styleClass="formCreateAccount" >    
             <p:growl keepAlive="3000" id="msgPrincipal" severity="info, fatal" showDetail="true" showSummary="true" />
-            
+
 
             <p:fieldset legend="Datos de acceso del usuario" styleClass="createAccountFieldset">
                 <p:panelGrid columns="3" id="pgr2" styleClass="createAccountPanel">
@@ -27,23 +27,23 @@
                     <p:outputLabel value="Repita la contraseña" for="pass2"/>
                     <p:password id="pass2" required="true" requiredMessage="La contraseña es obligatoria" value="#{createAccountController.user.password2}"/>
                     <p:message for="pass2"/>
-                    
+
                     <p:outputLabel value="Email" for="email"/>
                     <p:inputText id="email" required="true" requiredMessage="El email es obligatorio" value="#{createAccountController.user.email}"/>
                     <p:message for="email"/>
-                    
+
                     <p:selectBooleanCheckbox value="#{createAccountController.user.private}" itemLabel="Perfil privado"/>
                     <p:column/>
                     <p:column/>
-                    
+
                     <p:column/>
                     <p:commandButton value="Registrarse" actionListener="#{createAccountController.createUser()}" update="msgPrincipal, pgr2"/>
                     <p:column/>
-                    
+
                 </p:panelGrid>
-                
+
             </p:fieldset>
-           
+
         </h:form>
     </h:body>
 </html>

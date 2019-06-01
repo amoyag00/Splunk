@@ -7,7 +7,7 @@
         <title>Index</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet library="css" name="index.css" />
-    
+
     </h:head>
     <body id="indexBody">
         <div id="login">
@@ -18,48 +18,48 @@
                         <p:column>
                             <p:outputLabel value="Usuario"/>
                         </p:column>
-                            
+
                         <p:column>
-                             <p:inputText  id="nickname" value="#{indexController.user.nickname}" required="true" requiredMessage="Introduzca nickname"/>
+                            <p:inputText  id="nickname" value="#{indexController.user.nickname}" required="true" requiredMessage="Introduzca nickname"/>
                         </p:column>
-                        
+
                         <p:column>
-                             <p:outputLabel value="Contraseña"/>
+                            <p:outputLabel value="Contraseña"/>
                         </p:column>
-                        
+
                         <p:column>
-                           <p:password id="password" value="#{indexController.user.password}" required="true" requiredMessage="Introduzca contraseña"/> 
+                            <p:password id="password" value="#{indexController.user.password}" required="true" requiredMessage="Introduzca contraseña"/> 
                         </p:column>
-                        
+
                         <p:column/>
-                        
+
                         <p:column>
                             <p:commandButton value="Acceder" action="#{indexController.checkUser()}" update="wrongLogin, indexGrid"/>
                         </p:column>
                     </p:row>
-                    
+
                     <p:row>
-                       <p:column colspan="2">
+                        <p:column colspan="2">
                             <p:message for="nickname"/>
-                       </p:column> 
-                        
-                       <p:column colspan="2">
+                        </p:column> 
+
+                        <p:column colspan="2">
                             <p:message for="password"/>
-                       </p:column> 
-                        
-                       <p:column colspan="2"/>
+                        </p:column> 
+
+                        <p:column colspan="2"/>
                     </p:row>
 
                 </p:panelGrid>
             </h:form>   
-            
-           
+
+
         </div>
-        
-         <h:form id="account">
+
+        <h:form id="account">
             <p:commandButton styleClass="accountButton" value="Registrarse" action="public/createAccount" />
         </h:form>
-           
-        
+
+
     </body>
 </html>
