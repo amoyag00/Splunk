@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -49,6 +51,8 @@ public class ReviewAdminController implements Serializable{
     
     public void edit(){
         this.reviewEJB.edit(this.selectedReview);
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Reseña editada");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public List<Review> getReviews() {

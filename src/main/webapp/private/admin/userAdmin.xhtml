@@ -18,9 +18,20 @@
 
             <ui:define name="content">
                  <h:form id="formData">
-                    
-                    <p:fieldset legend="Usuarios">
-                        
+                    <p:growl keepAlive="1000" id="growl" severity="info, fatal" showDetail="true" showSummary="true" />
+                    <p:fieldset legend="Adiministrar usuarios">
+                         <p:panelGrid styleClass="panelGridCenter">
+
+                            <f:facet name="header">
+
+                                <p:row>
+                                    <p:column styleClass="third">Nickname</p:column>
+                                    <p:column styleClass="third">Editar usuario</p:column>
+                                    <p:column styleClass="third">Editar reseñas</p:column>
+                                </p:row>
+                            </f:facet>
+
+                        </p:panelGrid>
                         <p:dataGrid var="user" value="#{userAdminController.userResults}" columns="1" layout="grid"  id="results">
                             
                             <p:panelGrid   styleClass="panelGridCenter" >
@@ -50,55 +61,66 @@
                             
                             <p:row>
                                 <p:column>
-                                   <p:outputLabel value="Nombre:"/>
+                                   <p:outputLabel value="Nombre:" for="name"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText value="#{userAdminController.selectedUser.nickname}" required="true" requiredMessage="Introduzca nickname"/>      
+                                    <p:inputText id="name" value="#{userAdminController.selectedUser.nickname}" required="true" requiredMessage="Introduzca nickname"/>      
+                                </p:column>
+                                <p:column>
+                                    <p:message for="name"/>
                                 </p:column>
                                
                             </p:row>
                             
                             <p:row>
                                 <p:column>
-                                   <p:outputLabel value="Contraseña:"/>
+                                   <p:outputLabel value="Contraseña:" for="password"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText value="#{userAdminController.selectedUser.password}"  required="true" requiredMessage="Introduzca nickname"/>  
+                                    <p:inputText id="password" value="#{userAdminController.selectedUser.password}"  required="true" requiredMessage="Introduzca contraseña"/>  
+                                </p:column>
+                                <p:column>
+                                    <p:message for="password"/>
                                 </p:column>
                             </p:row>
                                 
                             
                             <p:row>
                                 <p:column>
-                                   <p:outputLabel value="Email:"/>
+                                   <p:outputLabel value="Email:" for="email"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText value="#{userAdminController.selectedUser.email}"  required="true" requiredMessage="Introduzca nickname"/> 
+                                    <p:inputText id="email" value="#{userAdminController.selectedUser.email}"  required="true" requiredMessage="Introduzca nickname"/> 
+                                </p:column>
+                                <p:column>
+                                    <p:message for="email"/>
                                 </p:column>
                             </p:row>
                             
                             <p:row>
                                 <p:column>
-                                    <p:outputLabel value="Perfil"/>
+                                    <p:outputLabel value="Perfil" for="visible"/>
                                 </p:column>
                                 <p:column>
-                                    <p:selectBooleanCheckbox value="#{userAdminController.selectedUser.private}" itemLabel="Visible"/>
+                                    <p:selectBooleanCheckbox id="visible" value="#{userAdminController.selectedUser.private}" itemLabel="Visible"/>
                                 </p:column>
+                                <p:column/>
                             </p:row>
                             
                             <p:row>
                                 <p:column>
-                                   <p:outputLabel value="Acceso"/>
+                                   <p:outputLabel value="Acceso" for="ban"/>
                                 </p:column>
                                 <p:column>
-                                    <p:selectBooleanCheckbox value="#{userAdminController.selectedUser.banned}" itemLabel="Baneado"/> 
+                                    <p:selectBooleanCheckbox id="ban" value="#{userAdminController.selectedUser.banned}" itemLabel="Baneado"/> 
                                 </p:column>
+                                <p:column/>
                             </p:row>
                             
                             
                             <p:row>
-                                <p:column colspan="2">
-                                    <p:commandButton value="Editar" actionListener="#{userAdminController.edit()}" oncomplete="PF('wedit').hide();" update=":formData:results"/>
+                                <p:column colspan="3">
+                                    <p:commandButton value="Editar" actionListener="#{userAdminController.edit()}" oncomplete="if (!args.validationFailed)PF('wedit').hide();" update=":formData:results @form :formData:growl"/>
                                 </p:column>
                             </p:row>
                             

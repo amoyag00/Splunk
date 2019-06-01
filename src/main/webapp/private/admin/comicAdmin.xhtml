@@ -64,15 +64,7 @@
                                 </p:column>
 
                                 <p:column headerText="Autores">
-                                    <p:dataTable id="authors" var="author" value="#{comicAdminController.listAuthorsComic(list)}" rowIndexVar="row" editable="true" editMode="cell">
-                                        <p:column>
-                                            <p:cellEditor>
-                                                <f:facet name="output"><h:outputText value="#{author.name}" /></f:facet>
-                                                <f:facet name="input"><p:inputText value="#{author.name}" styleClass="fullWidth" label="statusComic"/></f:facet>
-                                            </p:cellEditor>  
-
-                                        </p:column>
-                                    </p:dataTable>
+                                     <p:commandButton value="Editar autores" actionListener="#{comicAdminController.setComicSeleccionado(list)}" action="authorAdmin" />
                                 </p:column>
 
                                 <p:column headerText="Generos">
@@ -93,7 +85,7 @@
                                     </p:selectBooleanCheckbox>
                                 </p:column>
 
-                                <p:column headerText="Editar">
+                                <p:column headerText="Capitulos">
 
                                    
                                     <p:commandButton value="Editar capitulos" actionListener="#{comicAdminController.setComicSeleccionado(list)}" action="chapterAdmin" />
@@ -124,23 +116,15 @@
                                     <p:message for="image"/>
 
                                     <p:outputLabel value="Fecha de publicación" for="date"/>
-                                    <p:calendar id="date" value="#{comicAdminController.newComic.publishDate}" showOn="button"/>
+                                    <p:calendar id="date" value="#{comicAdminController.newComic.publishDate}" showOn="button" required="true"/>
                                     <p:message for="date"/>
-
-                                    <p:outputLabel value="Authors " for="auth" id="aut"/>
-                                    <p:inputText id="auth" required="false" requiredMessage="Campo obligatorio" value="#{comicAdminController.newComicAuthor}"  label="Authors"/>
-                                    <p:message for="auth"/>
-
-                                    <p:outputLabel value="Genre " for="gen"/>
-                                    <p:inputText id="gen" required="false" requiredMessage="Campo obligatorio" value="#{comicAdminController.newComicGenre}"  label="Genre"/>
-                                    <p:message for="auth"/>
                                     
                                     <p:outputLabel value="Visible " for="visible"/>
                                     <p:selectBooleanCheckbox id="visible" value="#{comicAdminController.newComic.visible}" itemLabel="Visible"/>
                                     
                                     
                                     <p:column/>
-                                        <p:commandButton value="Guardar" actionListener="#{comicAdminController.save()}" update=":tabla1:tablaComics" oncomplete="PF('wcreate').hide();"/>
+                                        <p:commandButton value="Guardar" actionListener="#{comicAdminController.save()}" update=":tabla1:tablaComics :tabla2" oncomplete="if (!args.validationFailed)PF('wcreate').hide();"/>
                                     <p:column/>
 
 

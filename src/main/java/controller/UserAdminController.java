@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import model.User;
@@ -29,7 +31,7 @@ public class UserAdminController implements Serializable{
     public void init() {
         userResults=userEJB.findAll();
     }
-
+    
     public List<User> getUserResults() {
         return userResults;
     }
@@ -49,5 +51,7 @@ public class UserAdminController implements Serializable{
     
     public void edit(){
         userEJB.edit(selectedUser);
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Usuario editado");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 }

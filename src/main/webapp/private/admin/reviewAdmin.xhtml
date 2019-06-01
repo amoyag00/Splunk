@@ -16,7 +16,7 @@
 
             <ui:define name="content">
                 <h:form id="formData">
-
+                    <p:growl keepAlive="1000" id="growl" severity="info, fatal" showDetail="true" showSummary="true" />
                     <p:fieldset legend="Reseñas de #{reviewAdminController.nickname} ">
                         <p:panelGrid styleClass="panelGridCenter">
 
@@ -66,40 +66,46 @@
 
                             <p:row>
                                 <p:column>
-                                    <p:outputLabel value="Texto"/>
+                                    <p:outputLabel value="Texto" for ="text"/>
                                 </p:column>
                                 <p:column>
-                                    <p:inputText value="#{reviewAdminController.selectedReview.reviewText}" required="true" requiredMessage="Introduzca un texto"/>      
+                                    <p:inputText id ="text" value="#{reviewAdminController.selectedReview.reviewText}" required="true" requiredMessage="Introduzca un texto"/>      
+                                </p:column>
+                                <p:column>
+                                    <p:message for="text"/>
                                 </p:column>
                             </p:row>
 
                             <p:row>
                                 <p:column>
-                                    <p:outputLabel value="Contraseña:"/>
+                                    <p:outputLabel value="Fecha" for="calendar"/>
                                 </p:column>
                                 <p:column>
-                                    <p:calendar id="calendar" value="#{reviewAdminController.selectedReview.writtenDate}" showOn="button"/> 
+                                    <p:calendar required="true" id="calendar" value="#{reviewAdminController.selectedReview.writtenDate}" showOn="button"/> 
+                                </p:column>
+                                <p:column>
+                                    <p:message for="calendar" />
                                 </p:column>
                             </p:row>
 
 
                             <p:row>
-
                                 <p:column>
-                                    <p:outputLabel>
-                                        Visibilidad
-                                    </p:outputLabel>
+                                    <p:outputLabel value="Visibilidad" for="visible"/>
                                 </p:column>
                                 <p:column>
-                                     <p:selectBooleanCheckbox value="#{reviewAdminController.selectedReview.visible}" itemLabel="Visible"/>
+                                     <p:selectBooleanCheckbox id="visible" value="#{reviewAdminController.selectedReview.visible}" itemLabel="Visible"/>
+                                </p:column>
+                                <p:column>
+                                    <p:message for="visible"/>
                                 </p:column>
                             </p:row>
 
 
 
                             <p:row>
-                                <p:column colspan="2">
-                                    <p:commandButton value="Editar" actionListener="#{reviewAdminController.edit()}" oncomplete="PF('wedit').hide();" update=":formData:results"/>
+                                <p:column colspan="3">
+                                    <p:commandButton value="Editar" actionListener="#{reviewAdminController.edit()}" oncomplete="if (!args.validationFailed)PF('wedit').hide();" update=":formData:results :formData:growl @form"/>
                                 </p:column>
                             </p:row>
 

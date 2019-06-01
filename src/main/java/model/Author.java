@@ -82,7 +82,7 @@ public class Author implements Serializable{
    
     @Override
     public String toString() {
-        return "Author{" + "authorId=" + authorId + ", comic=" + comic + ", name=" + name + ", category=" + category + '}';
+        return name=", "+category;
     }
 
     

@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -67,11 +69,15 @@ public class ChapterAdminController implements Serializable{
     public void create() {
         chapterCreated.setComic(comic);
         chapterEJB.create(chapterCreated);
+        this.chapterResults.add(chapterCreated);
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Nuevo capítulo creado");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
     public void edit() {
-       
         chapterEJB.edit(chapterSelected);
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Capítulo editado");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
     public String dateToString(Date date){

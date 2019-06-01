@@ -57,6 +57,7 @@ public class ComicAdminController implements Serializable {
 
     public void setComicSeleccionado(Comic comicSeleccionado) {
         this.comicSeleccionado = comicSeleccionado;
+        this.authorList=listAuthorsComic(this.comicSeleccionado);
     }
 
     public ArrayList<String> getNewComicAuthorList() {
@@ -153,6 +154,8 @@ public class ComicAdminController implements Serializable {
         comicList = comicEJB.findAll();
         newComic = new Comic();
         comicSeleccionado = comicList.get(0);
+      
+        
 
     }
 
@@ -189,17 +192,6 @@ public class ComicAdminController implements Serializable {
         comicEJB.create(newComic);
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Nuevo comic creado");
         FacesContext.getCurrentInstance().addMessage(null, msg);
-
-        Author autor = new Author();
-        autor.setName(newComicAuthor);
-        autor.setCategory("Art & Script");
-        autor.setComic(newComic);
-        authorEJB.create(autor);
-
-        Genre genero = new Genre();
-        genero.setName(newComicGenre);
-        genero.setComic(newComic);
-        genreEJB.create(genero);
         
         comicList.add(newComic);
 
