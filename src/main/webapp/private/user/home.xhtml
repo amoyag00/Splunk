@@ -8,6 +8,7 @@
     <f:metadata>
         <f:event type="preRenderView" listener="#{securityController.checkUserPrivileges()}" />
     </f:metadata>
+    
     <body>
 
         <ui:composition template="./../../WEB-INF/templates/template.xhtml">
@@ -66,8 +67,24 @@
                             <p:chart id="pie" type="pie" model="#{homeController.pieModel1}"/>
 
                         </p:panelGrid>
+                        <p:commandButton value="Ajustes" rendered="#{homeController.editable}"  oncomplete="PF('wSettings').show();" update="formSettings"/>
                     </p:fieldset>
                 </h:form>
+                
+                <p:dialog header="Ajustes" widgetVar="wSettings">
+                    <h:form id="formSettings">
+                        <p:panelGrid id="settings" columns="3">
+                            <p:outputLabel value="Nueva contraseña:" for="pass"/>
+                            <p:inputText id="pass" value="#{homeController.usuario.password}" required="true" requiredMessage="Introduzca una contraseña"/>
+                            <p:message for="pass"/>
+                            
+                            <p:outputLabel value="Privacidad:" for="privacy"/>
+                            <p:selectBooleanCheckbox id="privacy" value="#{homeController.usuario.private}" required="true" requiredMessage="Introduzca un nombre"/>
+                            <p:message for="privacy"/>
+                            <p:commandButton value="Guardar ajustes" actionListener="#{homeController.updateSettings()}" oncomplete="if (!args.validationFailed)PF('wSettings').hide();" update="@form :form:homeGrowl"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
             </ui:define>
         </ui:composition>
 

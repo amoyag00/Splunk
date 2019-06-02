@@ -9,6 +9,7 @@ import javax.inject.Named;
 import model.ComicEntry;
 import model.User;
 import EJB.ComicEntryFacadeLocal;
+import EJB.UserFacadeLocal;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -22,7 +23,9 @@ import org.primefaces.model.chart.PieChartModel;
 @Named
 @ViewScoped
 public class HomeController implements Serializable {
-
+    @EJB
+    private UserFacadeLocal userEJB;
+    
     @EJB
     private ComicEntryFacadeLocal comicListEJB;
 
@@ -111,6 +114,41 @@ public class HomeController implements Serializable {
 
     public void setStatusComic(String[] statusComic) {
         this.statusComic = statusComic;
+    }
+    
+    public void updateSettings(){
+        if(isStrong(usuario.getPassword())){
+            userEJB.edit(usuario);
+             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Information", "Ajustes guardados"));
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Las contraseña ha de tener más de 8 caracteres, un número y una mayúscula"));
+        }
+        
+        
+    }
+    
+    public boolean isStrong(String password) {
+        boolean hasNumber = false;
+        boolean hasUpperCase = false;
+        boolean isStrong = false;
+
+        for (int i = 0; i < password.length(); i++) {
+
+            if (Character.isDigit(password.charAt(i))) {
+                hasNumber = true;
+            }
+
+            if (Character.isUpperCase(password.charAt(i))) {
+                hasUpperCase = true;
+            }
+
+        }
+
+        if (password.length() >= 8 && hasNumber && hasUpperCase) {
+            isStrong = true;
+        }
+
+        return isStrong;
     }
 
     public void deleteEntry(int row) {
