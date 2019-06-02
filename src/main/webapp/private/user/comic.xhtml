@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{securityController.checkUserPrivileges()}" />
+    </f:metadata>
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template.xhtml">
+
+
+
+            <ui:define name="content">
+                <h:form id="reviewForm">
+                    <p:growl keepAlive="1000" id="addedReview" severity="info, fatal" showDetail="true" showSummary="true" />
+                    <h:panelGrid columns="2" width="100%">
+                        <p:panel header="#{comicController.comic.name}" footer="Fecha de publicacion: #{comicController.dateToString(comicController.comic.publishDate)}">
+                            <h:panelGrid columns="3" cellpadding="10" >
+                                <p:graphicImage name="#{comicController.comic.imagePath}" height="400"/>
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel value="Puntuación global" />
+                                    <h:outputLabel value="#{comicController.globalScore}" />
+                                    <h:outputLabel value="Nº capitulos: "/>
+                                    <h:outputLabel value="#{comicController.comic.numChapters}"/>
+                                    <h:outputLabel value="Genero: "/>
+                                    <h:outputLabel value="#{comicController.genres}"/>
+                                    <h:outputLabel value="Autor: "/>
+                                    <h:outputLabel value="#{comicController.authors}"/>
+                                    <p:commandButton id="addButton" value="Añadir" actionListener="#{comicController.addComic}" disabled="#{comicController.isAdded}" update="addButton"/>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:panel header="Reviews">
+                            <p:dataGrid var="review" value="#{comicController.reviewResults}" columns="1" layout="grid"
+                                        rows="12" paginator="true" id="showReviews" paginatorPosition="top"
+                                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
+                                        rowsPerPageTemplate="6,12,16">
+                                <p:panel header="#{review.user.nickname}">
+                                    <h:outputLabel value="#{review.reviewText}"/>
+                                </p:panel>
+                            </p:dataGrid>
+
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column>
+                                        <p:inputTextarea cols="50" rows="10" value="#{comicController.reviewText}"/> 
+                                    </p:column>
+
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:commandButton value="Comentar" actionListener="#{comicController.addReview}" update="addedReview @form"/>
+                                    </p:column>
+
+                                </p:row>
+                            </p:panelGrid>
+
+
+                        </p:panel>  
+                    </h:panelGrid>
+
+                    <p:fieldset legend="Capitulos">
+                        <p:dataGrid var="chapter" value="#{comicController.chapterResults}" columns="1" layout="grid"
+                                    rows="12" paginator="true" id="caps"
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
+                                    rowsPerPageTemplate="6,12,16">
+                            <p:growl keepAlive="1000" id="premiumGrowl" severity="info, fatal" showDetail="true" showSummary="true" />
+                            <p:panelGrid   styleClass="panelGridCenter" >
+
+                                <p:column styleClass="third">
+                                    <p:outputLabel value="Capitulo #{chapter.chapterNumber} #{chapter.chapterName}" /> 
+                                </p:column>
+
+                                <p:column styleClass="third">
+                                    <p:outputLabel value="Añadido en #{comicController.dateToString(chapter.addedDate)}" /> 
+                                </p:column>
+
+                                <p:column styleClass="third">
+                                    <p:commandButton  value="Leer" actionListener="#{comicController.setSelectedChapter(chapter)}" action="#{comicController.checkPremium()}" update="premiumGrowl"/> 
+                                </p:column>
+                            </p:panelGrid>
+                        </p:dataGrid>
+                    </p:fieldset>
+                </h:form>
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

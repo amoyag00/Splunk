@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{securityController.checkUserPrivileges()}" />
+    </f:metadata>
+    
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template.xhtml">
+
+
+
+            <ui:define name="content">
+                <h:form id="form">
+                    <p:growl keepAlive="1000" id="homeGrowl" severity="info, fatal" showDetail="true" showSummary="true" />
+                    <p:fieldset legend="#{homeController.usuario.nickname}">
+                        <p:panelGrid id="homeGrid" columns="2">
+
+                            <p:dataTable id="tablaHome" var="list" value="#{homeController.comicList}" rowIndexVar="row" editable="#{homeController.editable}" editMode="cell">
+                                <p:growl keepAlive="1000" id="cellEdit" severity="info, fatal" showDetail="true" showSummary="true" />
+                                <p:ajax event="cellEdit" listener="#{homeController.onCellEdit}"  update="cellEdit @form:homeGrowl"/>                                
+                                <p:column headerText="Titulo">
+                                    <h:outputText value="#{list.comic.name}" />
+                                </p:column>
+
+                                <p:column headerText="Puntuacion">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{list.score}" /></f:facet>
+                                        <f:facet name="input"><p:inputNumber minValue="0" maxValue="100" value="#{list.score}" styleClass="fullWidth" label="Score"/></f:facet>
+                                    </p:cellEditor>                                             
+                                </p:column>
+
+                                <p:column headerText="Estado">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{homeController.prettyStatus(list.comicStatus)}" /></f:facet>
+                                        <f:facet name="input">
+                                            <p:selectOneMenu id="lazy" value="#{list.comicStatus}" dynamic="true" styleClass="selectOne" >
+                                                <f:selectItem itemLabel="Select One" itemValue=""/>
+                                                <f:selectItem itemLabel="Pendiente" itemValue="P"/>
+                                                <f:selectItem itemLabel="Leido" itemValue="R"/>
+                                                <f:selectItem itemLabel="Leyendo" itemValue="L"/>
+                                                <p:ajax event="change" update=":form:pie :form:homeGrowl" listener="#{homeController.createPieModel1()}"/>
+
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                    </p:cellEditor>  
+                                </p:column>
+
+                                <p:column headerText="Progreso">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{list.progress}" /></f:facet>
+                                        <f:facet name="input"><p:inputNumber minValue="0" maxValue="#{list.comic.numChapters}" value="#{list.progress}" styleClass="fullWidth" label="Progress"/></f:facet>
+                                    </p:cellEditor>  
+
+                                </p:column>
+
+
+                                <p:column headerText="Eliminar" rendered="#{homeController.editable}">
+                                    <p:commandButton value="Delete" disabled="#{!homeController.editable}"  actionListener="#{homeController.deleteEntry(row)}" update="@form @form:pie @form:homeGrowl" ajax="true"/>
+                                </p:column>
+                            </p:dataTable>
+                            <p:chart id="pie" type="pie" model="#{homeController.pieModel1}"/>
+
+                        </p:panelGrid>
+                        <p:commandButton value="Ajustes" rendered="#{homeController.editable}"  oncomplete="PF('wSettings').show();" update="formSettings"/>
+                    </p:fieldset>
+                </h:form>
+                
+                <p:dialog header="Ajustes" widgetVar="wSettings">
+                    <h:form id="formSettings">
+                        <p:panelGrid id="settings" columns="3">
+                            <p:outputLabel value="Nueva contraseña:" for="pass"/>
+                            <p:inputText id="pass" value="#{homeController.usuario.password}" required="true" requiredMessage="Introduzca una contraseña"/>
+                            <p:message for="pass"/>
+                            
+                            <p:outputLabel value="Privacidad:" for="privacy"/>
+                            <p:selectBooleanCheckbox id="privacy" value="#{homeController.usuario.private}" required="true" requiredMessage="Introduzca un nombre"/>
+                            <p:message for="privacy"/>
+                            <p:commandButton value="Guardar ajustes" actionListener="#{homeController.updateSettings()}" oncomplete="if (!args.validationFailed)PF('wSettings').hide();" update="@form :form:homeGrowl"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

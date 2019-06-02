@@ -1,0 +1,43 @@
+#login{
+    float:right;
+}
+
+#indexBody{
+    background-image: url("#{resource['img/bg.png']}");
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-position: 60% 20%;
+
+}
+
+.indexPanel.ui-panelgrid>*>tr,
+.indexPanel.ui-panelgrid .ui-panelgrid-cell,
+.createAccountPanel.ui-panelgrid>*>tr,
+.createAccountPanel.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
+}
+.createAccountFieldset.ui-fieldset{
+    display:inline-block;
+}
+
+div.ui-growl {
+   top:10%;
+}
+
+#account{
+    text-align:center;
+    width:200px;
+    height: 50px;
+    position: absolute;
+    top:550px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.accountButton{
+    width:200px;
+    height: 50px;
+    font-size: 20px;
+}

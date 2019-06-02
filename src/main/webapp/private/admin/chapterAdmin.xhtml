@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{securityController.checkAdminPrivileges()}" />
+    </f:metadata>
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template.xhtml">
+
+
+
+            <ui:define name="content">
+                <h:form id="formData">
+                    <p:growl keepAlive="1000" id="growl" severity="info, fatal" showDetail="true" showSummary="true" />
+                    <p:panel styleClass="section" header="#{chapterAdminController.comic.name}" footer="#{chapterAdminController.dateToString(chapterAdminController.comic.publishDate)}">
+                        <p:panelGrid  columns="1">
+
+                            <p:graphicImage styleClass="image" name="#{chapterAdminController.comic.imagePath}"/>
+
+                            <p:commandButton value="Crear capitulo" oncomplete="PF('wcreate').show();" update="formCreate"/> 
+
+
+                        </p:panelGrid>
+
+                    </p:panel>
+
+                    <p:fieldset legend="Capitulos">
+                        <p:dataGrid styleClass="section" var="chapter" value="#{chapterAdminController.chapterResults}" columns="1" layout="grid"
+                                    rows="12" paginator="true" id="results"
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropDown}"
+                                    rowsPerPageTemplate="6,12,16">
+                            <p:panelGrid   styleClass="panelGridCenter" >
+
+                                <p:column styleClass="third">
+                                    <p:outputLabel value="Capitulo #{chapter.chapterNumber} #{chapter.chapterName}" /> 
+                                </p:column>
+
+                                <p:column styleClass="third">
+                                    <p:outputLabel value="Añadido el #{chapterAdminController.dateToString(chapter.addedDate)}" /> 
+                                </p:column>
+
+                                <p:column styleClass="third">
+                                    <p:commandButton  value="Editar capitulo" actionListener="#{chapterAdminController.selectChapter(chapter)}" oncomplete="if (!args.validationFailed)PF('wedit').show();" update="formEdit :formData:growl :formData:results"/> 
+                                </p:column>
+                            </p:panelGrid>
+                        </p:dataGrid>
+                    </p:fieldset>
+                </h:form>
+
+                <p:dialog header="Crear capitulo" widgetVar="wcreate">
+                    <h:form id="formCreate">
+                        <p:panelGrid columns="3">
+                            <p:outputLabel value="Nombre:" for="name"/>
+                            <p:inputText id="name" required="true" requiredMessage="Introduzca un nombre" value="#{chapterAdminController.chapterCreated.chapterName}"/>
+                            <p:message for="name"/>
+
+                            <p:outputLabel  value="Numero:" for="numero"/>
+                            <p:inputText required="true" requiredMessage="Introduzca un número" id="numero" value="#{chapterAdminController.chapterCreated.chapterNumber}"/>
+                            <p:message for="numero"/>
+
+                            <p:outputLabel for ="content" value="Contenido:"/>
+                            <p:inputText required="true" requiredMessage="Introduzca una ruta" id="content" value="#{chapterAdminController.chapterCreated.contentPath}"/>
+                            <p:message for="content"/>
+
+                            <p:outputLabel value="Fecha:" for="date"/>
+                            <p:calendar id="date" required="true" requiredMessage="Introduzca una fecha" value="#{chapterAdminController.chapterCreated.addedDate}" showOn="button"/>
+                            <p:message for="date"/>
+
+                            <p:outputLabel value="Visibilidad"/>
+                            <p:selectBooleanCheckbox value="#{chapterAdminController.chapterCreated.visible}" itemLabel="Visible"/>
+                            <p:column/>
+
+                            <p:commandButton value="Crear" actionListener="#{chapterAdminController.create()}" oncomplete="if (!args.validationFailed)PF('wcreate').hide();" update=":formData:results @form :formData:growl"/>
+                            <p:column/>
+                            <p:column/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+
+                <p:dialog header="Editar capitulo" widgetVar="wedit">
+                    <h:form id="formEdit" >
+                        <p:panelGrid columns="3">
+                            <p:outputLabel value="Nombre:" for="name"/>
+                            <p:inputText required="true" requiredMessage="Introduzca un nombre" id="name" value="#{chapterAdminController.chapterSelected.chapterName}"/>
+                            <p:message for="name"/>
+
+                            <p:outputLabel value="Numero:" for="numero"/>
+                            <p:inputText id="numero" required="true" requiredMessage="Introduzca un número" value="#{chapterAdminController.chapterSelected.chapterNumber}"/>
+                            <p:message for="numero"/>
+
+                            <p:outputLabel value="Contenido:" for="contenido"/>
+                            <p:inputText id="contenido" required="true" requiredMessage="Introduzca una ruta" value="#{chapterAdminController.chapterSelected.contentPath}"/>
+                            <p:message for="contenido"/>
+
+                            <p:outputLabel value="Fecha:" for="calendar"/>
+                            <p:calendar id="calendar" required="true" requiredMessage="Introduzca una fecha" value="#{chapterAdminController.chapterSelected.addedDate}" showOn="button"/>
+                            <p:column/>
+
+                            <p:outputLabel value="Visibilidad"/>
+                            <p:selectBooleanCheckbox value="#{chapterAdminController.chapterSelected.visible}" itemLabel="Visible"/>
+                            <p:column/>
+
+                            <p:commandButton value="Editar" actionListener="#{chapterAdminController.edit()}" oncomplete="if (!args.validationFailed)PF('wedit').hide();" update=":formData:results :formData:growl @form"/>
+                            <p:column/>
+                            <p:column/>
+
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

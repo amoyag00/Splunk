@@ -2,27 +2,81 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
-        <title>Facelets Template</title>
-    </h:head>
 
+    </h:head>
+    <f:event type="preRenderView" listener="#{templateController.checkPermissions()}" />
+    <f:event type="preRenderView" listener="#{menuController.loadMenu()}" />
     <h:body>
 
         <div id="top">
-            <ui:insert name="top">Top</ui:insert>
+
+            <h:form>
+                <p:menubar id="bar" model="#{menuController.modelo}">
+                    <f:facet name="options">
+                        <p:commandButton value="Cerrar sesion" icon="pi pi-home" action="#{menuController.cerrarSesion()}" update="bar"/>
+                    </f:facet>
+                </p:menubar>
+            </h:form>
         </div>
 
         <div id="content" class="center_content">
             <ui:insert name="content">Content</ui:insert>
         </div>
 
-        <div id="bottom">
-            <ui:insert name="bottom">Bottom</ui:insert>
+        <div id="footer" class="noBackground">
+            <ui:insert name="bottom">
+                <p:panelGrid styleClass="panelGridCenter">
+
+                    <p:row>
+                        <p:column><b>Productos</b></p:column>
+                        <p:column><b>Enlaces</b></p:column>
+                        <p:column><b>Contactos</b></p:column>
+                    </p:row>
+
+
+                    <p:row>
+                        <p:column>
+                            Comics
+                        </p:column>
+                        <p:column>
+                            Diseño y desarrollo
+                        </p:column>
+                        <p:column>
+                            Mapa del sitio
+                        </p:column> 
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            Colecciones
+                        </p:column>
+                        <p:column>
+                            Trabajos
+                        </p:column>
+                        <p:column>
+                            Nuestro equipo
+                        </p:column> 
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            Eventos
+                        </p:column>
+                        <p:column>
+                            Blog
+                        </p:column>
+                        <p:column>
+                            Sobre nosotros
+                        </p:column> 
+                    </p:row>
+                </p:panelGrid>
+            </ui:insert>
         </div>
 
     </h:body>
