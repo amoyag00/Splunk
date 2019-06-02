@@ -127,48 +127,7 @@ public class SearcherController implements Serializable {
     public void viewComic(Comic comic) {
         comicSelected = comic;
     }
-<<<<<<< HEAD
 
-    public void dummySearchComic() {
-        //TODO delete this
-        List<Comic> results = comicEJB.search("on");
-        for (Comic comic : results) {
-            comicResults += comic.getName() + " " + comic.getImagePath() + "\n";
-        }
-    }
-
-    public void dummySearchComicByName() {
-        //TODO delete this
-        //Param must be name or score
-        //Order must be ASC or DESC or ""
-        List<Comic> results = comicEJB.searchBy("", Param.NAME, Order.ASC);
-        for (Comic comic : results) {
-            comicResults += comic.getName() + " " + comic.getImagePath() + "\n";
-        }
-    }
-
-    public void dummySearchComicByScore() {
-        //TODO delete this
-        //Param must be name or score
-        //Order must be ASC or DESC
-        List<Comic> results = comicEJB.searchBy("", Param.SCORE, Order.DESC);
-        for (Comic comic : results) {
-            comicResults += comic.getName() + " " + comic.getImagePath() + "\n";
-        }
-    }
-
-    /*public void dummySearchUser(){
-        //TODO delete this
-        //Order must be ASC or DESC or ""
-        List<User> results=userEJB.search("", false, Order.DESC);
-        for(User user :results){
-            userResults+="Nickname: "+user.getNickname()+" Private profile? "+user.isPrivate()+"\n";
-        }
-    }*/
-
-=======
-    
->>>>>>> adminGenres
     public List<ComicEntry> getResultEntry() {
         return resultEntry;
     }
